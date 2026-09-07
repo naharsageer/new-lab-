@@ -2062,7 +2062,8 @@ function openManualFromNav(){
 
 function saveScheduleNow(silent){
   try{
-    if(S&&S.length)enforceRosterRestRules(days());
+    // حفظ الجدول كما تم تحريره يدويًا؛ لا نعيد تشغيل قواعد الإصلاح التلقائي هنا
+    // حتى لا تُلغى تعديلات المستخدم عند الضغط على «حفظ».
     const payload={
       employees:E,
       schedule:S,
@@ -2386,7 +2387,16 @@ function renderManualEditor(){
     <div class="manualEditorWrap"><table class="manualEditorTable">${head}${rows}</table></div>
   `,true);
 }
-function manualCycle(i,d){cy(i,d);renderManualEditor()}
+function manualCycle(i,d){
+  // التعديل اليدوي يتناوب M → N → O → V مع احترام نوع الموظف،
+  // ثم يحفظ التعديل فورًا حتى لا يضيع عند الانتقال بين الصفحات.
+  cy(i,d);
+  try{
+    const payload={employees:E,schedule:S,month:+m.value,year:+y.value};
+    localStorage.setItem('lab-roster-saved-schedule-v3',JSON.stringify(payload));
+  }catch(e){}
+  renderManualEditor();
+}
 
 function renderStatsOnly(){
   if(!S || !S.length){
