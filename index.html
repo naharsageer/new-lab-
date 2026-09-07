@@ -1608,6 +1608,25 @@ function selectEmployeeCalendar(value){
   resetPortalMonth();
   openEmployeePage(currentPortalEmp);
 }
+function employeeShiftHours(i,sh){
+  if(sh==='O'||sh==='V'||!sh)return 0;
+  // الموظفون المثبتون على دوام صباحي، ورحاب العلي في المرحلة الانتقالية: 8 ساعات.
+  if(sh==='M' && E[i] && (E[i][1] || E[i][0]==='رحاب العلي')) return 8;
+  // موظفو نظام 12 ساعة: الصباح والمساء كلاهما 12 ساعة.
+  if(sh==='M'||sh==='N') return 12;
+  return 0;
+}
+function employeeHours(i){
+  if(!S||!S[i])return 0;
+  return S[i].reduce((total,sh)=>total+employeeShiftHours(i,sh),0);
+}
+function employeeHoursBreakdown(i){
+  const row=S&&S[i]?S[i]:[];
+  const m12=row.filter(x=>x==='M').length, n12=row.filter(x=>x==='N').length, o=row.filter(x=>x==='O').length, v=row.filter(x=>x==='V').length;
+  const day8=E[i]&&(E[i][1]||E[i][0]==='رحاب العلي')?m12:0;
+  const m12h=m12-day8;
+  return {m12h,n12h:n12,day8,o,v,hours:employeeHours(i)};
+}
 function openEmployeePage(forceIndex){
   ensurePortalMonth();
   let idx=forceIndex;
@@ -1665,7 +1684,7 @@ function openEmployeePage(forceIndex){
         <div class="monthNav"><button onclick="changePortalMonth(-1,'employee')">‹</button><span class="monthLabel">${portalMonthLabel()}</span><button onclick="changePortalMonth(1,'employee')">›</button></div>
         <b>تقويم ${emp[0]}</b>
         <div class="empcal">${cells}</div>
-        <div class="readonly-note" style="margin-top:10px">العمل ${work(i)} • M ${c('M')} • A ${c('A')} • N ${c('N')} • O ${c('O')} • V ${c('V')}</div>
+        <div class="hoursBox"><b>ساعات العمل: ${employeeHours(i)} ساعة</b><span>صباح 12س: ${employeeHoursBreakdown(i).m12h} • مساء 12س: ${employeeHoursBreakdown(i).n12h} • صباح 8س: ${employeeHoursBreakdown(i).day8} • أوف: ${employeeHoursBreakdown(i).o} • إجازة: ${employeeHoursBreakdown(i).v}</span></div>
         ${compensationStatNote(emp[0])}
         ${annualVStatsHtml(i,portalViewYear)}
       </div>
@@ -1757,7 +1776,7 @@ function renderMyCalendar(open){
       <div class="readonly-note">تقويم الموظف</div>
       <div class="monthNav"><button aria-label="الشهر السابق" onclick="changePortalMonth(-1,'mine')">‹</button><span class="monthLabel">${portalMonthLabel()}</span><button aria-label="الشهر التالي" onclick="changePortalMonth(1,'mine')">›</button></div>
       <div class="empcal">${cells}</div>
-      <div class="readonly-note" style="margin-top:10px">العمل ${work(i)} • M ${c('M')} • A ${c('A')} • N ${c('N')} • O ${c('O')} • V ${c('V')}</div>
+      <div class="hoursBox"><b>ساعات العمل: ${employeeHours(i)} ساعة</b><span>صباح 12س: ${employeeHoursBreakdown(i).m12h} • مساء 12س: ${employeeHoursBreakdown(i).n12h} • صباح 8س: ${employeeHoursBreakdown(i).day8} • أوف: ${employeeHoursBreakdown(i).o} • إجازة: ${employeeHoursBreakdown(i).v}</span></div>
       ${compensationStatNote(emp[0])}
       ${annualVStatsHtml(i,portalViewYear)}
     </div>
