@@ -465,9 +465,29 @@ function loadAgreed12h2026(){
   if(+y.value!==2026 || +m.value!==8) return false;
   const n=days();
   S=E.map(()=>Array(n).fill('O'));
-  // جميع الموظفين في النظام الحالي 12 ساعة. طاهر وعبدالمنعم ومصطفى وعقيله وصالح مثبتون صباح M فقط، 12 ساعة؛ طاهر وعبدالمنعم متناوبان بحيث يتوفر أحدهما يوميًا أو كلاهما عند الحاجة.
-  const schedule=['MMMMMMMMOOOOOOOMMMMMMMOOOOOOOM','MOOOOOOOMMMMMMMOOOOOOOMMMMMMMM','MOMMMMMMMMOOOOOOMMMMMMMOOOOOOO','MOOOOMMMMMMMMOOOOOOMMMMMMMOOOO','MMOOOOOOOMMMMMMMOOOOOOOMMMMMMM','MOOOOOOONNNNNNNOOOOOOMMMMMMMMO','NNNNNOOOOOOOMMMMMMMOOOOOOOMMMM','OMMMMMMMMOOOOOONNNNNNNOOOOOOOM','MMOOOOOONNNNNNNOOOOOOOMMMMMMMO','ONNNNNNNOOOOOOOMMMMMMMMOOOOOOM','NNNNNOOOOOOOMMMMMMMOOOOOOOMMMM','MMOOOOOOMMMMMMMOOOOOOONNNNNNNO','MMOOOOOONNNNNNNOOOOOOOMMMMMMMO','MMMMMMMMOOOOOOOMMMMMMMOOOOOOON','ONNNNNNNOOOOOOMMMMMMMMOOOOOOOM','','V']
-  fixed.forEach(i=>{ if(!S[i]) return; S[i]=S[i].map(x=>x==='N'?'M':x); });
+  // Final agreed September 2026 pattern: first five are M-only 12h.
+  // Taher/Abdulmunim are coordinated so at least one is present every day.
+  const schedule=[
+    'MMMMMMMMOOOOOOOMMMMMMMOOOOOOOM',
+    'MOOOOOOOMMMMMMMOOOOOOOMMMMMMMM',
+    'MOMMMMMMMMOOOOOOMMMMMMMOOOOOOO',
+    'MOOOOMMMMMMMMOOOOOOMMMMMMMOOOO',
+    'MMOOOOOOOMMMMMMMOOOOOOOMMMMMMM',
+    'MOOOOOOONNNNNNNOOOOOOMMMMMMMMO',
+    'NNNNNOOOOOOOMMMMMMMOOOOOOOMMMM',
+    'OMMMMMMMMOOOOOONNNNNNNOOOOOOOM',
+    'MMOOOOOONNNNNNNOOOOOOOMMMMMMMO',
+    'ONNNNNNNOOOOOOOMMMMMMMMOOOOOOM',
+    'NNNNNOOOOOOOMMMMMMMOOOOOOOMMMM',
+    'MMOOOOOOMMMMMMMOOOOOOONNNNNNNO',
+    'MMOOOOOONNNNNNNOOOOOOOMMMMMMMO',
+    'MMMMMMMMOOOOOOOMMMMMMMOOOOOOON',
+    'ONNNNNNNOOOOOOMMMMMMMMOOOOOOOM'
+  ];
+  for(let i=0;i<Math.min(E.length,schedule.length);i++) S[i]=schedule[i].slice(0,n).split('');
+  // Enforce M-only for Taher, Abdulmunim, Mustafa, Aqila, Saleh.
+  [0,1,2,3,4].forEach(i=>{if(S[i])S[i]=S[i].map(x=>x==='N'?'M':x)});
+  return true;
 }
 function normalizeLegacyA(){S=(S||[]).map(r=>(r||[]).map(x=>x==='A'?'N':x));E=(E||[]).map(e=>{if(e[5]){e[5]=0;e[2]=1}return e});}
 function purgeLegacyA(){normalizeLegacyA(); if(Array.isArray(S)) S=S.map(r=>(r||[]).map(x=>x==='A'?'N':x));}
