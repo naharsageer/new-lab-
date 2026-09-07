@@ -485,6 +485,7 @@ function loadAgreed12h2026(){
   };
   S=E.map(e=>{const r=plan[e[0]]||'O'.repeat(n);return r.slice(0,n).split('')});
   E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));
+  rebalanceSupervisorWeekends(n);
   purgeLegacyA();
   return true;
 }
@@ -674,6 +675,42 @@ function enforcePreviousMonthBoundary(n){
   }
   return changed;
 }
+
+function rebalanceSupervisorWeekends(n){
+  const sup=E.findIndex(e=>e[0]==='طاهر المحيميد'), dep=E.findIndex(e=>e[0]==='عبدالمنعم البلادي');
+  const excluded=new Set([sup,dep].filter(i=>i>=0));
+  if(!S||sup<0||dep<0)return;
+  // Prefer OFF for supervisor/deputy on Friday/Saturday. Preserve each employee's
+  // monthly shift count by swapping an existing weekday M for the weekend M.
+  for(let d=1;d<=n;d++){
+    if(!wk(d))continue;
+    [sup,dep].forEach(i=>{if(i>=0&&S[i][d-1]==='M')S[i][d-1]='O';});
+    const need=2;
+    while(cnt(d,'M')<need){
+      const cand=[];
+      E.forEach((e,i)=>{
+        if(excluded.has(i)||S[i][d-1]!=='O'||!employeeCanWorkShift(i,'M'))return;
+        // Find a weekday M that can be swapped to OFF while keeping at least 4 M.
+        for(let q=1;q<=n;q++){
+          if(wk(q)||S[i][q-1]!=='M'||cnt(q,'M')<=4)continue;
+          if(!canSetWithoutRestConflict(i,d,'M',n))continue;
+          // Avoid creating N->M or M->N transitions.
+          if(!canWork(i,d,'M'))continue;
+          let score=(cnt(q,'M')-4)*5 - Math.abs(q-d)*0.05;
+          if(q>1&&(S[i][q-2]==='O'||S[i][q-2]==='V'))score+=2;
+          if(q<n&&(S[i][q]==='O'||S[i][q]==='V'))score+=2;
+          cand.push([i,q,score]);
+        }
+      });
+      cand.sort((a,b)=>b[2]-a[2]);
+      if(!cand.length)break;
+      const [i,q]=cand[0];
+      S[i][q-1]='O';
+      S[i][d-1]='M';
+    }
+  }
+}
+
 function gen(){
   const n=days(); updateTarget();
   // جميع الموظفين الآن على نظام 12 ساعة. خمسة موظفين مثبتون صباحًا، والبقية مرنون.
@@ -788,6 +825,7 @@ function gen(){
   enforceSupervisorAlternation(n);
   enforceHardShiftSafety(n);
   E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));
+  rebalanceSupervisorWeekends(n);
   enforceHardShiftSafety(n);
   save(); archiveCurrentSchedule(); rend(); summary(); check();
 }
