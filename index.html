@@ -457,46 +457,62 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
 <button class="scheduleTool approveTool" aria-label="اعتماد" title="اعتماد" onclick="approveAndLeaveSchedule()"><span>✅</span><small>اعتماد</small></button>
 <button class="scheduleTool pdfTool" aria-label="مشاركة PDF أفقي" title="مشاركة PDF أفقي" onclick="shareRosterPdfLandscape()"><span>⬆️</span><small>PDF</small></button>
 <button class="scheduleTool deleteTool" aria-label="حذف الجدول" title="حذف الجدول" onclick="deleteCurrentSchedule()"><span>🗑️</span><small>حذف</small></button>
-</div><main><div id="homePortal"></div><div id="adminArea" style="display:none"><div class="grid"><section class="card"><b>الإعدادات</b><div><select id=m></select><input id=y type=number value=2026 style="width:90px"></div><div>الحد الأدنى للتغطية: M <input id=wm value=2 size=2> N <input id=wn value=2 size=2></div><div>الويكند: M <input id=em value=2 size=2> N <input id=en value=2 size=2></div><div>أيام العمل <span id=t class=targetBox>تلقائي</span> بلوك الليل <input id=b value=7 size=2></div><div class=sm>ساعات موظفي 12 ساعة: حد أدنى 180 وحد أعلى 192 ساعة، والمستهدف 192؛ نظام 12 ساعة يبقى 7 أيام عمل + 7 أيام OFF ولا يُكسر للوصول للهدف. الموازنة تطبق على الموظفين المرنين فقط؛ المثبت M أو N مستثنى من التدوير. عقيلة وعبدالمنعم يتناوبان على M للجمعة والسبت، ومن يغطي الويكند يأخذ أوف بديل خلال الأسبوع. الحد الأقصى للدوام المتواصل 7 أيام فقط. إذا كان الموظف ناقص أيام، المحرك يعوضه أولًا من بلوكات الأوف الطويلة ثم يعمل تبديلات مع الموظفين الزائدين. شفت N للموظف المرن يُجمع في بلوك 7 أيام متواصلة قدر الإمكان، وبعده تكون أيام التعويض M بدل تشتيت N خلال الشهر. الإجازة V تخصم فقط إذا وقعت في يوم عمل.</div><div class="actions"></div><hr><b>الموظفون</b><div id=emps></div><button onclick=add()>+ موظف</button><button onclick=gen()>توليد ذكي</button><button onclick=check()>✓ فحص الجدول</button><button id=fixBtn style="display:none;background:#b45309" onclick=autoFix()>🔧 إصلاح تلقائي</button><button onclick=csv()></button><button class=secondary onclick=printRoster()>📄 PDF الجدول</button><div id=msg class=sm></div></section><section class="card"><div class=wrap><table id=tab></table></div><h3>الإحصائيات</h3><div class=wrap><table id=sum></table></div></section></div></div></main><div id="adminHubRoot" style="display:none"></div><script>const M=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];let E=[['طاهر المحيميد',1,0,0,[]],['عبدالمنعم البلادي',1,0,0,[]],['مصطفى الزقعان',0,0,0,[]],['عقيله الحبابي',1,0,0,[]],['صالح الهاشم',1,0,0,[]],['جعفر الشهيب',0,0,0,[]],['مختار الخلف',0,0,0,[]],['عبدالخالق التريكي',0,0,0,[]],['حسين الحسن',0,0,0,[]],['محمد العيثان',1,0,0,[]],['حيدر الحسن',0,0,0,[]],['ساره الخليفة',0,0,0,[]],['ندى العلي',0,0,0,[]],['رحاب العلي',0,0,0,[]],['زهرة بو حسن',1,0,0,[]]],S=[];function loadAgreedSeptember2026(){
+</div><main><div id="homePortal"></div><div id="adminArea" style="display:none"><div class="grid"><section class="card"><b>الإعدادات</b><div><select id=m></select><input id=y type=number value=2026 style="width:90px"></div><div>الحد الأدنى للتغطية: M <input id=wm value=4 size=2> N <input id=wn value=2 size=2></div><div>الويكند: M <input id=em value=2 size=2> N <input id=en value=2 size=2></div><div>أيام العمل <span id=t class=targetBox>تلقائي</span> بلوك الليل <input id=b value=7 size=2></div><div class=sm>ساعات موظفي 12 ساعة: حد أدنى 180 وحد أعلى 192 ساعة، والمستهدف 192؛ نظام 12 ساعة يبقى 7 أيام عمل + 7 أيام OFF ولا يُكسر للوصول للهدف. الموازنة تطبق على الموظفين المرنين فقط؛ المثبت M أو N مستثنى من التدوير. الحد الأدنى للصباح الأحد–الخميس 4، والجمعة والسبت 2؛ والمساء 2 ويمكن أن يزيد حسب الحاجة. الحد الأقصى للدوام المتواصل 7 أيام فقط. إذا كان الموظف ناقص أيام، المحرك يعوضه أولًا من بلوكات الأوف الطويلة ثم يعمل تبديلات مع الموظفين الزائدين. شفت N للموظف المرن يُجمع في بلوك 7 أيام متواصلة قدر الإمكان، وبعده تكون أيام التعويض M بدل تشتيت N خلال الشهر. الإجازة V تخصم فقط إذا وقعت في يوم عمل.</div><div class="actions"></div><hr><b>الموظفون</b><div id=emps></div><button onclick=add()>+ موظف</button><button onclick=gen()>توليد ذكي</button><button onclick=check()>✓ فحص الجدول</button><button id=fixBtn style="display:none;background:#b45309" onclick=autoFix()>🔧 إصلاح تلقائي</button><button onclick=csv()></button><button class=secondary onclick=printRoster()>📄 PDF الجدول</button><div id=msg class=sm></div></section><section class="card"><div class=wrap><table id=tab></table></div><h3>الإحصائيات</h3><div class=wrap><table id=sum></table></div></section></div></div></main><div id="adminHubRoot" style="display:none"></div><script>const M=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];let E=[['طاهر المحيميد',1,0,0,[]],['عبدالمنعم البلادي',1,0,0,[]],['مصطفى الزقعان',0,0,0,[]],['عقيله الحبابي',1,0,0,[]],['صالح الهاشم',1,0,0,[]],['جعفر الشهيب',0,0,0,[]],['مختار الخلف',0,0,0,[]],['عبدالخالق التريكي',0,0,0,[]],['حسين الحسن',0,0,0,[]],['محمد العيثان',1,0,0,[]],['حيدر الحسن',0,0,0,[]],['ساره الخليفة',0,0,0,[]],['ندى العلي',0,0,0,[]],['رحاب العلي',0,0,0,[]],['زهرة بو حسن',1,0,0,[]]],S=[];function loadAgreedSeptember2026(){
   if(+y.value!==2026 || +m.value!==8) return false;
   return loadAgreed12h2026();
 }
 function loadAgreed12h2026(){
-  if(+y.value!==2026 || +m.value<8) return false;
-  const n=days(), month=+m.value;
+  if(+y.value!==2026 || +m.value!==8) return false;
+  const n=days();
   S=E.map(()=>Array(n).fill('O'));
-  // موظفو الدوام النهاري 8 ساعات: الأحد–الخميس 07:00–16:00.
-  const dayNames=['طاهر المحيميد','عبدالمنعم البلادي','عقيله الحبابي','صالح الهاشم','محمد العيثان','زهرة بو حسن','رحاب العلي'];
-  const dayIdx=dayNames.map(name=>E.findIndex(e=>e[0]===name)).filter(i=>i>=0);
-  dayIdx.forEach(i=>{for(let d=1;d<=n;d++) S[i][d-1]=wk(d)?'O':'M';});
-  // نوزع مناوبة M إضافية في أيام الجمعة/السبت حتى تكون ساعات الدوام النهاري في سبتمبر بين 180 و192.
-  // سبتمبر 2026 فيه 22 يوم أحد–خميس = 176 ساعة؛ نضيف يومًا واحدًا (8 ساعات) لكل موظف.
-  const weekendDays=[]; for(let d=1;d<=n;d++) if(wk(d)) weekendDays.push(d);
-  dayIdx.forEach((i,k)=>{ const d=weekendDays[k % weekendDays.length]; if(d) S[i][d-1]='M'; });
 
-  // موظفو 12 ساعة: دورة صارمة 7 عمل / 7 OFF، والشفت ثابت طوال بلوك العمل.
-  // أربع أنماط تغطي الشهر كاملًا مع 2 M + 2 N يوميًا، وكل موظف = 15 مناوبة = 180 ساعة.
-  // الأيام 1–8 محسوبة ضمن الشهر لأنها دوام سابق؛ من 8 سبتمبر يستمر نفس البلوك بدون إعادة ضبط.
-  const groups=[
-    {i:2,phase:1,firstShift:'M'},   // مصطفى: 2–8 M ثم 16–22 N ثم 30–...
-    {i:5,phase:1,firstShift:'N'},   // جعفر: 2–8 N ثم 16–22 M ثم 30–...
-    {i:8,phase:1,firstShift:'M'},   // حسين: 2–8 M ثم 16–22 N ثم 30–...
-    {i:10,phase:1,firstShift:'N'},  // حيدر: 2–8 N ثم 16–22 M ثم 30–...
-    {i:6,phase:8,firstShift:'M'},   // مختار: 1–7 M ثم 15–21 N ثم 29–...
-    {i:7,phase:8,firstShift:'N'},   // عبدالخالق: 1–7 N ثم 15–21 M ثم 29–...
-    {i:11,phase:8,firstShift:'M'},  // ساره: 1–7 M ثم 15–21 N ثم 29–...
-    {i:12,phase:8,firstShift:'N'}   // ندى: 1–7 N ثم 15–21 M ثم 29–...
+  // النظام المعتمد: جميع الموظفين 12 ساعة. خمسة موظفين مثبتون صباحًا M.
+  const fixedM=[0,1,2,3,4]; // طاهر، عبدالمنعم، مصطفى، عقيله، صالح
+  E.forEach((e,i)=>{ e[1]=fixedM.includes(i)?1:0; e[2]=0; e[5]=0; });
+
+  // دورة 7 عمل + 7 OFF. الـphase يضمن استمرار البلوك عبر حدود الشهر.
+  // كل موظف يعمل 15 أو 16 مناوبة في سبتمبر = 180 أو 192 ساعة.
+  // لكل بلوك عمل شفت واحد ثابت؛ لا يوجد تبديل داخل السبعة أيام.
+  const plans=[
+    {i:0, p:0,  shifts:{0:'M',1:'M',2:'M'}},
+    {i:1, p:1,  shifts:{0:'M',1:'M',2:'M'}},
+    {i:2, p:1,  shifts:{0:'M',1:'M',2:'M'}},
+    {i:3, p:8,  shifts:{'-1':'M',0:'M',1:'M'}},
+    {i:4, p:8,  shifts:{'-1':'M',0:'M',1:'M'}},
+    {i:5, p:8,  shifts:{'-1':'M',0:'M',1:'M'}},
+    {i:6, p:8,  shifts:{'-1':'M',0:'M',1:'M'}},
+    {i:7, p:13, shifts:{'-1':'N',0:'M',1:'N'}},
+    {i:8, p:13, shifts:{'-1':'N',0:'M',1:'N'}},
+    {i:9, p:1,  shifts:{0:'M',1:'M',2:'M'}},
+    {i:10,p:8,  shifts:{'-1':'M',0:'N',1:'N'}},
+    {i:11,p:1,  shifts:{0:'M',1:'M',2:'M'}},
+    {i:12,p:1,  shifts:{0:'N',1:'N',2:'M'}},
+    {i:13,p:8,  shifts:{'-1':'M',0:'N',1:'N'}},
+    {i:14,p:1,  shifts:{0:'N',1:'N',2:'M'}}
   ];
-  const shiftFlip={M:'N',N:'M'};
-  groups.forEach(g=>{
-    const i=g.i; if(!S[i]) return;
+  plans.forEach(g=>{
+    let bi=0;
     for(let d=1;d<=n;d++){
-      const rel=d-1-g.phase, pos=((rel%14)+14)%14, cycle=Math.floor(rel/14);
-      S[i][d-1]=pos<7 ? ((cycle%2===0)?g.firstShift:shiftFlip[g.firstShift]) : 'O';
+      const pos=((d-1-g.p)%14+14)%14;
+      if(pos<7){
+        // رقم البلوك العالمي، يبدأ من أي بلوك يعبر حدود الشهر.
+        const rel=Math.floor((d-1-g.p)/14);
+        S[g.i][d-1]=g.shifts[rel] || 'M';
+      }else S[g.i][d-1]='O';
     }
   });
-  // تغطية المناوبتين: كل يوم يوجد على الأقل موظفان M وموظفان N.
-  // لا توجد مناوبة A إطلاقًا، ولا نضيف يومًا منفردًا يكسر 7 عمل / 7 OFF.
+
+  // التغطية المطلوبة: الأحد–الخميس M>=4، الجمعة والسبت M>=2، وN>=2 يوميًا.
+  // إذا احتجنا أكثر من الحد الأدنى، يبقى الموظف ضمن بلوك 7 أيام نفسه ولا نكسر 7/7.
+  const demandM=d=>wk(d)?2:4;
+  const demandN=2;
+
+  // التوزيع أعلاه مصمم ليحقق التغطية مع 180–192 ساعة لكل موظف.
+  // الإجازات V تُطبق أخيرًا.
+  E.forEach((e,i)=>(e[4]||[]).forEach(v=>{
+    for(let d=1;d<=n;d++) if(vacationCoversDay(v,d)) S[i][d-1]='V';
+  }));
+
   purgeLegacyA();
   save();
   return true;
@@ -689,7 +705,7 @@ function enforcePreviousMonthBoundary(n){
   return changed;
 }
 function gen(){if(+y.value===2026 && +m.value===8){loadAgreed12h2026();rend();summary();check();return;}let n=days(),target=monthTarget(),block=7;updateTarget();S=E.map(()=>Array(n).fill('O'));E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));let fixed=[],afixed=[],rot=[],nonly=[],wkm=[];E.forEach((e,i)=>{if(e[5])nonly.push(i);else if(e[1])fixed.push(i);else rot.push(i);if(e[2])nonly.push(i);if(e[3])wkm.push(i)});fixed=[...new Set(fixed)];nonly=[...new Set(nonly)];fixed.forEach(i=>{for(let d=1;d<=n;d++)if(S[i][d-1]!='V')S[i][d-1]=wk(d)?'O':'M'});let w=0;for(let d=1;d<=n;d++)if(new Date(+y.value,+m.value,d).getDay()==5&&wkm.length){let i=wkm[w++%wkm.length];if(S[i][d-1]!='V')S[i][d-1]='M';if(d<n&&S[i][d]!='V')S[i][d]='M'};nonly.forEach(i=>{for(let d=1;d<=n;d++)if(S[i][d-1]!='V')S[i][d-1]=wk(d)?'O':'N'});let flex=rot.filter(i=>!E[i][2]),N=flex;function pool(P,s,need){if(!P.length||need<=0)return;for(let d=1;d<=n;d++){let dt=new Date(Date.UTC(+y.value,+m.value,d)),offset=(dt.getUTCDay()-4+7)%7,anchor=Date.UTC(+y.value,+m.value,d-offset),week=Math.floor(anchor/604800000),start=((week%P.length)+P.length)%P.length;for(let k=0;k<need;k++){let i=P[(start+k)%P.length];if(i!=null&&S[i][d-1]=='O')S[i][d-1]=s}}}if(N.length)pool(N,'N',Math.max(1,+wn.value-nonly.length));for(let d=1;d<=n;d++){let rr=wk(d)?[+em.value,0,+en.value]:[+wm.value,0,+wn.value];fill(d,'N',rr[2],rot);if(!wk(d))fill(d,'M',rr[0],flex.filter(i=>!E[i][2]));else{trim(d,'M',rr[0]);trim(d,'N',rr[2])}}compWeekendM(n);balanceFair(n);enforceMax7(n);finalExactBalance(n);E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));enforcePreviousMonthBoundary(n);enforceRosterRestRules(n);save();rend();summary();check()}
-function needForDay(d,s){if(wk(d))return 1;if(s==='M')return Math.max(0,+wm.value||0);if(s==='N')return Math.max(1,Math.min(2,+wa.value||2));if(s==='N')return Math.max(1,Math.min(2,+wn.value||2));return 0}
+function needForDay(d,s){if(s==='M')return wk(d)?Math.max(2,+em.value||2):Math.max(4,+wm.value||4);if(s==='N')return Math.max(2,+wn.value||2);return 0}
 function minimumNeedForDay(d,s){let preferred=needForDay(d,s);return (s=='N'||s=='N')&&preferred>0?1:preferred}
 function canRemove(i,d){let s=S[i][d-1];return ['M','N'].includes(s)&&cnt(d,s)>minimumNeedForDay(d,s)}
 function edgeScore(i,d){let L=d==1?'X':S[i][d-2],R=d==days()?'X':S[i][d];let sc=0;if(L=='O'||L=='V')sc+=4;if(R=='O'||R=='V')sc+=4;if(L==S[i][d-1])sc+=1;if(R==S[i][d-1])sc+=1;return sc}
@@ -727,7 +743,7 @@ function compWeekendM(n){
   });
 }
 
-function isWorkShift(x){return x=='M'||x=='N'||x=='N'}
+function isWorkShift(x){return x=='M'||x=='N'}
 function maxWorkRun(i){
   let best=0,cur=0;
   for(let d=0;d<S[i].length;d++){
