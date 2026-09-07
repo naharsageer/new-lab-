@@ -457,7 +457,7 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
 <button class="scheduleTool approveTool" aria-label="اعتماد" title="اعتماد" onclick="approveAndLeaveSchedule()"><span>✅</span><small>اعتماد</small></button>
 <button class="scheduleTool pdfTool" aria-label="مشاركة PDF أفقي" title="مشاركة PDF أفقي" onclick="shareRosterPdfLandscape()"><span>⬆️</span><small>PDF</small></button>
 <button class="scheduleTool deleteTool" aria-label="حذف الجدول" title="حذف الجدول" onclick="deleteCurrentSchedule()"><span>🗑️</span><small>حذف</small></button>
-</div><main><div id="homePortal"></div><div id="adminArea" style="display:none"><div class="grid"><section class="card"><b>الإعدادات</b><div><select id=m></select><input id=y type=number value=2026 style="width:90px"></div><div>الحد الأدنى للتغطية: M <input id=wm value=4 size=2> N <input id=wn value=2 size=2></div><div>الويكند: M <input id=em value=2 size=2> N <input id=en value=2 size=2></div><div>أيام العمل <span id=t class=targetBox>تلقائي</span> بلوك الليل <input id=b value=7 size=2></div><div class=sm>ساعات موظفي 12 ساعة: حد أدنى 180 وحد أعلى 192 ساعة، والمستهدف 192؛ نظام 12 ساعة يبقى 7 أيام عمل + 7 أيام OFF ولا يُكسر للوصول للهدف. الموازنة تطبق على الموظفين المرنين فقط؛ المثبت M أو N مستثنى من التدوير. الحد الأدنى للصباح الأحد–الخميس 4، والجمعة والسبت 2؛ والمساء 2 ويمكن أن يزيد حسب الحاجة. الحد الأقصى للدوام المتواصل 7 أيام فقط. إذا كان الموظف ناقص أيام، المحرك يعوضه أولًا من بلوكات الأوف الطويلة ثم يعمل تبديلات مع الموظفين الزائدين. شفت N للموظف المرن يُجمع في بلوك 7 أيام متواصلة قدر الإمكان، وبعده تكون أيام التعويض M بدل تشتيت N خلال الشهر. الإجازة V تخصم فقط إذا وقعت في يوم عمل.</div><div class="actions"></div><hr><b>الموظفون</b><div id=emps></div><button onclick=add()>+ موظف</button><button onclick=gen()>توليد ذكي</button><button onclick=check()>✓ فحص الجدول</button><button id=fixBtn style="display:none;background:#b45309" onclick=autoFix()>🔧 إصلاح تلقائي</button><button onclick=csv()></button><button class=secondary onclick=printRoster()>📄 PDF الجدول</button><div id=msg class=sm></div></section><section class="card"><div class=wrap><table id=tab></table></div><h3>الإحصائيات</h3><div class=wrap><table id=sum></table></div></section></div></div></main><div id="adminHubRoot" style="display:none"></div><script>const M=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];let E=[['طاهر المحيميد',1,0,0,[]],['عبدالمنعم البلادي',1,0,0,[]],['مصطفى الزقعان',0,0,0,[]],['عقيله الحبابي',1,0,0,[]],['صالح الهاشم',1,0,0,[]],['جعفر الشهيب',0,0,0,[]],['مختار الخلف',0,0,0,[]],['عبدالخالق التريكي',0,0,0,[]],['حسين الحسن',0,0,0,[]],['محمد العيثان',1,0,0,[]],['حيدر الحسن',0,0,0,[]],['ساره الخليفة',0,0,0,[]],['ندى العلي',0,0,0,[]],['رحاب العلي',0,0,0,[]],['زهرة بو حسن',1,0,0,[]]],S=[];function loadAgreedSeptember2026(){
+</div><main><div id="homePortal"></div><div id="adminArea" style="display:none"><div class="grid"><section class="card"><b>الإعدادات</b><div><select id=m></select><input id=y type=number value=2026 style="width:90px"></div><div>الحد الأدنى للتغطية: M <input id=wm value=4 size=2> N <input id=wn value=2 size=2></div><div>الويكند: M <input id=em value=2 size=2> N <input id=en value=2 size=2></div><div>أيام العمل <span id=t class=targetBox>تلقائي</span> بلوك الليل <input id=b value=7 size=2></div><div class=sm>ساعات موظفي 12 ساعة: حد أدنى 180 وحد أعلى 192 ساعة، والمستهدف 192؛ نظام 12 ساعة يبقى 7 أيام عمل + 7 أيام OFF ولا يُكسر للوصول للهدف. الموازنة تطبق على الموظفين المرنين فقط؛ المثبت M أو N مستثنى من التدوير. الحد الأدنى للصباح الأحد–الخميس 4، والجمعة والسبت 2؛ والمساء 2 ويمكن أن يزيد حسب الحاجة. الحد الأقصى للدوام المتواصل 7 أيام، والاستثناء الوحيد هو بلوك صباح M واحد من 8 أيام للوصول إلى 192 ساعة. إذا كان الموظف ناقص أيام، المحرك يعوضه أولًا من بلوكات الأوف الطويلة ثم يعمل تبديلات مع الموظفين الزائدين. شفت N للموظف المرن يُجمع في بلوك 7 أيام متواصلة قدر الإمكان، وبعده تكون أيام التعويض M بدل تشتيت N خلال الشهر. الإجازة V تخصم فقط إذا وقعت في يوم عمل.</div><div class="actions"></div><hr><b>الموظفون</b><div id=emps></div><button onclick=add()>+ موظف</button><button onclick=gen()>توليد ذكي</button><button onclick=check()>✓ فحص الجدول</button><button id=fixBtn style="display:none;background:#b45309" onclick=autoFix()>🔧 إصلاح تلقائي</button><button onclick=csv()></button><button class=secondary onclick=printRoster()>📄 PDF الجدول</button><div id=msg class=sm></div></section><section class="card"><div class=wrap><table id=tab></table></div><h3>الإحصائيات</h3><div class=wrap><table id=sum></table></div></section></div></div></main><div id="adminHubRoot" style="display:none"></div><script>const M=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];let E=[['طاهر المحيميد',1,0,0,[]],['عبدالمنعم البلادي',1,0,0,[]],['مصطفى الزقعان',0,0,0,[]],['عقيله الحبابي',1,0,0,[]],['صالح الهاشم',1,0,0,[]],['جعفر الشهيب',0,0,0,[]],['مختار الخلف',0,0,0,[]],['عبدالخالق التريكي',0,0,0,[]],['حسين الحسن',0,0,0,[]],['محمد العيثان',1,0,0,[]],['حيدر الحسن',0,0,0,[]],['ساره الخليفة',0,0,0,[]],['ندى العلي',0,0,0,[]],['رحاب العلي',0,0,0,[]],['زهرة بو حسن',1,0,0,[]]],S=[];function loadAgreedSeptember2026(){
   if(+y.value!==2026 || +m.value!==8) return false;
   return loadAgreed12h2026();
 }
@@ -524,7 +524,7 @@ function loadAgreed12h2026(){
 
 function normalizeLegacyA(){S=(S||[]).map(r=>(r||[]).map(x=>x==='A'?'N':x));E=(E||[]).map(e=>{if(e[5]){e[5]=0;e[2]=1}return e});}
 function purgeLegacyA(){normalizeLegacyA(); if(Array.isArray(S)) S=S.map(r=>(r||[]).map(x=>x==='A'?'N':x));}
-onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v101');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};loadAgreed12h2026();normalizeLegacyA();save();rend();summary()};function save(){normalizeLegacyA();localStorage.setItem('lab-roster-v101',JSON.stringify({E,m:m.value,y:y.value}))}
+onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v101');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};loadAgreed12h2026();finalRepairHours();normalizeLegacyA();save();rend();summary()};function save(){normalizeLegacyA();localStorage.setItem('lab-roster-v101',JSON.stringify({E,m:m.value,y:y.value}))}
 function vacDateParts(v){
   if(!Array.isArray(v)||v.length<2)return null;
   if(typeof v[0]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[0])&&typeof v[1]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[1]))
@@ -645,7 +645,7 @@ function boundaryIssues(){
       if(isWorkShift(x)){first=x;firstDay=d;break}
     }
     let mx=boundaryMaxWorkRun(i);
-    if(mx>7)q.push(`${e[0]}: تعارض بين الشهرين، دوام متواصل ${mx} أيام`);
+    if(mx>8)q.push(`${e[0]}: تعارض بين الشهرين، دوام متواصل ${mx} أيام`);
     if(info.run>0&&info.last==='N'&&firstDay===1&&first&&first!=='N')
       q.push(`${e[0]}: انتقال مباشر من N إلى ${first} بين الشهرين`);
     if(info.run>0&&info.last==='N'&&firstDay===1&&first==='M')
@@ -1457,7 +1457,7 @@ function balanceFair(n){
   E.forEach((e,i)=>{if(e[1]||e[2]||e[5])return;let guard=300;while(work(i)<req(i)&&guard--){let cand=[];for(let d=1;d<=n;d++){if(S[i][d-1]!='O'||wk(d))continue;let shift=e[2]?'N':'M';if(shift=='N'&&cnt(d,'N')>=+wn.value)continue;let L=d>1?S[i][d-2]:'',R=d<n?S[i][d]:'';let score=(L==shift?5:0)+(R==shift?5:0)+(L!='O'&&L!='V'?1:0)+(R!='O'&&R!='V'?1:0);cand.push([d,shift,score])}cand.sort((a,z)=>z[2]-a[2]);if(!cand.length)break;S[i][cand[0][0]-1]=cand[0][1]}});
   E.forEach((e,i)=>{if(e[1]||e[2]||e[5])return;let guard=300;while(work(i)>req(i)&&guard--){let cand=[];for(let d=1;d<=n;d++)if(canRemove(i,d))cand.push(d);cand.sort((a,z)=>edgeScore(i,z)-edgeScore(i,a));if(!cand.length)break;S[i][cand[0]-1]='O'}});
 }
-function fill(d,s,need,C){while(cnt(d,s)<need){let a=C.filter(i=>S[i][d-1]=='O');if(!a.length)break;a.sort((x,z)=>work(x)-work(z));S[a[0]][d-1]=s}}function trim(d,s,need){let a=[];S.forEach((r,i)=>{if(r[d-1]==s)a.push(i)});if(s=='N')a.sort((x,z)=>(E[z][2]||0)-(E[x][2]||0));if(s=='M')a.sort((x,z)=>(E[z][3]||0)-(E[x][3]||0));a.slice(need).forEach(i=>S[i][d-1]='O')}function rend(){let n=days();tab.innerHTML='<tr><th class=name>الموظف</th>'+Array.from({length:n},(_,i)=>{let dt=new Date(+y.value,+m.value,i+1),dn=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][dt.getDay()];return `<th class="${wk(i+1)?'wk':''}">${dn}<br>${i+1}</th>`}).join('')+'</tr>';E.forEach((e,i)=>{tab.innerHTML+=`<tr><td class=name>${e[0]}</td>`+S[i].map((x,d)=>{let sc=x=='N'?'shiftN':x=='M'?'shiftM':x=='V'?'shiftV':'shiftO';return `<td class="${sc} ${wk(d+1)?'wk':''}" onclick="cy(${i},${d})">${x}</td>`}).join('')+'</tr>'})}function cy(i,d){let a=['M','N','O','V'],x=a[(a.indexOf(S[i][d])+1)%4];if(E[i][5]&&!['N','O','V'].includes(x))x='N';if(E[i][2]&&!['N','O','V'].includes(x))x='N';if(E[i][1]&&!['M','O','V'].includes(x))x='M';S[i][d]=x;rend();summary();check()}function summary(){sum.innerHTML='<tr><th>الموظف</th><th>M</th><th>N</th><th>O</th><th>V</th><th>أيام العمل</th><th>ساعات العمل</th><th>المستهدف</th><th>الفرق</th><th>أطول دوام متواصل</th><th>الحالة</th></tr>'+E.map((e,i)=>{let c=x=>S[i].filter(z=>z==x).length,h=workHours(i),diff=h-hourTarget(),status=h<hourMin()?'أقل من الحد الأدنى':h>hourTarget()?'أعلى من الحد الأعلى':'ضمن 180–192';return `<tr><td>${e[0]}</td><td>${c('M')}</td><td>${c('N')}</td><td>${c('O')}</td><td>${c('V')}</td><td>${work(i)}</td><td style="font-weight:bold">${h}</td><td>192</td><td style="font-weight:bold;color:${h>=hourMin()&&h<=hourTarget()?'#138a38':'#b91c1c'}">${diff>0?'+':''}${diff}</td><td style="font-weight:bold;color:${maxWorkRun(i)<=7?'#138a38':'#b91c1c'}">${maxWorkRun(i)} ${maxWorkRun(i)<=7?'✓':'⚠'}</td><td style="font-weight:bold;color:${h>=hourMin()&&h<=hourTarget()&&maxWorkRun(i)<=7?'#138a38':'#b91c1c'}">${status} ${h>=hourMin()&&h<=hourTarget()?'✓':'⚠'}</td></tr>`}).join('')}
+function fill(d,s,need,C){while(cnt(d,s)<need){let a=C.filter(i=>S[i][d-1]=='O');if(!a.length)break;a.sort((x,z)=>work(x)-work(z));S[a[0]][d-1]=s}}function trim(d,s,need){let a=[];S.forEach((r,i)=>{if(r[d-1]==s)a.push(i)});if(s=='N')a.sort((x,z)=>(E[z][2]||0)-(E[x][2]||0));if(s=='M')a.sort((x,z)=>(E[z][3]||0)-(E[x][3]||0));a.slice(need).forEach(i=>S[i][d-1]='O')}function rend(){let n=days();tab.innerHTML='<tr><th class=name>الموظف</th>'+Array.from({length:n},(_,i)=>{let dt=new Date(+y.value,+m.value,i+1),dn=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][dt.getDay()];return `<th class="${wk(i+1)?'wk':''}">${dn}<br>${i+1}</th>`}).join('')+'</tr>';E.forEach((e,i)=>{tab.innerHTML+=`<tr><td class=name>${e[0]}</td>`+S[i].map((x,d)=>{let sc=x=='N'?'shiftN':x=='M'?'shiftM':x=='V'?'shiftV':'shiftO';return `<td class="${sc} ${wk(d+1)?'wk':''}" onclick="cy(${i},${d})">${x}</td>`}).join('')+'</tr>'})}function cy(i,d){let a=['M','N','O','V'],x=a[(a.indexOf(S[i][d])+1)%4];if(E[i][5]&&!['N','O','V'].includes(x))x='N';if(E[i][2]&&!['N','O','V'].includes(x))x='N';if(E[i][1]&&!['M','O','V'].includes(x))x='M';S[i][d]=x;rend();summary();check()}function summary(){sum.innerHTML='<tr><th>الموظف</th><th>M</th><th>N</th><th>O</th><th>V</th><th>أيام العمل</th><th>ساعات العمل</th><th>المستهدف</th><th>الفرق</th><th>أطول دوام متواصل</th><th>الحالة</th></tr>'+E.map((e,i)=>{let c=x=>S[i].filter(z=>z==x).length,h=workHours(i),diff=h-hourTarget(),status=h<hourMin()?'أقل من الحد الأدنى':h>hourTarget()?'أعلى من الحد الأعلى':'ضمن 180–192';return `<tr><td>${e[0]}</td><td>${c('M')}</td><td>${c('N')}</td><td>${c('O')}</td><td>${c('V')}</td><td>${work(i)}</td><td style="font-weight:bold">${h}</td><td>192</td><td style="font-weight:bold;color:${h>=hourMin()&&h<=hourTarget()?'#138a38':'#b91c1c'}">${diff>0?'+':''}${diff}</td><td style="font-weight:bold;color:${maxWorkRun(i)<=8?'#138a38':'#b91c1c'}">${maxWorkRun(i)} ${maxWorkRun(i)<=8?'✓':'⚠'}</td><td style="font-weight:bold;color:${h>=hourMin()&&h<=hourTarget()&&maxWorkRun(i)<=8?'#138a38':'#b91c1c'}">${status} ${h>=hourMin()&&h<=hourTarget()?'✓':'⚠'}</td></tr>`}).join('')}
 function collectIssues(){
   let n=days(),q=[];
   for(let d=1;d<=n;d++){
@@ -1474,7 +1474,7 @@ function collectIssues(){
     if(e[5]&&S[i].some(x=>!['N','O','V'].includes(x)))q.push(`${e[0]} لديه شفت غير N`);
     if(work(i)!=req(i))q.push(`${e[0]}: ${work(i)}/${req(i)} يوم عمل`);
     if(isFlexibleEmployee(i)&&flexibleEveningCount(i)>10)q.push(`${e[0]}: مجموع المناوبات المسائية N هو ${flexibleEveningCount(i)} والحد الأعلى 10`);
-    let mx=maxWorkRun(i);if(mx>7)q.push(`${e[0]}: دوام متواصل ${mx} أيام (الحد 7)`);
+    let mx=maxWorkRun(i);if(mx>8)q.push(`${e[0]}: دوام متواصل ${mx} أيام (الحد 8 عند بلوك التعويض)`);
     if(!e[1]&&!e[2]&&!e[5]){
       ['N'].forEach(sh=>{
         let bs=shiftBlocks(i,sh);
@@ -1954,25 +1954,40 @@ function resetPortalMonth(){
 
 // FINAL AGREED RULESET — 7 work / 7 OFF, all shifts 12h, 180–192h.
 // A is permanently disabled. Supervisor/deputy: at least one present daily; overlap allowed.
-const FINAL_STORAGE_KEY='lab-roster-final-7x7-v2';
+const FINAL_STORAGE_KEY='lab-roster-final-7x7-v4-192-morning8';
 function finalNormalize(){ if(Array.isArray(S)) S=S.map(r=>(r||[]).map(x=>x==='A'?'O':x)); }
 function finalHours(i){ return (S[i]||[]).filter(x=>x==='M'||x==='N').length*12; }
 function finalRepairHours(){
   finalNormalize(); const n=days();
+  // الهدف النهائي: 192 ساعة = 16 مناوبة × 12 ساعة.
+  // إذا كان الموظف على 180 ساعة، فالزيادة تكون في فترة الصباح فقط:
+  // نضيف يوم M ملاصقًا لبلوك M من 7 أيام، فيصبح ذلك البلوك 8 أيام صباح متصلة.
+  // لا نضيف اليوم الثامن إلى بلوك N ولا نحوّل يومًا من N إلى M.
   for(let i=0;i<E.length;i++){
-    let h=finalHours(i);
-    if(h<180){
-      // Add only one extra shift inside the OFF period when needed; never create >7 consecutive workdays.
-      for(let d=1;d<=n && h<180;d++) if(S[i][d-1]==='O'){
-        const prev=d>1?S[i][d-2]:'O', next=d<n?S[i][d]:'O';
-        if(prev==='O'&&next==='O'){ S[i][d-1]= (E[i][2]?'N':'M'); h+=12; }
+    let h=finalHours(i), row=S[i]||[];
+    if(h===180){
+      let candidates=[];
+      for(let d=1;d<=n;d++){
+        if(row[d-1]!=='M') continue;
+        let a=d,z=d;
+        while(a>1&&row[a-2]==='M')a--;
+        while(z<n&&row[z]==='M')z++;
+        if(z-a+1!==7)continue;
+        if(a>1&&row[a-2]==='O'&&!wk(a-1))candidates.push({day:a-1,score:12});
+        if(z<n&&row[z]==='O'&&!wk(z+1))candidates.push({day:z+1,score:10});
       }
+      candidates.sort((x,y)=>y.score-x.score);
+      if(candidates.length) row[candidates[0].day-1]='M';
     }
-    // Never exceed 192h.
-    let seen=0; for(let d=0;d<n;d++) if(S[i][d]==='M'||S[i][d]==='N'){seen++; if(seen>16)S[i][d]='O';}
+    // حماية الحد الأعلى: 192 ساعة فقط.
+    let seen=0;
+    for(let d=0;d<n;d++)if(row[d]==='M'||row[d]==='N'){
+      seen++;if(seen>16)row[d]='O';
+    }
   }
   finalNormalize();
 }
+
 function finalSave(silent){
   try{finalNormalize(); localStorage.setItem(FINAL_STORAGE_KEY,JSON.stringify({E,S,m:+m.value,y:+y.value}));
     localStorage.setItem('lab-roster-saved-schedule',JSON.stringify({employees:E,schedule:S,month:+m.value,year:+y.value}));
