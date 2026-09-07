@@ -445,7 +445,7 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
   body.employeesToolsActive .employeeListHint{flex:0 0 auto}
   body.employeesToolsActive .employeeListScroll{flex:1 1 auto;height:auto;min-height:0}
 }
-</style><header><b>منظّم جدول المناوبات v1.0.1 — 7 أيام عمل / 7 أيام راحة</b><div class="sm" style="color:white">M صباح • N مسائية • O أوف • V إجازة</div></header><div id="quickNav" style="display:none!important">
+</style><header><b>منظّم جدول المناوبات v1.0.2 — 7 أيام عمل / 7 أيام راحة</b><div class="sm" style="color:white">M صباح • N مسائية • O أوف • V إجازة</div></header><div id="quickNav" style="display:none!important">
 <div class="employeeAddTool" aria-label="إضافة موظف">
   <input id="newEmpName" placeholder="اسم الموظف" autocomplete="off" onkeydown="if(event.key==='Enter')addEmployeeSimple()">
   <button onclick="addEmployeeSimple()"><span>＋</span> إضافة</button>
@@ -1663,10 +1663,7 @@ function selectEmployeeCalendar(value){
   openEmployeePage(currentPortalEmp);
 }
 function employeeShiftHours(i,sh){
-  if(sh==='O'||sh==='V'||!sh)return 0;
-  // الموظفون المثبتون على دوام صباحي، ورحاب العلي في المرحلة الانتقالية: 8 ساعات.
-  if(sh==='M' && E[i] && (E[i][1] || E[i][0]==='رحاب العلي')) return 8;
-  // موظفو نظام 12 ساعة: الصباح والمساء كلاهما 12 ساعة.
+  // جميع المناوبات في النظام الحالي 12 ساعة: M و N.
   if(sh==='M'||sh==='N') return 12;
   return 0;
 }
@@ -1677,7 +1674,7 @@ function employeeHours(i){
 function employeeHoursBreakdown(i){
   const row=S&&S[i]?S[i]:[];
   const m12=row.filter(x=>x==='M').length, n12=row.filter(x=>x==='N').length, o=row.filter(x=>x==='O').length, v=row.filter(x=>x==='V').length;
-  const day8=E[i]&&(E[i][1]||E[i][0]==='رحاب العلي')?m12:0;
+  const day8=0;
   const m12h=m12-day8;
   const hours=employeeHours(i);
   const target=192;
