@@ -11,7 +11,6 @@
 /* تقويمي — خلفية بيج موحدة */
 .empcal .dow,
 .empcal .day,
-.empcal .A,
 .empcal .N,
 .empcal .M,
 .empcal .V,
@@ -32,7 +31,6 @@
 }
 /* بقية أيام الدوام كتابة داكنة على البيج */
 .empcal .day.M:not(.weekend),
-.empcal .day.A:not(.weekend),
 .empcal .day.N:not(.weekend),
 .empcal .day.V:not(.weekend){
   color:#222!important;
@@ -115,13 +113,13 @@
 .empCalendar .calO{background:#f3ead7!important;color:#c81e1e!important}
 .empCalendar .calO .num,.empCalendar .calO .sh,.empCalendar .calWeekend .num,.empCalendar .calWeekend .sh{color:#c81e1e!important}
 .empCalendar .calA,.empCalendar .calN,.empCalendar .calM,.empCalendar .calV{background:#f3ead7!important}
-.shiftA{display:none!important}
+
 </style>
 <style id="hours-target-box">
 .hoursTargetBox{margin-top:8px;padding:10px 12px;border-radius:9px;background:#eef6ff;border:1px solid #c9dff5;display:flex;flex-direction:column;gap:4px;font-size:13px}.hoursTargetBox b{font-size:14px}.hoursTargetBox span{color:#334155}
 </style>
 <!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><title>منظم المناوبات</title><style>body{font-family:Arial;margin:0;background:#f5f7fb;color:#222}header{background:#1f4e78;color:#fff;padding:14px}main{padding:12px}.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px;margin-bottom:12px}input,select,button{padding:8px;margin:3px;border:1px solid #ccc;border-radius:8px}button{background:#1f4e78;color:#fff}.grid{display:grid;grid-template-columns:340px 1fr;gap:12px}@media(max-width:800px){.grid{grid-template-columns:1fr}}table{border-collapse:collapse;min-width:1050px;width:100%}td,th{border:1px solid #ddd;padding:4px;text-align:center;font-size:12px}.wrap{overflow:auto}.wk{color:#d40000!important;font-weight:700}.name{position:sticky;right:0;background:white}.emp{border:1px solid #ddd;padding:7px;border-radius:8px;margin:5px 0}.sm{font-size:12px;color:#666}
-.shiftA{background:#d9ecff!important;color:#134f8c}
+
 .shiftN{background:#fff2a8!important;color:#664d00}
 .shiftM{background:#eef8ee}
 .shiftO{background:#f3f4f6}
@@ -151,7 +149,7 @@
     font-size:8pt!important;
     text-align:right!important
   }
-  .shiftA{background:#d9ecff!important}
+  
   .shiftN{background:#fff2a8!important}
   .shiftM{background:#eef8ee!important}
   .shiftO{background:#f3f4f6!important}
@@ -162,7 +160,7 @@
 .printTitle{display:none}
 
 
-.employeePortal{margin-top:14px;border:1px solid #d9e2ec;border-radius:14px;padding:14px;background:#fff}.employeeActions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.calendarWrap{display:none;margin-top:12px}.empCalendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;direction:rtl}.calDow,.calDay{border:1px solid #d8dee8;border-radius:8px;padding:5px;text-align:center;box-sizing:border-box;min-width:0}.calDow{height:36px;min-height:36px;display:flex;align-items:center;justify-content:center}.calDay{height:64px;min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center}.calDow{font-weight:700;background:#f5f7fb}.calDay .num{font-size:11px;font-weight:700}.calDay .sh{font-size:16px;font-weight:800;margin-top:5px}.calWeekend{color:#b42318!important;background:#fff6f6!important;border-color:#f1b8b8!important}.calA,.calN,.calM,.calV{background:#fff}.calO{background:#dff3df}.empStats{font-size:12px;margin-top:8px;padding:8px;background:#f8fafc;border-radius:8px}@media print{body.employee-print header,body.employee-print main>*:not(.employeePortal){display:none!important}body.employee-print .employeePortal>*:not(.calendarWrap){display:none!important}body.employee-print .calendarWrap{display:block!important}}
+.employeePortal{margin-top:14px;border:1px solid #d9e2ec;border-radius:14px;padding:14px;background:#fff}.employeeActions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.calendarWrap{display:none;margin-top:12px}.empCalendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;direction:rtl}.calDow,.calDay{border:1px solid #d8dee8;border-radius:8px;padding:5px;text-align:center;box-sizing:border-box;min-width:0}.calDow{height:36px;min-height:36px;display:flex;align-items:center;justify-content:center}.calDay{height:64px;min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center}.calDow{font-weight:700;background:#f5f7fb}.calDay .num{font-size:11px;font-weight:700}.calDay .sh{font-size:16px;font-weight:800;margin-top:5px}.calWeekend{color:#b42318!important;background:#fff6f6!important;border-color:#f1b8b8!important}.calN,.calM,.calV{background:#fff}.calO{background:#dff3df}.empStats{font-size:12px;margin-top:8px;padding:8px;background:#f8fafc;border-radius:8px}@media print{body.employee-print header,body.employee-print main>*:not(.employeePortal){display:none!important}body.employee-print .employeePortal>*:not(.calendarWrap){display:none!important}body.employee-print .calendarWrap{display:block!important}}
 
 .portal-shell{max-width:720px;margin:18px auto;padding:14px}
 .portal-card{background:#fff;border:1px solid #d8e0ea;border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
@@ -176,7 +174,7 @@
 .empcal .day{height:64px;min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .empcal .dow{font-weight:700;background:#f5f7fb}
 .empcal .weekend{color:#b42318!important;background:#fff6f6!important;border-color:#f1b8b8!important}
-.empcal .A,.empcal .N,.empcal .M,.empcal .V{background:#fff}.empcal .O{background:#dff3df}
+.empcal .N,.empcal .M,.empcal .V{background:#fff}.empcal .O{background:#dff3df}
 .empcal .shift{font-size:18px;font-weight:800;margin-top:6px}
 .readonly-note{font-size:12px;color:#667085;margin-top:4px}
 @media(max-width:600px){.portal-actions{grid-template-columns:1fr}.portal-shell{padding:8px}}
@@ -194,7 +192,7 @@
 .fullRosterTable th{background:#eef3f8}
 .fullRosterTable th.name,.fullRosterTable td.name{position:sticky;right:0;background:#fff;min-width:170px;text-align:right;z-index:2}
 .fullRosterTable .wkcol{color:#d40000!important;font-weight:700}
-.fullRosterTable .A{background:#d9ecff}
+.fullRosterTable 
 .fullRosterTable .N{background:#fff2a8}
 .fullRosterTable .M{background:#eef8ee}
 .fullRosterTable .O{background:#f3f4f6}
@@ -356,7 +354,7 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
   body.print-roster-only #printRosterOnlyHost th,body.print-roster-only #printRosterOnlyHost td{border:1px solid #555!important;font-size:6.7pt!important;padding:1px!important;height:14pt!important;text-align:center!important;white-space:nowrap!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   body.print-roster-only #printRosterOnlyHost th.name,body.print-roster-only #printRosterOnlyHost td.name{position:static!important;width:25mm!important;min-width:25mm!important;text-align:right!important;font-size:7pt!important;background:#fff!important}
   body.print-roster-only #printRosterOnlyHost .wkcol{color:#d40000!important}
-  body.print-roster-only #printRosterOnlyHost .A{background:#d9ecff!important}.print-roster-only #printRosterOnlyHost .N{background:#fff2a8!important}.print-roster-only #printRosterOnlyHost .M{background:#eef8ee!important}.print-roster-only #printRosterOnlyHost .O{background:#f3f4f6!important}.print-roster-only #printRosterOnlyHost .V{background:#f3ddff!important}
+  body.print-roster-only #printRosterOnlyHost .N{background:#fff2a8!important}.print-roster-only #printRosterOnlyHost .M{background:#eef8ee!important}.print-roster-only #printRosterOnlyHost .O{background:#f3f4f6!important}.print-roster-only #printRosterOnlyHost .V{background:#f3ddff!important}
 }
 /* v0.8.6 — Reliable A4 landscape preview (no device rotation) */
 #fullRosterLandscapeOverlay{
@@ -380,7 +378,7 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
 .landscapeRosterTable th,.landscapeRosterTable td{border:1px solid #cfd8e3;text-align:center;padding:2px 1px;font-size:10px;height:26px;white-space:nowrap}
 .landscapeRosterTable th{background:#eef3f8;font-weight:900}
 .landscapeRosterTable th.emp,.landscapeRosterTable td.emp{width:105px;min-width:105px;text-align:right;padding-right:5px;background:#fff;font-size:11px;font-weight:800}
-.landscapeRosterTable .wkcol{color:#d40000!important}.landscapeRosterTable .A{background:#d9ecff}.landscapeRosterTable .N{background:#fff2a8}.landscapeRosterTable .M{background:#eef8ee}.landscapeRosterTable .O{background:#f3f4f6}.landscapeRosterTable .V{background:#f3ddff}
+.landscapeRosterTable .wkcol{color:#d40000!important}.landscapeRosterTable .landscapeRosterTable .N{background:#fff2a8}.landscapeRosterTable .M{background:#eef8ee}.landscapeRosterTable .O{background:#f3f4f6}.landscapeRosterTable .V{background:#f3ddff}
 @media print{
   @page{size:A4 landscape;margin:6mm}
   body.print-full-roster *{visibility:hidden!important}
@@ -418,7 +416,7 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
 .manualEditorTable .name{position:sticky;right:0;background:#fff;min-width:150px;z-index:2;text-align:right}
 .manualEditorTable .wk{color:#d40000;font-weight:800}
 .manualEditorTable button{min-width:34px;width:100%;padding:6px 2px;margin:0;border:0;border-radius:6px;font-weight:900}
-.manualEditorTable button.M{background:#eef8ee;color:#163d1e}.manualEditorTable button.A{background:#d9ecff;color:#134f8c}.manualEditorTable button.N{background:#fff2a8;color:#664d00}.manualEditorTable button.O{background:#f3f4f6;color:#333}.manualEditorTable button.V{background:#f3ddff;color:#6b21a8}
+.manualEditorTable button.M{background:#eef8ee;color:#163d1e}.manualEditorTable button.manualEditorTable button.N{background:#fff2a8;color:#664d00}.manualEditorTable button.O{background:#f3f4f6;color:#333}.manualEditorTable button.V{background:#f3ddff;color:#6b21a8}
 @media(max-width:520px){.empTypeGrid{grid-template-columns:1fr}.empListBtn{padding:11px}.manualEditorTable th,.manualEditorTable td{font-size:11px;padding:3px}}
 
 /* v0.9.9 employee page refinements */
@@ -508,6 +506,8 @@ function loadAgreed12h2026(){
 }
 
 function normalizeLegacyA(){S=(S||[]).map(r=>(r||[]).map(x=>x==='A'?'N':x));E=(E||[]).map(e=>{if(e[5]){e[5]=0;e[2]=1}return e});}
+function purgeLegacyA(){normalizeLegacyA(); if(Array.isArray(S)) S=S.map(r=>(r||[]).map(x=>x==='A'?'N':x));}
+function purgeLegacyA(){normalizeLegacyA(); if(Array.isArray(S)) S=S.map(r=>(r||[]).map(x=>x==='N'?'N':x));}
 onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v048');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};loadAgreed12h2026();normalizeLegacyA();save();rend();summary()};function save(){normalizeLegacyA();localStorage.setItem('lab-roster-v048',JSON.stringify({E,m:m.value,y:y.value}))}
 function vacDateParts(v){
   if(!Array.isArray(v)||v.length<2)return null;
@@ -536,7 +536,7 @@ function vacationTouchesCurrentMonth(v){
   let last=String(+y.value)+'-'+mm+'-'+String(days()).padStart(2,'0');
   return q.to>=first&&q.from<=last;
 }
-function rendE(){emps.innerHTML='';E.forEach((e,i)=>{let vv=(e[4]||[]).map((v,j)=>`<span style="display:inline-block;background:#e8f0fe;color:#123;padding:3px 7px;border-radius:10px;margin:2px">${vacLabel(v)} <b onclick="delVac(${i},${j})" style="cursor:pointer;color:#b00">×</b></span>`).join('')||'<span>لا توجد إجازة</span>';let typ=e[5]?'مثبت A':e[1]?'مثبت صباح M':e[2]?'مثبت آخر ليل N':'موظف مرن';emps.innerHTML+=`<div class=emp><input value="${e[0]}" oninput="E[${i}][0]=this.value;save()"><div class=sm style="margin-top:4px;font-weight:bold">${typ}</div><label><input type=checkbox ${e[3]?'checked':''} onchange="E[${i}][3]=+this.checked;save()"> M ويكند</label><div class=sm style="margin-top:7px"><b>الإجازات V</b><br><label>من <input type=date style="width:auto" id=vs${i}></label> <label>إلى <input type=date style="width:auto" id=ve${i}></label> <button onclick=vac(${i})>+ إضافة إجازة</button><div style="margin-top:4px">${vv}</div></div></div>`})}function vac(i){let a=document.getElementById('vs'+i).value,z=document.getElementById('ve'+i).value;if(!a||!z||a>z){alert('حدد تاريخ بداية ونهاية الإجازة بشكل صحيح');return}E[i][4]=E[i][4]||[];E[i][4].push([a,z]);E[i][4].sort((x,y)=>String(x[0]).localeCompare(String(y[0])));save();rendE();msg.innerHTML='تمت إضافة الإجازة. عند إنشاء الجدول ستُطبّق V تلقائيًا على الأيام الواقعة ضمن الشهر.'}function delVac(i,j){E[i][4].splice(j,1);save();rendE();msg.innerHTML='تم حذف فترة الإجازة.'}function add(){E.push(['موظف جديد',0,0,0,[]]);save();rendE()}function days(){return new Date(+y.value,+m.value+1,0).getDate()}function wk(d){let z=new Date(+y.value,+m.value,d).getDay();return z==5||z==6}
+function rendE(){emps.innerHTML='';E.forEach((e,i)=>{let vv=(e[4]||[]).map((v,j)=>`<span style="display:inline-block;background:#e8f0fe;color:#123;padding:3px 7px;border-radius:10px;margin:2px">${vacLabel(v)} <b onclick="delVac(${i},${j})" style="cursor:pointer;color:#b00">×</b></span>`).join('')||'<span>لا توجد إجازة</span>';let typ=e[5]?'مثبت N':e[1]?'مثبت صباح M':e[2]?'مثبت المناوبة المسائية N':'موظف مرن';emps.innerHTML+=`<div class=emp><input value="${e[0]}" oninput="E[${i}][0]=this.value;save()"><div class=sm style="margin-top:4px;font-weight:bold">${typ}</div><label><input type=checkbox ${e[3]?'checked':''} onchange="E[${i}][3]=+this.checked;save()"> M ويكند</label><div class=sm style="margin-top:7px"><b>الإجازات V</b><br><label>من <input type=date style="width:auto" id=vs${i}></label> <label>إلى <input type=date style="width:auto" id=ve${i}></label> <button onclick=vac(${i})>+ إضافة إجازة</button><div style="margin-top:4px">${vv}</div></div></div>`})}function vac(i){let a=document.getElementById('vs'+i).value,z=document.getElementById('ve'+i).value;if(!a||!z||a>z){alert('حدد تاريخ بداية ونهاية الإجازة بشكل صحيح');return}E[i][4]=E[i][4]||[];E[i][4].push([a,z]);E[i][4].sort((x,y)=>String(x[0]).localeCompare(String(y[0])));save();rendE();msg.innerHTML='تمت إضافة الإجازة. عند إنشاء الجدول ستُطبّق V تلقائيًا على الأيام الواقعة ضمن الشهر.'}function delVac(i,j){E[i][4].splice(j,1);save();rendE();msg.innerHTML='تم حذف فترة الإجازة.'}function add(){E.push(['موظف جديد',0,0,0,[]]);save();rendE()}function days(){return new Date(+y.value,+m.value+1,0).getDate()}function wk(d){let z=new Date(+y.value,+m.value,d).getDay();return z==5||z==6}
 function monthTarget(){let n=days(),x=0;for(let d=1;d<=n;d++)if(!wk(d))x++;return x}
 function vacWeekdays(i){let n=days(),x=0;for(let d=1;d<=n;d++)if(S[i]&&S[i][d-1]=='V'&&!wk(d))x++;return x}
 function req(i){
@@ -626,7 +626,7 @@ function boundaryIssues(){
     if(mx>7)q.push(`${e[0]}: تعارض بين الشهرين، دوام متواصل ${mx} أيام`);
     if(info.run>0&&info.last==='N'&&firstDay===1&&first&&first!=='N')
       q.push(`${e[0]}: انتقال مباشر من N إلى ${first} بين الشهرين`);
-    if(info.run>0&&info.last==='A'&&firstDay===1&&first==='M')
+    if(info.run>0&&info.last==='N'&&firstDay===1&&first==='M')
       q.push(`${e[0]}: انتقال مباشر من N إلى M بين الشهرين`);
   });
   return q;
@@ -663,17 +663,17 @@ function enforcePreviousMonthBoundary(n){
       }
     }
 
-    // 2) امنع الانتقال المباشر المتعارض من نهاية N إلى M/A، ومن N إلى M.
+    // 2) امنع الانتقال المباشر المتعارض من نهاية N إلى M.
     let first=S[i][0];
     if(isWorkShift(first)){
-      let conflict=(info.last==='N'&&first!=='N')||(info.last==='A'&&first==='M');
+      let conflict=(info.last==='N'&&first!=='N')||(info.last==='N'&&first==='M');
       if(conflict){
         // الأفضل يوم راحة إذا كانت التغطية تسمح.
         if(canBoundaryTurnOff(i,1)){S[i][0]='O';changed=true}
         // وإلا استمر بنفس الشفت السابق إن كان نوع الموظف يسمح بذلك والتغطية لا تتضرر.
         else{
-          let allowedShift=!e[1]&&!e[2]&&!e[5] || (e[2]&&info.last==='N') || (e[5]&&info.last==='A');
-          if(allowedShift && ['A','N'].includes(info.last)){S[i][0]=info.last;changed=true}
+          let allowedShift=!e[1]&&!e[2]&&!e[5] || (e[2]&&info.last==='N') || (e[5]&&info.last==='N');
+          if(allowedShift && ['N'].includes(info.last)){S[i][0]=info.last;changed=true}
         }
       }
     }
@@ -687,9 +687,9 @@ function enforcePreviousMonthBoundary(n){
   return changed;
 }
 function gen(){if(+y.value===2026 && +m.value===8){loadAgreed12h2026();rend();summary();check();return;}let n=days(),target=monthTarget(),block=7;updateTarget();S=E.map(()=>Array(n).fill('O'));E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));let fixed=[],afixed=[],rot=[],nonly=[],wkm=[];E.forEach((e,i)=>{if(e[5])nonly.push(i);else if(e[1])fixed.push(i);else rot.push(i);if(e[2])nonly.push(i);if(e[3])wkm.push(i)});fixed=[...new Set(fixed)];nonly=[...new Set(nonly)];fixed.forEach(i=>{for(let d=1;d<=n;d++)if(S[i][d-1]!='V')S[i][d-1]=wk(d)?'O':'M'});let w=0;for(let d=1;d<=n;d++)if(new Date(+y.value,+m.value,d).getDay()==5&&wkm.length){let i=wkm[w++%wkm.length];if(S[i][d-1]!='V')S[i][d-1]='M';if(d<n&&S[i][d]!='V')S[i][d]='M'};nonly.forEach(i=>{for(let d=1;d<=n;d++)if(S[i][d-1]!='V')S[i][d-1]=wk(d)?'O':'N'});let flex=rot.filter(i=>!E[i][2]),N=flex;function pool(P,s,need){if(!P.length||need<=0)return;for(let d=1;d<=n;d++){let dt=new Date(Date.UTC(+y.value,+m.value,d)),offset=(dt.getUTCDay()-4+7)%7,anchor=Date.UTC(+y.value,+m.value,d-offset),week=Math.floor(anchor/604800000),start=((week%P.length)+P.length)%P.length;for(let k=0;k<need;k++){let i=P[(start+k)%P.length];if(i!=null&&S[i][d-1]=='O')S[i][d-1]=s}}}if(N.length)pool(N,'N',Math.max(1,+wn.value-nonly.length));for(let d=1;d<=n;d++){let rr=wk(d)?[+em.value,0,+en.value]:[+wm.value,0,+wn.value];fill(d,'N',rr[2],rot);if(!wk(d))fill(d,'M',rr[0],flex.filter(i=>!E[i][2]));else{trim(d,'M',rr[0]);trim(d,'N',rr[2])}}compWeekendM(n);balanceFair(n);enforceMax7(n);finalExactBalance(n);E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));enforcePreviousMonthBoundary(n);enforceRosterRestRules(n);save();rend();summary();check()}
-function needForDay(d,s){if(wk(d))return 1;if(s==='M')return Math.max(0,+wm.value||0);if(s==='A')return Math.max(1,Math.min(2,+wa.value||2));if(s==='N')return Math.max(1,Math.min(2,+wn.value||2));return 0}
-function minimumNeedForDay(d,s){let preferred=needForDay(d,s);return (s=='A'||s=='N')&&preferred>0?1:preferred}
-function canRemove(i,d){let s=S[i][d-1];return ['M','A','N'].includes(s)&&cnt(d,s)>minimumNeedForDay(d,s)}
+function needForDay(d,s){if(wk(d))return 1;if(s==='M')return Math.max(0,+wm.value||0);if(s==='N')return Math.max(1,Math.min(2,+wa.value||2));if(s==='N')return Math.max(1,Math.min(2,+wn.value||2));return 0}
+function minimumNeedForDay(d,s){let preferred=needForDay(d,s);return (s=='N'||s=='N')&&preferred>0?1:preferred}
+function canRemove(i,d){let s=S[i][d-1];return ['M','N'].includes(s)&&cnt(d,s)>minimumNeedForDay(d,s)}
 function edgeScore(i,d){let L=d==1?'X':S[i][d-2],R=d==days()?'X':S[i][d];let sc=0;if(L=='O'||L=='V')sc+=4;if(R=='O'||R=='V')sc+=4;if(L==S[i][d-1])sc+=1;if(R==S[i][d-1])sc+=1;return sc}
 function compWeekendM(n){
   let wem=E.map((e,i)=>e[3]?i:-1).filter(i=>i>=0);
@@ -725,7 +725,7 @@ function compWeekendM(n){
   });
 }
 
-function isWorkShift(x){return x=='M'||x=='A'||x=='N'}
+function isWorkShift(x){return x=='M'||x=='N'||x=='N'}
 function maxWorkRun(i){
   let best=0,cur=0;
   for(let d=0;d<S[i].length;d++){
@@ -793,7 +793,7 @@ function offBlocks(i){
   }
   return out
 }
-function employeeCanWorkShift(i,sh){if(E[i][5])return sh==='A';if(E[i][2])return sh==='N';if(E[i][1])return sh==='M';return ['M','A','N'].includes(sh)}
+function employeeCanWorkShift(i,sh){if(E[i][5])return sh==='N';if(E[i][2])return sh==='N';if(E[i][1])return sh==='M';return ['M','N'].includes(sh)}
 function isAllowedSingleOffBeforeN(i,d,n){
   return d<n&&S[i]&&S[i][d]==='N'
 }
@@ -812,7 +812,7 @@ function repairSingletonOffs(n){
         E.forEach((e,j)=>{
           if(j===i||!S[j])return;
           const sh=S[j][d-1];
-          if(!['M','A','N'].includes(sh)||!employeeCanWorkShift(i,sh)||wouldExceed7(i,d,sh))return;
+          if(!['M','N'].includes(sh)||!employeeCanWorkShift(i,sh)||wouldExceed7(i,d,sh))return;
           if(!((d>1&&S[j][d-2]==='O')||(d<n&&S[j][d]==='O')))return;
           const score=(work(i)<req(i)?20:0)+(work(j)>req(j)?20:0)+(d>1&&S[j][d-2]==='O'?3:0)+(d<n&&S[j][d]==='O'?3:0);
           candidates.push([j,sh,score]);
@@ -828,7 +828,7 @@ function repairSingletonOffs(n){
         if(d>1)adjacent.push(d-1);
         for(const x of adjacent){
           const sh=S[i][x-1];
-          if(!['M','A','N'].includes(sh))continue;
+          if(!['M','N'].includes(sh))continue;
           const receivers=[];
           E.forEach((e,j)=>{
             if(j===i||!S[j]||S[j][x-1]!=='O'||!employeeCanWorkShift(j,sh)||wouldExceed7(j,x,sh))return;
@@ -844,7 +844,7 @@ function repairSingletonOffs(n){
         // لا يغيّر التغطية أو مجموع أيام العمل.
         if(d<n&&employeeCanWorkShift(i,'N')){
           const nextShift=S[i][d];
-          if(['M','A'].includes(nextShift)){
+          if(['M','N'].includes(nextShift)){
             const swaps=[];
             E.forEach((e,j)=>{
               if(j===i||!S[j]||S[j][d]!=='N'||!employeeCanWorkShift(j,nextShift))return;
@@ -872,7 +872,7 @@ function invalidSingletonOffs(n){
 function enforceSingleOffRule(n){
   if(!S||!S.length)return 0;
   let changed=repairSingletonOffs(n),guard=100;
-  // ضمان نهائي: لا يُسمح ببقاء O منفرد يتبعه M أو A حتى إذا تعذر
+  // ضمان نهائي: لا يُسمح ببقاء O منفرد يتبعه M حتى إذا تعذر
   // إيجاد تبديل كامل بسبب قيود التغطية. الأولوية هنا لصحة فترة الراحة،
   // ويعرض الفحص أي نقص تغطية ناتج كي يُراجع بدل إظهار جدول مخالف.
   while(guard--){
@@ -880,12 +880,12 @@ function enforceSingleOffRule(n){
     if(!bad.length)break;
     let progress=false;
     for(const [i,d] of bad){
-      if(d<n&&employeeCanWorkShift(i,'N')&&['M','A'].includes(S[i][d])&&cnt(d+1,'N')<maximumAllowedForDay(d+1,'N')){
+      if(d<n&&employeeCanWorkShift(i,'N')&&['M','N'].includes(S[i][d])&&cnt(d+1,'N')<maximumAllowedForDay(d+1,'N')){
         S[i][d]='N';changed++;progress=true;continue
       }
       const choices=[];
-      if(d<n&&['M','A','N'].includes(S[i][d]))choices.push(d+1);
-      if(d>1&&['M','A','N'].includes(S[i][d-2]))choices.push(d-1);
+      if(d<n&&['M','N'].includes(S[i][d]))choices.push(d+1);
+      if(d>1&&['M','N'].includes(S[i][d-2]))choices.push(d-1);
       if(choices.length){S[i][choices[0]-1]='O';changed++;progress=true}
     }
     if(!progress)break;
@@ -895,7 +895,7 @@ function enforceSingleOffRule(n){
 }
 function forbiddenRestTransition(from,to){
   // Require an OFF/V day between night and morning shifts in either direction.
-  return (from==='N'&&(to==='M'||to==='A'))||(from==='M'&&to==='N')||(from==='A'&&to==='M')
+  return (from==='N'&&(to==='M'||to==='N'))||(from==='M'&&to==='N')||(from==='N'&&to==='M')
 }
 function invalidRestTransitions(n){
   const out=[];
@@ -917,7 +917,7 @@ function repairRestTransitions(n){
     let progress=false;
     for(const [i,d,from,oldShift] of bad){
       if(!S[i]||S[i][d-1]!==from||S[i][d]!==oldShift)continue;
-      const wanted=from==='N'?'N':'A',swapDay=d+1,swaps=[];
+      const wanted=from==='N'?'N':'N',swapDay=d+1,swaps=[];
       E.forEach((e,j)=>{
         if(j===i||!S[j]||S[j][d]!==wanted)return;
         if(!canSetWithoutRestConflict(i,swapDay,wanted,n))return;
@@ -938,20 +938,20 @@ function repairRestTransitions(n){
 }
 function maximumAllowedForDay(d,shift){
   if(wk(d))return 1;
-  if(shift==='A'||shift==='N')return 2;
+  if(shift==='N'||shift==='N')return 2;
   return Infinity
 }
 function isFlexibleEmployee(i){return !!E[i]&&!E[i][1]&&!E[i][2]&&!E[i][5]}
-function flexibleEveningCount(i){return S[i]?S[i].filter(x=>x==='A'||x==='N').length:0}
+function flexibleEveningCount(i){return S[i]?S[i].filter(x=>x==='N'||x==='N').length:0}
 function trimExcessShifts(n){
   let changed=0;
-  for(let d=1;d<=n;d++)for(const sh of ['M','A','N']){
+  for(let d=1;d<=n;d++)for(const sh of ['M','N']){
     const cap=maximumAllowedForDay(d,sh);
     while(cnt(d,sh)>cap){
       const candidates=[];
       E.forEach((e,i)=>{
         if(!S[i]||S[i][d-1]!==sh)return;
-        const fixed=(sh==='M'&&e[1])||(sh==='A'&&e[5])||(sh==='N'&&e[2]);
+        const fixed=(sh==='M'&&e[1])||(sh==='N'&&e[5])||(sh==='N'&&e[2]);
         let replacement='O',score=fixed?-100:20;
         if(!wk(d)&&sh!=='M'&&!e[1]&&!e[2]&&!e[5]&&canSetWithoutRestConflict(i,d,'M',n)){
           replacement='M';score+=15;
@@ -967,7 +967,7 @@ function trimExcessShifts(n){
 }
 function ensureMinimumShiftCoverage(n){
   let changed=0;
-  for(let d=1;d<=n;d++)for(const sh of ['M','A','N']){
+  for(let d=1;d<=n;d++)for(const sh of ['M','N']){
     const minimum=minimumNeedForDay(d,sh),cap=maximumAllowedForDay(d,sh);
     while(cnt(d,sh)<minimum&&cnt(d,sh)<cap){
       const candidates=[];
@@ -975,12 +975,12 @@ function ensureMinimumShiftCoverage(n){
         if(!S[i]||S[i][d-1]==='V'||S[i][d-1]===sh||!employeeCanWorkShift(i,sh))return;
         const old=S[i][d-1];
         if(sh==='M'&&old!=='O')return;
-        if((sh==='A'||sh==='N')&&!['M','O'].includes(old))return;
+        if((sh==='N'||sh==='N')&&!['M','O'].includes(old))return;
         if(!canSetWithoutRestConflict(i,d,sh,n))return;
         if(wouldExceed7(i,d,sh))return;
         const evening=flexibleEveningCount(i);
-        if((sh==='A'||sh==='N')&&isFlexibleEmployee(i)&&evening>=10)return;
-        const score=(old==='M'?30:0)+(work(i)<req(i)?10:0)-(E[i][1]||E[i][2]||E[i][5]?20:0)+((sh==='A'||sh==='N')&&isFlexibleEmployee(i)?(evening<7?70:-evening*4):0);
+        if((sh==='N'||sh==='N')&&isFlexibleEmployee(i)&&evening>=10)return;
+        const score=(old==='M'?30:0)+(work(i)<req(i)?10:0)-(E[i][1]||E[i][2]||E[i][5]?20:0)+((sh==='N'||sh==='N')&&isFlexibleEmployee(i)?(evening<7?70:-evening*4):0);
         candidates.push([i,score]);
       });
       candidates.sort((a,b)=>b[1]-a[1]);
@@ -994,7 +994,7 @@ function enforceFlexibleEveningLimits(n){
   let changed=0;
   function moveOne(i,limit){
     for(let d=1;d<=n;d++){
-      const sh=S[i][d-1];if(sh!=='A'&&sh!=='N')continue;
+      const sh=S[i][d-1];if(sh!=='N'&&sh!=='N')continue;
       const candidates=[];
       E.forEach((e,j)=>{
         if(j===i||!isFlexibleEmployee(j)||flexibleEveningCount(j)>=limit)return;
@@ -1015,10 +1015,10 @@ function enforceFlexibleEveningLimits(n){
     while(flexibleEveningCount(i)>10&&guard--){
       if(moveOne(i,10))continue;
       let fixed=false;
-      for(let d=1;d<=n;d++)if((S[i][d-1]==='A'||S[i][d-1]==='N')&&!wk(d)&&canSetWithoutRestConflict(i,d,'M',n)){
+      for(let d=1;d<=n;d++)if((S[i][d-1]==='N'||S[i][d-1]==='N')&&!wk(d)&&canSetWithoutRestConflict(i,d,'M',n)){
         S[i][d-1]='M';changed++;fixed=true;break;
       }
-      if(!fixed)for(let d=1;d<=n;d++)if(S[i][d-1]==='A'||S[i][d-1]==='N'){
+      if(!fixed)for(let d=1;d<=n;d++)if(S[i][d-1]==='N'||S[i][d-1]==='N'){
         S[i][d-1]='O';changed++;fixed=true;break;
       }
       if(!fixed)break;
@@ -1131,7 +1131,7 @@ function enforceThursdayWednesdayRotation(n){
     if(!w){w={anchor,days:[]};weeks.push(w)}
     w.days.push(d);
   }
-  flex.forEach(i=>{for(let d=1;d<=n;d++)if(S[i][d-1]==='A'||S[i][d-1]==='N'){S[i][d-1]='O';changed++}});
+  flex.forEach(i=>{for(let d=1;d<=n;d++)if(S[i][d-1]==='N'||S[i][d-1]==='N'){S[i][d-1]='O';changed++}});
   weeks.sort((a,b)=>a.anchor-b.anchor).forEach(w=>{
     const weekNumber=Math.floor(w.anchor/604800000),len=w.days.length;
     function choose(excluded){
@@ -1141,7 +1141,7 @@ function enforceThursdayWednesdayRotation(n){
       return pool[0]
     }
     const a=choose(null),nn=choose(a);
-    [[a,'A'],[nn,'N']].forEach(([i,sh])=>{
+    [[a,'N'],[nn,'N']].forEach(([i,sh])=>{
       if(i===undefined)return;
       const first=w.days[0],last=w.days[w.days.length-1];
       if(first>1&&isWorkShift(S[i][first-2])){S[i][first-2]='O';changed++}
@@ -1204,7 +1204,7 @@ function enforceRosterRestRules(n){
     changed+=repairRestTransitions(n);
     const after=invalidSingletonOffs(n).length+invalidRestTransitions(n).length;
     let deficit=0,excess=0;
-    for(let d=1;d<=n;d++)for(const sh of ['M','A','N']){
+    for(let d=1;d<=n;d++)for(const sh of ['M','N']){
       deficit+=Math.max(0,minimumNeedForDay(d,sh)-cnt(d,sh));
       excess+=Math.max(0,cnt(d,sh)-maximumAllowedForDay(d,sh));
     }
@@ -1240,7 +1240,7 @@ function wouldExceed7(i,d,shift){
 }
 function allowedShift(i,d){
   let e=E[i];
-  if(e[5]) return 'A'; // fixed A
+  if(e[5]) return 'N'; // fixed N
   if(e[2]) return 'N'; // N-only
   if(e[1]) return 'M'; // fixed morning
   // Flexible: extend neighboring shift block if possible, otherwise M as neutral fallback.
@@ -1255,7 +1255,7 @@ function canPlaceWork(i,d,shift){
   if(S[i][d-1]!='O')return false;
   if(wk(d)) return false; // preserve exact weekend staffing
   if(wouldExceed7(i,d,shift))return false;
-  if(E[i][5]&&shift!='A')return false;
+  if(E[i][5]&&shift!='N')return false;
   if(E[i][2]&&shift!='N')return false;
   if(E[i][1]&&shift!='M')return false;
   return true;
@@ -1315,7 +1315,7 @@ function moveWorkFromSurplusToDeficit(n){
         for(let [si,extra] of surplus){
           let sh=S[si][d-1];
           if(!isWorkShift(sh)||!canRemove(si,d))continue;
-          if(E[di][5]&&sh!='A')continue;
+          if(E[di][5]&&sh!='N')continue;
           if(E[di][2]&&sh!='N')continue;
           if(E[di][1]&&sh!='M')continue;
           if(wouldExceed7(di,d,sh))continue;
@@ -1345,7 +1345,7 @@ function normalizeNightBlocks(n){
   // Flexible employees: N should be one contiguous 7-day block where possible.
   E.forEach((e,i)=>{
     if(e[1]||e[2]||e[5])return; // fixed M/N are handled by their own rules
-    ['A','N'].forEach(sh=>{
+    ['N'].forEach(sh=>{
       let daysWith=[];
       for(let d=1;d<=n;d++)if(S[i][d-1]==sh)daysWith.push(d);
       if(!daysWith.length)return;
@@ -1383,7 +1383,7 @@ function normalizeNightBlocks(n){
   });
 }
 function countANBlocks(i){
-  return shiftBlocks(i,'A').length+shiftBlocks(i,'N').length;
+  return shiftBlocks(i,'N').length+shiftBlocks(i,'N').length;
 }
 function finalExactBalance(n){
   // First consolidate N into 7-day blocks to reduce shift changes.
@@ -1408,11 +1408,11 @@ function balanceFair(n){
   E.forEach((e,i)=>{if(e[1]||e[2]||e[5])return;let guard=300;while(work(i)<req(i)&&guard--){let cand=[];for(let d=1;d<=n;d++){if(S[i][d-1]!='O'||wk(d))continue;let shift=e[2]?'N':'M';if(shift=='N'&&cnt(d,'N')>=+wn.value)continue;let L=d>1?S[i][d-2]:'',R=d<n?S[i][d]:'';let score=(L==shift?5:0)+(R==shift?5:0)+(L!='O'&&L!='V'?1:0)+(R!='O'&&R!='V'?1:0);cand.push([d,shift,score])}cand.sort((a,z)=>z[2]-a[2]);if(!cand.length)break;S[i][cand[0][0]-1]=cand[0][1]}});
   E.forEach((e,i)=>{if(e[1]||e[2]||e[5])return;let guard=300;while(work(i)>req(i)&&guard--){let cand=[];for(let d=1;d<=n;d++)if(canRemove(i,d))cand.push(d);cand.sort((a,z)=>edgeScore(i,z)-edgeScore(i,a));if(!cand.length)break;S[i][cand[0]-1]='O'}});
 }
-function fill(d,s,need,C){while(cnt(d,s)<need){let a=C.filter(i=>S[i][d-1]=='O');if(!a.length)break;a.sort((x,z)=>work(x)-work(z));S[a[0]][d-1]=s}}function trim(d,s,need){let a=[];S.forEach((r,i)=>{if(r[d-1]==s)a.push(i)});if(s=='N')a.sort((x,z)=>(E[z][2]||0)-(E[x][2]||0));if(s=='M')a.sort((x,z)=>(E[z][3]||0)-(E[x][3]||0));a.slice(need).forEach(i=>S[i][d-1]='O')}function rend(){let n=days();tab.innerHTML='<tr><th class=name>الموظف</th>'+Array.from({length:n},(_,i)=>{let dt=new Date(+y.value,+m.value,i+1),dn=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][dt.getDay()];return `<th class="${wk(i+1)?'wk':''}">${dn}<br>${i+1}</th>`}).join('')+'</tr>';E.forEach((e,i)=>{tab.innerHTML+=`<tr><td class=name>${e[0]}</td>`+S[i].map((x,d)=>{let sc=x=='A'?'shiftA':x=='N'?'shiftN':x=='M'?'shiftM':x=='V'?'shiftV':'shiftO';return `<td class="${sc} ${wk(d+1)?'wk':''}" onclick="cy(${i},${d})">${x}</td>`}).join('')+'</tr>'})}function cy(i,d){let a=['M','A','N','O','V'],x=a[(a.indexOf(S[i][d])+1)%5];if(E[i][5]&&!['A','O','V'].includes(x))x='A';if(E[i][2]&&!['N','O','V'].includes(x))x='N';if(E[i][1]&&!['M','O','V'].includes(x))x='M';S[i][d]=x;rend();summary();check()}function summary(){sum.innerHTML='<tr><th>الموظف</th><th>M</th><th>A</th><th>N</th><th>O</th><th>V</th><th>العمل</th><th>المطلوب</th><th>أطول دوام متواصل</th><th>العجز/الزيادة</th><th>الحالة</th></tr>'+E.map((e,i)=>{let c=x=>S[i].filter(z=>z==x).length,r=req(i),w=work(i);return `<tr><td>${e[0]}</td><td>${c('M')}</td><td>${c('A')}</td><td>${c('N')}</td><td>${c('O')}</td><td>${c('V')}</td><td>${w}</td><td>${r}</td><td style="font-weight:bold;color:${maxWorkRun(i)<=7?'#138a38':'#b91c1c'}">${maxWorkRun(i)} ${maxWorkRun(i)<=7?'✓':'⚠'}</td><td style="font-weight:bold;color:${w==r?'#138a38':'#c2410c'}">${w-r>0?'+':''}${w-r}</td><td style="font-weight:bold;color:${w==r&&maxWorkRun(i)<=7?'#138a38':'#c2410c'}">${w}/${r} ${w==r&&maxWorkRun(i)<=7?'✓':'⚠'}</td></tr>`}).join('')}function collectIssues(){
+function fill(d,s,need,C){while(cnt(d,s)<need){let a=C.filter(i=>S[i][d-1]=='O');if(!a.length)break;a.sort((x,z)=>work(x)-work(z));S[a[0]][d-1]=s}}function trim(d,s,need){let a=[];S.forEach((r,i)=>{if(r[d-1]==s)a.push(i)});if(s=='N')a.sort((x,z)=>(E[z][2]||0)-(E[x][2]||0));if(s=='M')a.sort((x,z)=>(E[z][3]||0)-(E[x][3]||0));a.slice(need).forEach(i=>S[i][d-1]='O')}function rend(){let n=days();tab.innerHTML='<tr><th class=name>الموظف</th>'+Array.from({length:n},(_,i)=>{let dt=new Date(+y.value,+m.value,i+1),dn=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][dt.getDay()];return `<th class="${wk(i+1)?'wk':''}">${dn}<br>${i+1}</th>`}).join('')+'</tr>';E.forEach((e,i)=>{tab.innerHTML+=`<tr><td class=name>${e[0]}</td>`+S[i].map((x,d)=>{let sc=x=='N'?'shiftN':x=='M'?'shiftM':x=='V'?'shiftV':'shiftO';return `<td class="${sc} ${wk(d+1)?'wk':''}" onclick="cy(${i},${d})">${x}</td>`}).join('')+'</tr>'})}function cy(i,d){let a=['M','N','O','V'],x=a[(a.indexOf(S[i][d])+1)%4];if(E[i][5]&&!['N','O','V'].includes(x))x='N';if(E[i][2]&&!['N','O','V'].includes(x))x='N';if(E[i][1]&&!['M','O','V'].includes(x))x='M';S[i][d]=x;rend();summary();check()}function summary(){sum.innerHTML='<tr><th>الموظف</th><th>M</th><th>N</th><th>O</th><th>V</th><th>العمل</th><th>المطلوب</th><th>أطول دوام متواصل</th><th>العجز/الزيادة</th><th>الحالة</th></tr>'+E.map((e,i)=>{let c=x=>S[i].filter(z=>z==x).length,r=req(i),w=work(i);return `<tr><td>${e[0]}</td><td>${c('M')}</td><td>${c('N')}</td><td>${c('O')}</td><td>${c('V')}</td><td>${w}</td><td>${r}</td><td style="font-weight:bold;color:${maxWorkRun(i)<=7?'#138a38':'#b91c1c'}">${maxWorkRun(i)} ${maxWorkRun(i)<=7?'✓':'⚠'}</td><td style="font-weight:bold;color:${w==r?'#138a38':'#c2410c'}">${w-r>0?'+':''}${w-r}</td><td style="font-weight:bold;color:${w==r&&maxWorkRun(i)<=7?'#138a38':'#c2410c'}">${w}/${r} ${w==r&&maxWorkRun(i)<=7?'✓':'⚠'}</td></tr>`}).join('')}function collectIssues(){
   let n=days(),q=[];
   for(let d=1;d<=n;d++){
     let r=wk(d)?[+em.value,+ea.value,+en.value]:[+wm.value,+wa.value,+wn.value];
-    ['M','A','N'].forEach((s,k)=>{
+    ['M','N'].forEach((s,k)=>{
       const minimum=minimumNeedForDay(d,s);
       if(cnt(d,s)<minimum)q.push(`يوم ${d}: نقص ${s}`);
       const maximum=maximumAllowedForDay(d,s);
@@ -1421,12 +1421,12 @@ function fill(d,s,need,C){while(cnt(d,s)<need){let a=C.filter(i=>S[i][d-1]=='O')
   }
   E.forEach((e,i)=>{
     if(e[2]&&S[i].some(x=>!['N','O','V'].includes(x)))q.push(`${e[0]} لديه شفت غير N`);
-    if(e[5]&&S[i].some(x=>!['A','O','V'].includes(x)))q.push(`${e[0]} لديه شفت غير A`);
+    if(e[5]&&S[i].some(x=>!['N','O','V'].includes(x)))q.push(`${e[0]} لديه شفت غير N`);
     if(work(i)!=req(i))q.push(`${e[0]}: ${work(i)}/${req(i)} يوم عمل`);
-    if(isFlexibleEmployee(i)&&flexibleEveningCount(i)>10)q.push(`${e[0]}: مجموع مناوبات A وN هو ${flexibleEveningCount(i)} والحد الأعلى 10`);
+    if(isFlexibleEmployee(i)&&flexibleEveningCount(i)>10)q.push(`${e[0]}: مجموع المناوبات المسائية N هو ${flexibleEveningCount(i)} والحد الأعلى 10`);
     let mx=maxWorkRun(i);if(mx>7)q.push(`${e[0]}: دوام متواصل ${mx} أيام (الحد 7)`);
     if(!e[1]&&!e[2]&&!e[5]){
-      ['A','N'].forEach(sh=>{
+      ['N'].forEach(sh=>{
         let bs=shiftBlocks(i,sh);
         if(bs.length>1)q.push(`${e[0]}: ${sh} موزع على أكثر من بلوك`);
         bs.forEach(b=>{if(b[2]!=7)q.push(`${e[0]}: بلوك ${sh} طوله ${b[2]} وليس 7`)});
@@ -1446,10 +1446,10 @@ function fill(d,s,need,C){while(cnt(d,s)<need){let a=C.filter(i=>S[i][d-1]=='O')
 }
 function fill(d,s,need,C){
   while(cnt(d,s)<need){
-    let a=C.filter(i=>S[i][d-1]==='O'&&employeeCanWorkShift(i,s)&&(!isFlexibleEmployee(i)||!['A','N'].includes(s)||flexibleEveningCount(i)<10));
+    let a=C.filter(i=>S[i][d-1]==='O'&&employeeCanWorkShift(i,s)&&(!isFlexibleEmployee(i)||!['N'].includes(s)||flexibleEveningCount(i)<10));
     if(!a.length)break;
     a.sort((x,z)=>{
-      if(['A','N'].includes(s)){
+      if(['N'].includes(s)){
         const ex=flexibleEveningCount(x),ez=flexibleEveningCount(z);
         if((ex<7)!==(ez<7))return ex<7?-1:1;
         if(ex!==ez)return ex-ez;
@@ -1473,27 +1473,27 @@ function autoFix(){
   // ثبّت الإجازات أولاً حتى لا يغيّرها الإصلاح.
   E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));
   // موظف N فقط: صحح أي شفت مخالف مع أقل تغيير ممكن.
-  E.forEach((e,i)=>{if(!e[2])return;for(let d=1;d<=n;d++)if(['M','A'].includes(S[i][d-1]))S[i][d-1]='N'});
-  // موظف A ثابت: صحح أي شفت عمل مخالف إلى A مع الحفاظ على O وV.
-  E.forEach((e,i)=>{if(!e[5])return;for(let d=1;d<=n;d++)if(['M','N'].includes(S[i][d-1]))S[i][d-1]='A'});
+  E.forEach((e,i)=>{if(!e[2])return;for(let d=1;d<=n;d++)if(['M','N'].includes(S[i][d-1]))S[i][d-1]='N'});
+  // موظف مسائي ثابت: صحح أي شفت عمل مخالف إلى A مع الحفاظ على O وV.
+  E.forEach((e,i)=>{if(!e[5])return;for(let d=1;d<=n;d++)if(['M','N'].includes(S[i][d-1]))S[i][d-1]='N'});
   // عالج نقص التغطية اليومية من الموظفين المتاحين، مع تفضيل من لديه عجز في أيام العمل.
   for(let pass=0;pass<3;pass++){
     for(let d=1;d<=n;d++){
-      for(let sh of ['M','A','N']){
+      for(let sh of ['M','N']){
         let need=needForDay(d,sh),guard=50;
         while(cnt(d,sh)<need&&guard--){
           let cand=[];
           E.forEach((e,i)=>{
             if(S[i][d-1]!='O')return;
-            if(e[5]&&sh!='A')return;
+            if(e[5]&&sh!='N')return;
             if(e[2]&&sh!='N')return;
             if(e[1]&&sh!='M')return;
-            if(!e[1]&&!e[2]&&!e[5]&&!['M','A','N'].includes(sh))return;
+            if(!e[1]&&!e[2]&&!e[5]&&!['M','N'].includes(sh))return;
             if(wouldExceed7(i,d,sh))return;
-            if((sh==='A'||sh==='N')&&isFlexibleEmployee(i)&&flexibleEveningCount(i)>=10)return;
+            if((sh==='N'||sh==='N')&&isFlexibleEmployee(i)&&flexibleEveningCount(i)>=10)return;
             let deficit=req(i)-work(i),adj=0;
             if(d>1&&S[i][d-2]==sh)adj+=2;if(d<n&&S[i][d]==sh)adj+=2;
-            let eveningBonus=(sh==='A'||sh==='N')&&isFlexibleEmployee(i)?(flexibleEveningCount(i)<7?70:-flexibleEveningCount(i)*4):0;
+            let eveningBonus=(sh==='N'||sh==='N')&&isFlexibleEmployee(i)?(flexibleEveningCount(i)<7?70:-flexibleEveningCount(i)*4):0;
             cand.push([i,deficit*10+adj+eveningBonus]);
           });
           cand.sort((a,b)=>b[1]-a[1]);
@@ -1517,7 +1517,7 @@ function autoFix(){
   if(q.length)msg.innerHTML=`🔧 تم تعديل ${changed} خانة تلقائياً. بقيت ${q.length} ملاحظة تحتاج مراجعة يدوية: `+q.slice(0,10).join(' • ');
   else msg.innerHTML=`✅ تم الإصلاح التلقائي بنجاح. عُدّلت ${changed} خانة فقط حسب الحاجة، ولا توجد ملاحظات حالياً.`;
 }
-function csv(){if(!S.length)return;let n=days(),r=[['الموظف',...Array.from({length:n},(_,i)=>i+1)],...E.map((e,i)=>[e[0],...S[i]])],c='\ufeff'+r.map(x=>x.join(',')).join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:'text/csv'}));a.download='roster.csv';a.click()}
+function csv(){if(!S.length)return;let n=days(),r=[['الموظف',...Array.from({length:n},(_,i)=>i+1)],...E.map((e,i)=>[e[0],...(S[i]||[])])],c='\ufeff'+r.map(x=>x.join(',')).join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:'text/csv'}));a.download='roster.csv';a.click()}
 function printRoster(){
   // صفحة توليد الجدول: PDF/طباعة للجدول فقط، بدون الإحصائيات، A4 أفقي.
   return printFullRosterOnly();
@@ -1985,7 +1985,7 @@ function generatedScheduleTableHtml(){
   h+='</tr>';
   E.forEach((e,i)=>{
     h+=`<tr><td class="name">${e[0]}</td>`;
-    S[i].forEach((x,d)=>{let sc=x==='A'?'shiftA':x==='N'?'shiftN':x==='M'?'shiftM':x==='V'?'shiftV':'shiftO';h+=`<td class="${sc} ${wk(d+1)?'wk':''}">${x}</td>`});
+    S[i].forEach((x,d)=>{let sc=x==='N'?'shiftN':x==='M'?'shiftM':x==='V'?'shiftV':'shiftO';h+=`<td class="${sc} ${wk(d+1)?'wk':''}">${x}</td>`});
     h+='</tr>';
   });
   return h+'</table></div>';
@@ -2159,14 +2159,14 @@ function renderStatsOnly(){
   }
   let rows='';
   E.forEach((e,i)=>{
-    let c={M:0,A:0,N:0,O:0,V:0};
+    let c={M:0,N:0,O:0,V:0};
     (S[i]||[]).forEach(x=>{if(c[x]!==undefined)c[x]++});
-    rows+=`<tr><td>${e[0]}</td><td>${c.M}</td><td>${c.A}</td><td>${c.N}</td><td>${c.O}</td><td>${c.V}</td><td>${c.M+c.A+c.N}</td></tr>`;
+    rows+=`<tr><td>${e[0]}</td><td>${c.M}</td><td>${c.N}</td><td>${c.O}</td><td>${c.V}</td><td>${c.M+c.N}</td></tr>`;
   });
   renderSubPage('الإحصائيات',`
     <div style="overflow:auto">
       <table class="statsTable">
-        <thead><tr><th>الموظف</th><th>M</th><th>A</th><th>N</th><th>O</th><th>V</th><th>العمل</th></tr></thead>
+        <thead><tr><th>الموظف</th><th>M</th><th>N</th><th>O</th><th>V</th><th>العمل</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>
     </div>`);
@@ -2379,8 +2379,8 @@ function rosterLandscapeCanvas(){
     c.fillStyle=weekend?'#d40000':'#172b3d';c.font='900 21px Arial';
     c.fillText(dn,x+dayW/2,top+27);c.font='900 24px Arial';c.fillText(String(d),x+dayW/2,top+56);
   }
-  const bg={M:'#ffffff',A:'#ffffff',N:'#ffffff',O:'#f3f4f6',V:'#f3ddff'};
-  const fg={M:'#2e7d32',A:'#1976b9',N:'#b77900',O:'#333333',V:'#6b21a8'};
+  const bg={M:'#ffffff',N:'#ffffff',O:'#f3f4f6',V:'#f3ddff'};
+  const fg={M:'#2e7d32',N:'#b77900',O:'#333333',V:'#6b21a8'};
   E.forEach((e,i)=>{
     const y0=top+headH+i*rowH;
     c.fillStyle='#fff';c.fillRect(nameX,y0,nameW,rowH);c.strokeRect(nameX,y0,nameW,rowH);
@@ -2539,7 +2539,7 @@ function showFullReadOnly(){ return showFullReadOnlyLegacy(); }
 })();
 </script>
 <script>
-/* v0.8.9.4 — fixed A option, employee highlight, logo-safe home, hard cache reset */
+/* v0.8.9.4 — fixed N option, employee highlight, logo-safe home, hard cache reset */
 (function(){
   if(!('serviceWorker' in navigator)) return;
   let reloaded=false;
@@ -2646,8 +2646,7 @@ function showFullReadOnly(){ return showFullReadOnlyLegacy(); }
 #homePortal.calendarWallpaper .empcal .dow,
 #homePortal.calendarWallpaper .empcal .day,
 #homePortal.calendarWallpaper .empcal .M,
-#homePortal.calendarWallpaper .empcal .A,
-#homePortal.calendarWallpaper .empcal .N,
+#homePortal.calendarWallpaper #homePortal.calendarWallpaper .empcal .N,
 #homePortal.calendarWallpaper .empcal .V,
 #homePortal.calendarWallpaper .empcal .O,
 #homePortal.calendarWallpaper .empcal .weekend{
@@ -2726,7 +2725,7 @@ function showFullReadOnly(){ return showFullReadOnlyLegacy(); }
 .archiveList{display:grid;gap:10px}.archiveItem{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px;border:1px solid #d6e0e8;border-radius:14px;background:#fff;color:#0b3156;text-align:right;box-shadow:0 3px 10px rgba(11,49,86,.06)}
 .archiveItem .archiveMonth{font-size:17px;font-weight:900}.archiveItem small{display:block;margin-top:4px;color:#617083}.archiveReadOnlyBadge{display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border-radius:999px;background:#edf2f7;color:#425466;font-size:11px;font-weight:900;white-space:nowrap}
 .archiveToolbar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}.archiveToolbar button{margin:0}.archiveTableWrap{overflow:auto;border:1px solid #d7dee7;border-radius:12px;background:#fff}
-.archiveRosterTable{border-collapse:collapse;min-width:900px;width:100%;direction:rtl}.archiveRosterTable th,.archiveRosterTable td{border:1px solid #d7dee7;padding:5px;text-align:center;font-weight:800;white-space:nowrap}.archiveRosterTable th:first-child,.archiveRosterTable td:first-child{position:sticky;right:0;background:#fff;min-width:145px;text-align:right;z-index:1}.archiveRosterTable .wkcol{color:#c91d1d}.archiveRosterTable .A{background:#d9ecff}.archiveRosterTable .N{background:#fff2a8}.archiveRosterTable .M{background:#eef8ee}.archiveRosterTable .O{background:#f3f4f6}.archiveRosterTable .V{background:#f3ddff}
+.archiveRosterTable{border-collapse:collapse;min-width:900px;width:100%;direction:rtl}.archiveRosterTable th,.archiveRosterTable td{border:1px solid #d7dee7;padding:5px;text-align:center;font-weight:800;white-space:nowrap}.archiveRosterTable th:first-child,.archiveRosterTable td:first-child{position:sticky;right:0;background:#fff;min-width:145px;text-align:right;z-index:1}.archiveRosterTable .wkcol{color:#c91d1d}.archiveRosterTable .N{background:#fff2a8}.archiveRosterTable .M{background:#eef8ee}.archiveRosterTable .O{background:#f3f4f6}.archiveRosterTable .V{background:#f3ddff}
 </style>
 <script>
 const APPROVED_ARCHIVE_KEY='lab-roster-approved-archive-v1';
@@ -2736,7 +2735,7 @@ function approveCurrentSchedule(){
   if(!S||!S.length){alert('أنشئ الجدول أولًا ثم راجعه قبل الاعتماد');return}
   enforceRosterRestRules(days());
   const restIssues=collectIssues().filter(x=>String(x).includes('أوف منفرد')||String(x).includes('انتقال غير مسموح')||String(x).includes('الحد الأعلى'));
-  if(restIssues.length){alert('لا يمكن اعتماد الجدول: الأوف المنفرد يجب أن يليه N، وبعد N لا يُسمح بـ M أو A، وبعد A لا يُسمح بـ M. استخدم زر الإصلاح التلقائي ثم راجع الجدول.');return}
+  if(restIssues.length){alert('لا يمكن اعتماد الجدول: الأوف المنفرد يجب أن يليه N، وبعد N لا يُسمح بـ M مباشرة. استخدم زر الإصلاح التلقائي ثم راجع الجدول.');return}
   if(!applySchedulePicker())return;
   const key=rosterMonthKey(+y.value,+m.value),a=approvedArchive(),exists=!!a[key];
   if(!confirm(exists?'يوجد جدول معتمد لهذا الشهر. هل تريد استبدال النسخة المعتمدة؟':'بعد الاعتماد سيُحفظ الجدول في الأرشيف للقراءة والطباعة فقط. هل تريد اعتماده؟'))return;
@@ -2814,7 +2813,7 @@ body.scheduleToolsActive #quickNav .scheduleTool{display:flex!important}
 .todayDutyCard h3{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px;color:#0b3156;font-size:17px}
 .todayDutyCard h3 b{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;border-radius:999px;background:#eef3f8;font-size:13px}
 .todayDutyCard ul{list-style:none;margin:0;padding:0}.todayDutyCard li{padding:8px 4px;border-top:1px solid #edf1f5;font-size:16px;font-weight:900;color:#1f2937}
-.todayDutyCard li:first-child{border-top:0}.todayDutyCard.shiftM{border-right:5px solid #3b8d50}.todayDutyCard.shiftA{border-right:5px solid #4b9bd8}.todayDutyCard.shiftN{border-right:5px solid #d3a900}.todayDutyCard.shiftO{border-right:5px solid #d52b2b}.todayDutyCard.shiftV{border-right:5px solid #8b5cf6}
+.todayDutyCard li:first-child{border-top:0}.todayDutyCard.shiftM{border-right:5px solid #3b8d50}.todayDutyCard.todayDutyCard.shiftN{border-right:5px solid #d3a900}.todayDutyCard.shiftO{border-right:5px solid #d52b2b}.todayDutyCard.shiftV{border-right:5px solid #8b5cf6}
 .todayDutyCard.shiftO li,.todayDutyCard.shiftV li{color:#c51f1f}
 @media(max-width:520px){.todayDutyGrid{grid-template-columns:1fr}.todayDutyCard li{font-size:17px}}
 .statsTable{width:max-content!important;min-width:620px!important;border-collapse:collapse!important;text-align:center!important;margin:0 auto!important}
@@ -2856,7 +2855,7 @@ body.scheduleToolsActive #quickNav .scheduleTool{display:flex!important}
     let body=`<div class="todayDutyHeadingRow"><div class="todayDutyHeading">مناوبات اليوم المحدد</div><button class="dutySearchButton" onclick="toggleDutyDateSearch()" aria-label="البحث بالتاريخ" title="البحث بالتاريخ">🔍</button></div><div id="dutySearchPanel" class="dutySearchPanel"><div class="dutyDateFields"><label>اليوم<select id="dutySearchDay" onchange="applyDutyDateParts()">${dayOptions}</select></label><label>الشهر<select id="dutySearchMonth" onchange="applyDutyDateParts()">${monthOptions}</select></label><label>السنة<select id="dutySearchYear" onchange="applyDutyDateParts()">${yearOptions}</select></label></div></div>`;
     if(!snap||!Array.isArray(snap.schedule))body+=`<div class="readonly-note">لا يوجد جدول محفوظ أو معتمد لشهر ${esc(M[mm])} ${yy}.</div>`;
     else{
-      const groups={M:[],A:[],N:[],O:[],V:[]},names=snap.employees||[];
+      const groups={M:[],N:[],O:[],V:[]},names=snap.employees||[];
       snap.schedule.forEach((row,i)=>{const sh=row&&row[dd-1]||'O';if(groups[sh])groups[sh].push(Array.isArray(names[i])?names[i][0]:names[i])});
       const card=(code,title,cls)=>{const list=groups[code];return `<section class="todayDutyCard ${cls}"><h3><span>${title}</span><b>${list.length}</b></h3>${list.length?`<ul>${list.map(n=>`<li>${esc(n)}</li>`).join('')}</ul>`:'<div class="readonly-note">لا يوجد</div>'}</section>`};
       body+=`<div class="todayDutyGrid">${card('M','المناوبة الصباحية','shiftM')}${card('N','المناوبة المسائية','shiftN')}${card('O','أوف','shiftO')}${card('V','إجازة','shiftV')}</div>`;
@@ -2927,24 +2926,17 @@ function deleteCompEntry(id){if(!confirm('حذف حركة التعويض؟'))ret
 <style id="v0950-weekend-working-text">
 /* الجمعة والسبت: الأحمر للأوف O ولعنوان اليوم فقط؛ المناوبة الفعلية بلونها الطبيعي. */
 #homePortal.calendarWallpaper .empcal .day.weekend.M,#homePortal.calendarWallpaper .empcal .day.weekend.M *,
-#homePortal.calendarWallpaper .empcal .day.weekend.A,#homePortal.calendarWallpaper .empcal .day.weekend.A *,
-#homePortal.calendarWallpaper .empcal .day.weekend.N,#homePortal.calendarWallpaper .empcal .day.weekend.N *,
-#homePortal.calendarWallpaper .empcal .day.weekend.V,#homePortal.calendarWallpaper .empcal .day.weekend.V *,
-.empcal .day.weekend.M,.empcal .day.weekend.M *,
-.empcal .day.weekend.A,.empcal .day.weekend.A *,
-.empcal .day.weekend.N,.empcal .day.weekend.N *,
-.empcal .day.weekend.V,.empcal .day.weekend.V *{color:#222!important}
+#homePortal.calendarWallpaper 
 table td.wk.shiftM,table td.wk.shiftA,table td.wk.shiftN,table td.wk.shiftV,
-.fullRosterTable td.wkcol.M,.fullRosterTable td.wkcol.A,.fullRosterTable td.wkcol.N,.fullRosterTable td.wkcol.V,
-.landscapeRosterTable td.wkcol.M,.landscapeRosterTable td.wkcol.A,.landscapeRosterTable td.wkcol.N,.landscapeRosterTable td.wkcol.V,
-.archiveRosterTable td.wkcol.M,.archiveRosterTable td.wkcol.A,.archiveRosterTable td.wkcol.N,.archiveRosterTable td.wkcol.V{color:#222!important}
+.fullRosterTable td.wkcol.M,.fullRosterTable td.wkcol.N,.fullRosterTable td.wkcol.V,
+.landscapeRosterTable td.wkcol.M,.landscapeRosterTable td.wkcol.N,.landscapeRosterTable td.wkcol.V,
+.archiveRosterTable td.wkcol.M,.archiveRosterTable td.wkcol.N,.archiveRosterTable td.wkcol.V{color:#222!important}
 </style>
 <style id="v0953-am-text-only">
-/* A وM بلا تعبئة لونية؛ التمييز بلون الحرف فقط. */
-td.shiftA,td.A,.empcal .day.A,.fullRosterTable td.A,.landscapeRosterTable td.A,.manualEditorTable td.A,.archiveRosterTable td.A{background:transparent!important;color:#1976b9!important}
+/* N وM بلا تعبئة لونية؛ التمييز بلون الحرف فقط. */
 td.shiftM,td.M,.empcal .day.M,.fullRosterTable td.M,.landscapeRosterTable td.M,.manualEditorTable td.M,.archiveRosterTable td.M{background:transparent!important;color:#2e7d32!important}
-.empcal .day.A *{color:#1976b9!important}.empcal .day.M *{color:#2e7d32!important}
-#homePortal.calendarWallpaper .empcal .day.weekend.A,#homePortal.calendarWallpaper .empcal .day.weekend.A *{color:#1976b9!important}
+.empcal .day.M *{color:#2e7d32!important}
+#homePortal.calendarWallpaper 
 #homePortal.calendarWallpaper .empcal .day.weekend.M,#homePortal.calendarWallpaper .empcal .day.weekend.M *{color:#2e7d32!important}
 </style>
 <style id="v0954-schedule-controls">
