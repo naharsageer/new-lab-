@@ -466,23 +466,7 @@ function loadAgreed12h2026(){
   const n=days();
   S=E.map(()=>Array(n).fill('O'));
   // جميع الموظفين في النظام الحالي 12 ساعة. طاهر وعبدالمنعم مثبتان صباح M للتنسيق الإشرافي.
-  const schedule=[
-    'MOOOOOOMMMMMMMMOOOOOOOMMMMMMMO',
-    'MMMMMMMMOOOOOOOMMMMMMMOOOOOOOM',
-    'MOOOOOOOMMMMMMMMOOOOOONNNNNNNO',
-    'MMOOOOOOOMMMMMMMOOOOOOONNNNNNN',
-    'OMMMMMMMOOOOOOONNNNNNNOOOOOOMM',
-    'MOOOOOOONNNNNNNOOOOOOMMMMMMMMO',
-    'NNNNNOOOOOOOMMMMMMMOOOOOOOMMMM',
-    'OMMMMMMMMOOOOOONNNNNNNOOOOOOOM',
-    'MMOOOOOONNNNNNNOOOOOOOMMMMMMMO',
-    'ONNNNNNNOOOOOOOMMMMMMMMOOOOOOM',
-    'NNNNNOOOOOOOMMMMMMMOOOOOOOMMMM',
-    'MMOOOOOOMMMMMMMOOOOOOONNNNNNNO',
-    'MMOOOOOONNNNNNNOOOOOOOMMMMMMMO',
-    'MMMMMMMMOOOOOOOMMMMMMMOOOOOOON',
-    'ONNNNNNNOOOOOOMMMMMMMMOOOOOOOM'
-  ];
+  const schedule=['MOOOOOOMMMMMMMMOOOOOOOMMMMMMMO','MMMMMMMMOOOOOOOMMMMMMMOOOOOOOM','MOOOOOOOMMMMMMMMOOOOOOMMMMMMMO','MMOOOOOOOMMMMMMMOOOOOONNNNNNNO','OMMMMMMMOOOOOOONNNNNNNOOOOOOMM','MOOOOOOONNNNNNNOOOOOOMMMMMMMMO','NNNNNOOOOOOOMMMMMMMOOOOOOOMMMM','OMMMMMMMMOOOOOONNNNNNNOOOOOOOM','MMOOOOOONNNNNNNOOOOOOOMMMMMMMO','ONNNNNNNOOOOOOOMMMMMMMMOOOOOOM','NNNNNOOOOOOOMMMMMMMOOOOOOOMMMM','MMOOOOOOMMMMMMMOOOOOOONNNNNNNO','MMOOOOOONNNNNNNOOOOOOOMMMMMMMO','MMMMMMMMOOOOOOOMMMMMMMOOOOOOON','ONNNNNNNOOOOOOMMMMMMMMOOOOOOOM'];
   schedule.forEach((row,i)=>{ if(i<S.length) S[i]=row.split('').slice(0,n); });
   // لا يوجد A؛ M وN كلاهما 12 ساعة. الهدف 192 ساعة (16 مناوبة) لكل موظف.
   // نظام 7×7 هو الأساس، والبلوك الثامن - عند الحاجة - يكون صباح M فقط.
@@ -790,7 +774,7 @@ function offBlocks(i){
   }
   return out
 }
-function employeeCanWorkShift(i,sh){if(E[i][5])return sh==='N';if(E[i][2])return sh==='N';if(E[i][1])return sh==='M';return ['M','N'].includes(sh)}
+function employeeCanWorkShift(i,sh){if((i===2||i===4)&&sh==='N')return false;if(E[i][5])return sh==='N';if(E[i][2])return sh==='N';if(E[i][1])return sh==='M';return ['M','N'].includes(sh)}
 function isAllowedSingleOffBeforeN(i,d,n){
   return d<n&&S[i]&&S[i][d]==='N'
 }
