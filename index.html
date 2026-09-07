@@ -465,50 +465,47 @@ function loadAgreed12h2026(){
   if(+y.value!==2026 || +m.value<8) return false;
   const n=days(), month=+m.value;
   S=E.map(()=>Array(n).fill('O'));
-  const fixedNames=['طاهر المحيميد','عبدالمنعم البلادي','عقيله الحبابي','صالح الهاشم','محمد العيثان','زهرة بو حسن'];
-  E.forEach((e,i)=>{
-    if(fixedNames.includes(e[0])) for(let d=1;d<=n;d++) S[i][d-1]=wk(d)?'O':'M';
-  });
-  // 12-hour staff: strict 7 ON / 7 OFF, anchored on 8 Sep 2026.
-  // Each 7-day ON block is one shift only. The next block is always 7 OFF.
-  // Groups: A Mustafa/Jafar, B Mukhtar/Abdulkhaleq, C Hussain/Haider, D Sarah/Nada.
+  // موظفو الدوام النهاري 8 ساعات: الأحد–الخميس 07:00–16:00.
+  const dayNames=['طاهر المحيميد','عبدالمنعم البلادي','عقيله الحبابي','صالح الهاشم','محمد العيثان','زهرة بو حسن','رحاب العلي'];
+  const dayIdx=dayNames.map(name=>E.findIndex(e=>e[0]===name)).filter(i=>i>=0);
+  dayIdx.forEach(i=>{for(let d=1;d<=n;d++) S[i][d-1]=wk(d)?'O':'M';});
+  // نوزع مناوبة M إضافية في أيام الجمعة/السبت حتى تكون ساعات الدوام النهاري في سبتمبر بين 180 و192.
+  // سبتمبر 2026 فيه 22 يوم أحد–خميس = 176 ساعة؛ نضيف يومًا واحدًا (8 ساعات) لكل موظف.
+  const weekendDays=[]; for(let d=1;d<=n;d++) if(wk(d)) weekendDays.push(d);
+  dayIdx.forEach((i,k)=>{ const d=weekendDays[k % weekendDays.length]; if(d) S[i][d-1]='M'; });
+
+  // موظفو 12 ساعة: دورة صارمة 7 عمل / 7 OFF، والشفت ثابت طوال بلوك العمل.
+  // أربع أنماط تغطي الشهر كاملًا مع 2 M + 2 N يوميًا، وكل موظف = 15 مناوبة = 180 ساعة.
+  // الأيام 1–8 محسوبة ضمن الشهر لأنها دوام سابق؛ من 8 سبتمبر يستمر نفس البلوك بدون إعادة ضبط.
   const groups=[
-    {ids:[2,5], firstShift:'N', phase:0},
-    {ids:[6,7], firstShift:'M', phase:0},
-    {ids:[8,10], firstShift:'N', phase:7},
-    {ids:[11,12], firstShift:'M', phase:7}
+    {ids:[2],phase:1,firstShift:'M'}, // مصطفى: M ثم N
+    {ids:[5],phase:1,firstShift:'N'}, // جعفر: N ثم M
+    {ids:[6],phase:8,firstShift:'M'}, // مختار: N ثم M (من 1 سبتمبر N)
+    {ids:[7],phase:8,firstShift:'N'}, // عبدالخالق: M ثم N (من 1 سبتمبر M)
+    {ids:[8],phase:1,firstShift:'M'}, // حسين: M ثم N
+    {ids:[10],phase:1,firstShift:'N'}, // حيدر: N ثم M
+    {ids:[11],phase:8,firstShift:'M'}, // ساره: N ثم M
+    {ids:[12],phase:8,firstShift:'N'}  // ندى: M ثم N
   ];
-  const anchor=Date.UTC(2026,8,8); // 8 Sep 2026
   const shiftFlip={M:'N',N:'M'};
-  const is12h=new Set([2,5,6,7,8,10,11,12]);
-  is12h.forEach(i=>{ if(S[i]) S[i].fill('O'); });
-  for(let d=1;d<=n;d++){
-    const dt=Date.UTC(+y.value,month,d);
-    const off=Math.round((dt-anchor)/86400000);
-    groups.forEach(g=>{
-      const rel=off-g.phase;
-      if(rel<0) return;
-      const cycle=Math.floor(rel/14);
-      const pos=rel%14;
+  groups.forEach(g=>{
+    const i=g.ids[0]; if(i==null||!S[i]) return;
+    for(let d=1;d<=n;d++){
+      const rel=d-1-g.phase, pos=((rel%14)+14)%14, cycle=Math.floor(rel/14);
       if(pos<7){
         const sh=(cycle%2===0)?g.firstShift:shiftFlip[g.firstShift];
-        g.ids.forEach(i=>{if(S[i]) S[i][d-1]=sh;});
-      } else {
-        g.ids.forEach(i=>{if(S[i]) S[i][d-1]='O';});
-      }
-    });
-  }
-  // Rehab remains regular daytime in this transition and is not part of the 12-hour group.
-  const ri=E.findIndex(e=>e[0]==='رحاب العلي');
-  if(ri>=0) for(let d=1;d<=n;d++) S[ri][d-1]=wk(d)?'O':'M';
+        S[i][d-1]=sh;
+      } else S[i][d-1]='O';
+    }
+  });
+  purgeLegacyA();
   save();
   return true;
 }
 
 function normalizeLegacyA(){S=(S||[]).map(r=>(r||[]).map(x=>x==='A'?'N':x));E=(E||[]).map(e=>{if(e[5]){e[5]=0;e[2]=1}return e});}
 function purgeLegacyA(){normalizeLegacyA(); if(Array.isArray(S)) S=S.map(r=>(r||[]).map(x=>x==='A'?'N':x));}
-function purgeLegacyA(){normalizeLegacyA(); if(Array.isArray(S)) S=S.map(r=>(r||[]).map(x=>x==='N'?'N':x));}
-onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v048');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};loadAgreed12h2026();normalizeLegacyA();save();rend();summary()};function save(){normalizeLegacyA();localStorage.setItem('lab-roster-v048',JSON.stringify({E,m:m.value,y:y.value}))}
+onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v049');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};loadAgreed12h2026();normalizeLegacyA();save();rend();summary()};function save(){normalizeLegacyA();localStorage.setItem('lab-roster-v049',JSON.stringify({E,m:m.value,y:y.value}))}
 function vacDateParts(v){
   if(!Array.isArray(v)||v.length<2)return null;
   if(typeof v[0]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[0])&&typeof v[1]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[1]))
@@ -545,7 +542,13 @@ function req(i){
   if(flexible&&typeof compensationBalanceForEmployee==='function')base-=compensationBalanceForEmployee(E[i][0]);
   return Math.max(0,Math.min(days(),base));
 }
-function updateTarget(){if(typeof t!='undefined')t.textContent=monthTarget()+' يوم'}function cnt(d,s){return S.filter(r=>r[d-1]==s).length}function work(i){return S[i].filter(x=>x!='O'&&x!='V').length}
+function shiftHours(i,x){ if(x==='M'||x==='N') return (isFlexibleEmployee(i)?12:8); return 0; }
+function workHours(i){ return (S[i]||[]).reduce((a,x)=>a+shiftHours(i,x),0); }
+function hourTarget(){return 192}
+function hourMin(){return 180}
+function updateTarget(){if(typeof t!='undefined')t.textContent='180–192 ساعة'}
+function cnt(d,s){return S.filter(r=>r[d-1]==s).length}
+function work(i){return S[i].filter(x=>x!='O'&&x!='V').length}
 /* v0.9.9 — ربط نهاية الشهر السابق ببداية الشهر الحالي */
 function rosterMonthKey(yy,mm){return String(yy)+'-'+String(mm+1).padStart(2,'0')}
 function rosterArchive(){
@@ -1408,7 +1411,8 @@ function balanceFair(n){
   E.forEach((e,i)=>{if(e[1]||e[2]||e[5])return;let guard=300;while(work(i)<req(i)&&guard--){let cand=[];for(let d=1;d<=n;d++){if(S[i][d-1]!='O'||wk(d))continue;let shift=e[2]?'N':'M';if(shift=='N'&&cnt(d,'N')>=+wn.value)continue;let L=d>1?S[i][d-2]:'',R=d<n?S[i][d]:'';let score=(L==shift?5:0)+(R==shift?5:0)+(L!='O'&&L!='V'?1:0)+(R!='O'&&R!='V'?1:0);cand.push([d,shift,score])}cand.sort((a,z)=>z[2]-a[2]);if(!cand.length)break;S[i][cand[0][0]-1]=cand[0][1]}});
   E.forEach((e,i)=>{if(e[1]||e[2]||e[5])return;let guard=300;while(work(i)>req(i)&&guard--){let cand=[];for(let d=1;d<=n;d++)if(canRemove(i,d))cand.push(d);cand.sort((a,z)=>edgeScore(i,z)-edgeScore(i,a));if(!cand.length)break;S[i][cand[0]-1]='O'}});
 }
-function fill(d,s,need,C){while(cnt(d,s)<need){let a=C.filter(i=>S[i][d-1]=='O');if(!a.length)break;a.sort((x,z)=>work(x)-work(z));S[a[0]][d-1]=s}}function trim(d,s,need){let a=[];S.forEach((r,i)=>{if(r[d-1]==s)a.push(i)});if(s=='N')a.sort((x,z)=>(E[z][2]||0)-(E[x][2]||0));if(s=='M')a.sort((x,z)=>(E[z][3]||0)-(E[x][3]||0));a.slice(need).forEach(i=>S[i][d-1]='O')}function rend(){let n=days();tab.innerHTML='<tr><th class=name>الموظف</th>'+Array.from({length:n},(_,i)=>{let dt=new Date(+y.value,+m.value,i+1),dn=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][dt.getDay()];return `<th class="${wk(i+1)?'wk':''}">${dn}<br>${i+1}</th>`}).join('')+'</tr>';E.forEach((e,i)=>{tab.innerHTML+=`<tr><td class=name>${e[0]}</td>`+S[i].map((x,d)=>{let sc=x=='N'?'shiftN':x=='M'?'shiftM':x=='V'?'shiftV':'shiftO';return `<td class="${sc} ${wk(d+1)?'wk':''}" onclick="cy(${i},${d})">${x}</td>`}).join('')+'</tr>'})}function cy(i,d){let a=['M','N','O','V'],x=a[(a.indexOf(S[i][d])+1)%4];if(E[i][5]&&!['N','O','V'].includes(x))x='N';if(E[i][2]&&!['N','O','V'].includes(x))x='N';if(E[i][1]&&!['M','O','V'].includes(x))x='M';S[i][d]=x;rend();summary();check()}function summary(){sum.innerHTML='<tr><th>الموظف</th><th>M</th><th>N</th><th>O</th><th>V</th><th>العمل</th><th>المطلوب</th><th>أطول دوام متواصل</th><th>العجز/الزيادة</th><th>الحالة</th></tr>'+E.map((e,i)=>{let c=x=>S[i].filter(z=>z==x).length,r=req(i),w=work(i);return `<tr><td>${e[0]}</td><td>${c('M')}</td><td>${c('N')}</td><td>${c('O')}</td><td>${c('V')}</td><td>${w}</td><td>${r}</td><td style="font-weight:bold;color:${maxWorkRun(i)<=7?'#138a38':'#b91c1c'}">${maxWorkRun(i)} ${maxWorkRun(i)<=7?'✓':'⚠'}</td><td style="font-weight:bold;color:${w==r?'#138a38':'#c2410c'}">${w-r>0?'+':''}${w-r}</td><td style="font-weight:bold;color:${w==r&&maxWorkRun(i)<=7?'#138a38':'#c2410c'}">${w}/${r} ${w==r&&maxWorkRun(i)<=7?'✓':'⚠'}</td></tr>`}).join('')}function collectIssues(){
+function fill(d,s,need,C){while(cnt(d,s)<need){let a=C.filter(i=>S[i][d-1]=='O');if(!a.length)break;a.sort((x,z)=>work(x)-work(z));S[a[0]][d-1]=s}}function trim(d,s,need){let a=[];S.forEach((r,i)=>{if(r[d-1]==s)a.push(i)});if(s=='N')a.sort((x,z)=>(E[z][2]||0)-(E[x][2]||0));if(s=='M')a.sort((x,z)=>(E[z][3]||0)-(E[x][3]||0));a.slice(need).forEach(i=>S[i][d-1]='O')}function rend(){let n=days();tab.innerHTML='<tr><th class=name>الموظف</th>'+Array.from({length:n},(_,i)=>{let dt=new Date(+y.value,+m.value,i+1),dn=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][dt.getDay()];return `<th class="${wk(i+1)?'wk':''}">${dn}<br>${i+1}</th>`}).join('')+'</tr>';E.forEach((e,i)=>{tab.innerHTML+=`<tr><td class=name>${e[0]}</td>`+S[i].map((x,d)=>{let sc=x=='N'?'shiftN':x=='M'?'shiftM':x=='V'?'shiftV':'shiftO';return `<td class="${sc} ${wk(d+1)?'wk':''}" onclick="cy(${i},${d})">${x}</td>`}).join('')+'</tr>'})}function cy(i,d){let a=['M','N','O','V'],x=a[(a.indexOf(S[i][d])+1)%4];if(E[i][5]&&!['N','O','V'].includes(x))x='N';if(E[i][2]&&!['N','O','V'].includes(x))x='N';if(E[i][1]&&!['M','O','V'].includes(x))x='M';S[i][d]=x;rend();summary();check()}function summary(){sum.innerHTML='<tr><th>الموظف</th><th>M</th><th>N</th><th>O</th><th>V</th><th>أيام العمل</th><th>ساعات العمل</th><th>المستهدف</th><th>الفرق</th><th>أطول دوام متواصل</th><th>الحالة</th></tr>'+E.map((e,i)=>{let c=x=>S[i].filter(z=>z==x).length,h=workHours(i),diff=h-hourTarget(),status=h<hourMin()?'أقل من الحد الأدنى':h>hourTarget()?'أعلى من الحد الأعلى':'ضمن 180–192';return `<tr><td>${e[0]}</td><td>${c('M')}</td><td>${c('N')}</td><td>${c('O')}</td><td>${c('V')}</td><td>${work(i)}</td><td style="font-weight:bold">${h}</td><td>192</td><td style="font-weight:bold;color:${h>=hourMin()&&h<=hourTarget()?'#138a38':'#b91c1c'}">${diff>0?'+':''}${diff}</td><td style="font-weight:bold;color:${maxWorkRun(i)<=7?'#138a38':'#b91c1c'}">${maxWorkRun(i)} ${maxWorkRun(i)<=7?'✓':'⚠'}</td><td style="font-weight:bold;color:${h>=hourMin()&&h<=hourTarget()&&maxWorkRun(i)<=7?'#138a38':'#b91c1c'}">${status} ${h>=hourMin()&&h<=hourTarget()?'✓':'⚠'}</td></tr>`}).join('')}
+function collectIssues(){
   let n=days(),q=[];
   for(let d=1;d<=n;d++){
     let r=wk(d)?[+em.value,+ea.value,+en.value]:[+wm.value,+wa.value,+wn.value];
@@ -1474,7 +1478,7 @@ function autoFix(){
   E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));
   // موظف N فقط: صحح أي شفت مخالف مع أقل تغيير ممكن.
   E.forEach((e,i)=>{if(!e[2])return;for(let d=1;d<=n;d++)if(['M','N'].includes(S[i][d-1]))S[i][d-1]='N'});
-  // موظف مسائي ثابت: صحح أي شفت عمل مخالف إلى A مع الحفاظ على O وV.
+  // موظف مسائي ثابت: صحح أي شفت عمل مخالف إلى N مع الحفاظ على O وV.
   E.forEach((e,i)=>{if(!e[5])return;for(let d=1;d<=n;d++)if(['M','N'].includes(S[i][d-1]))S[i][d-1]='N'});
   // عالج نقص التغطية اليومية من الموظفين المتاحين، مع تفضيل من لديه عجز في أيام العمل.
   for(let pass=0;pass<3;pass++){
