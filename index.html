@@ -464,24 +464,24 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
 function loadAgreed12h2026(){
   if(+y.value!==2026 || +m.value!==8) return false;
   const n=days();
-  const fixedMorningNames=['طاهر المحيميد','عبدالمنعم البلادي','صالح الهاشم','محمد العيثان','زهرة بو حسن'];
+  const fixedMorningNames=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم'];
   E.forEach((e,i)=>{ if(fixedMorningNames.includes(e[0])) e[1]=1; else if(e[0]==='عقيله الحبابي'||e[0]==='مصطفى الزقعان') e[1]=0; });
   const plan={
-    'طاهر المحيميد': 'MMMMOOOOOOMMMOMMOMOMOOMOMMMOOM',
-    'عبدالمنعم البلادي': 'MMOOMMMMMMOOOMOOMOMOMMOMOOOMMO',
-    'مصطفى الزقعان': 'MMMOOMMOMMNOMOMOMOOOMOOOOONOOO',
-    'عقيله الحبابي': 'MMMOOMMMMOOOOONONOOOOMNOONOONO',
-    'صالح الهاشم': 'MMMOMMMMMMOOMOOMOOOMMOOMOOOOMM',
-    'جعفر الشهيب': 'MMMOOMMMMMOOMOOMOOONOOMMNOOOOO',
-    'مختار الخلف': 'MMOMNOMMMMNOMOOOOOOOOONNOOMNON',
-    'عبدالخالق التريكي': 'MOMOOMOMNNOOMMOMMOMOONOOOOOOOO',
-    'حسين الحسن': 'MNONNNOMMMOOMOMOOOOMOOOMOOOMOO',
-    'محمد العيثان': 'MMMOOMMMMMOMMOOOOMOMOMOOOMOOMM',
-    'حيدر الحسن': 'MMMOOMMMOMONOOMNNOOOOOMOOONONN',
-    'ساره الخليفة': 'MMMOOMMMMMONOMOOMNOOOOOOOOMNOO',
-    'ندى العلي': 'MMMNOMMMMMOOONONONNOMOOONOOOOO',
-    'رحاب العلي': 'MMMOOMMOMMOOMMNOOOOONOOOONOMOM',
-    'زهرة بو حسن': 'MMMOOMMMMMMOMOOOOOOOOMMOMOMMMO',
+    'طاهر المحيميد': 'OMOMMMMOMOMMOOMMOMMOOOOMOOMMOM',
+    'عبدالمنعم البلادي': 'MMMOOMOMOMOOMMOOMOOMMMMOMMOOMO',
+    'مصطفى الزقعان': 'OMMMOOMMOOOOOMMMMOOMMMMMOOMOMO',
+    'عقيله الحبابي': 'MMOOOOMOMOOMMMMMMOOMMMOMOOOMMO',
+    'صالح الهاشم': 'OOMOMOMOMMOOMMMMMOMOMOMOOOMMMO',
+    'جعفر الشهيب': 'MOMONNNOOMONOMOOONNOOOMOMOMMMM',
+    'مختار الخلف': 'ONOOOMMMMMOOONNNNOOOMMOMOONOMM',
+    'عبدالخالق التريكي': 'MMMONNNOOOONOMMOOOMONNOOOMMMMM',
+    'حسين الحسن': 'MMOOOOMMMOMONNNOMOOONNOONOMOMM',
+    'محمد العيثان': 'MMONOMOMMOONOMONOOOMMMMOONOONN',
+    'حيدر الحسن': 'OONNOMMMMONOMOOMOOOMMMOOONNNOM',
+    'ساره الخليفة': 'NNNOOMMONNOOMOOMMMOOMMMOOOONOM',
+    'ندى العلي': 'OMMONOONONOOMMOMMONNOMONOOOMMM',
+    'رحاب العلي': 'NOMOOMMMMONOOMMMOOONNOOOOMMONN',
+    'زهرة بو حسن': 'MMMOOMMONOOOMOMONNOMMONNNOOOOM'
   };
   S=E.map(e=>{const r=plan[e[0]]||'O'.repeat(n);return r.slice(0,n).split('')});
   E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));
@@ -523,16 +523,15 @@ function rendE(){emps.innerHTML='';E.forEach((e,i)=>{let vv=(e[4]||[]).map((v,j)
 function monthTarget(){let n=days(),x=0;for(let d=1;d<=n;d++)if(!wk(d))x++;return x}
 function vacWeekdays(i){let n=days(),x=0;for(let d=1;d<=n;d++)if(S[i]&&S[i][d-1]=='V'&&!wk(d))x++;return x}
 function req(i){
-  let base=Math.max(0,monthTarget()-vacWeekdays(i));
-  const flexible=E[i]&&!E[i][1]&&!E[i][2]&&!E[i][5];
-  if(flexible&&typeof compensationBalanceForEmployee==='function')base-=compensationBalanceForEmployee(E[i][0]);
-  return Math.max(0,Math.min(days(),base));
+  const target=16;
+  const vacationDays=(E[i]&&Array.isArray(E[i][4]))?E[i][4].filter(v=>v).length:0;
+  return Math.max(0,Math.min(days(),target-vacationDays));
 }
 function shiftHours(i,x){ if(x==='M'||x==='N') return 12; return 0; }
 function workHours(i){ return (S[i]||[]).reduce((a,x)=>a+shiftHours(i,x),0); }
 function hourTarget(){return 192}
 function hourMin(){return 180}
-function updateTarget(){if(typeof t!='undefined')t.textContent='180–192 ساعة'}
+function updateTarget(){if(typeof t!='undefined')t.textContent='180–192 ساعة (15–16 مناوبة 12 ساعة)'}
 function cnt(d,s){return S.filter(r=>r[d-1]==s).length}
 function work(i){return S[i].filter(x=>x!='O'&&x!='V').length}
 /* v0.9.9 — ربط نهاية الشهر السابق ببداية الشهر الحالي */
@@ -678,7 +677,7 @@ function enforcePreviousMonthBoundary(n){
 function gen(){
   const n=days(); updateTarget();
   // جميع الموظفين الآن على نظام 12 ساعة. خمسة موظفين مثبتون صباحًا، والبقية مرنون.
-  const fixedMorningNames=['طاهر المحيميد','عبدالمنعم البلادي','صالح الهاشم','محمد العيثان','زهرة بو حسن'];
+  const fixedMorningNames=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم'];
   const fixedM=E.map((e,i)=>fixedMorningNames.includes(e[0])?i:-1).filter(i=>i>=0);
   const flex=E.map((e,i)=>fixedM.includes(i)?-1:i).filter(i=>i>=0);
   const sup=E.findIndex(e=>e[0]==='طاهر المحيميد'), dep=E.findIndex(e=>e[0]==='عبدالمنعم البلادي');
@@ -803,7 +802,7 @@ function enforceSupervisorAlternation(n){
     }
   }
 }
-function needForDay(d,s){if(wk(d))return 1;if(s==='M')return Math.max(0,+wm.value||0);if(s==='N')return Math.max(1,Math.min(2,+wa.value||2));if(s==='N')return Math.max(1,Math.min(2,+wn.value||2));return 0}
+function needForDay(d,s){if(s==='M')return wk(d)?2:Math.max(4,+wm.value||4);if(s==='N')return Math.max(2,+wn.value||2);return 0}
 function minimumNeedForDay(d,s){let preferred=needForDay(d,s);return (s=='N'||s=='N')&&preferred>0?1:preferred}
 function canRemove(i,d){let s=S[i][d-1];return ['M','N'].includes(s)&&cnt(d,s)>minimumNeedForDay(d,s)}
 function edgeScore(i,d){let L=d==1?'X':S[i][d-2],R=d==days()?'X':S[i][d];let sc=0;if(L=='O'||L=='V')sc+=4;if(R=='O'||R=='V')sc+=4;if(L==S[i][d-1])sc+=1;if(R==S[i][d-1])sc+=1;return sc}
@@ -1053,8 +1052,7 @@ function repairRestTransitions(n){
   return changed
 }
 function maximumAllowedForDay(d,shift){
-  if(wk(d))return 1;
-  if(shift==='N'||shift==='N')return 2;
+  if(wk(d))return 2;
   return Infinity
 }
 function isFlexibleEmployee(i){return !!E[i]&&!E[i][1]&&!E[i][2]&&!E[i][5]}
