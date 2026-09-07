@@ -1,0 +1,2985 @@
+<style id="v0909-home-title">
+.homeBrand .homeHospitalTitle{
+  font-size:clamp(29px,7.2vw,42px)!important;
+  font-weight:950!important;
+  line-height:1.25!important;
+  letter-spacing:.1px!important;
+  margin:8px 0 6px!important;
+}
+</style>
+<style id="v0909-my-calendar-final">
+/* تقويمي — خلفية بيج موحدة */
+.empcal .dow,
+.empcal .day,
+.empcal .A,
+.empcal .N,
+.empcal .M,
+.empcal .V,
+.empcal .O,
+.empcal .weekend{
+  background:#f2e6cf!important;
+  border-color:#d6c29d!important;
+}
+/* الويكند: الخط أحمر فقط بدون تعبئة */
+.empcal .weekend,
+.empcal .weekend *{
+  color:#d21f1f!important;
+}
+/* الأوف: حرف O ورقم اليوم باللون الأحمر */
+.empcal .day.O,
+.empcal .day.O *{
+  color:#d21f1f!important;
+}
+/* بقية أيام الدوام كتابة داكنة على البيج */
+.empcal .day.M:not(.weekend),
+.empcal .day.A:not(.weekend),
+.empcal .day.N:not(.weekend),
+.empcal .day.V:not(.weekend){
+  color:#222!important;
+}
+
+/* اختيار شهر إنشاء الجدول */
+.scheduleMonthCard{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:18px;
+  padding:14px;
+  margin:0 0 14px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.scheduleMonthCard input[type=month]{
+  width:min(100%,310px);
+  min-height:54px;
+  box-sizing:border-box;
+  border-radius:14px;
+  padding:8px 12px;
+  font-size:17px;
+  font-weight:800;
+}
+.scheduleEmptyNote{
+  padding:22px 14px;
+  border:1px dashed rgba(255,255,255,.25);
+  border-radius:16px;
+  text-align:center;
+  font-weight:800;
+}
+</style>
+
+<style id="v0909-generate-grid">
+.generateActionGrid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:14px!important;
+  justify-items:center!important;
+}
+.generateActionTile{
+  width:100%!important;
+  aspect-ratio:1/1!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:12px 8px!important;
+  border-radius:22px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:10px!important;
+  white-space:normal!important;
+  text-align:center!important;
+  font-size:15px!important;
+  line-height:1.25!important;
+}
+.generateActionIcon{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:54px!important;
+  height:54px!important;
+  border-radius:16px!important;
+  background:rgba(255,255,255,.12)!important;
+  font-size:31px!important;
+  line-height:1!important;
+}
+@media(min-width:560px){
+  .generateActionGrid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+@media(min-width:980px){
+  .generateActionGrid{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+}
+</style>
+<style id="v0909-calendar-colors">
+.empCalendar .calDow,.empCalendar .calDay{background:#f3ead7!important;border-color:#d8c9aa!important;color:#2b2b2b!important}
+.empCalendar .calWeekend{background:#f3ead7!important;border-color:#d8c9aa!important;color:#c81e1e!important}
+.empCalendar .calO{background:#f3ead7!important;color:#c81e1e!important}
+.empCalendar .calO .num,.empCalendar .calO .sh,.empCalendar .calWeekend .num,.empCalendar .calWeekend .sh{color:#c81e1e!important}
+.empCalendar .calA,.empCalendar .calN,.empCalendar .calM,.empCalendar .calV{background:#f3ead7!important}
+</style><!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><title>منظم المناوبات</title><style>body{font-family:Arial;margin:0;background:#f5f7fb;color:#222}header{background:#1f4e78;color:#fff;padding:14px}main{padding:12px}.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px;margin-bottom:12px}input,select,button{padding:8px;margin:3px;border:1px solid #ccc;border-radius:8px}button{background:#1f4e78;color:#fff}.grid{display:grid;grid-template-columns:340px 1fr;gap:12px}@media(max-width:800px){.grid{grid-template-columns:1fr}}table{border-collapse:collapse;min-width:1050px;width:100%}td,th{border:1px solid #ddd;padding:4px;text-align:center;font-size:12px}.wrap{overflow:auto}.wk{color:#d40000!important;font-weight:700}.name{position:sticky;right:0;background:white}.emp{border:1px solid #ddd;padding:7px;border-radius:8px;margin:5px 0}.sm{font-size:12px;color:#666}
+.shiftA{background:#d9ecff!important;color:#134f8c}
+.shiftN{background:#fff2a8!important;color:#664d00}
+.shiftM{background:#eef8ee}
+.shiftO{background:#f3f4f6}
+.shiftV{background:#f3ddff!important;color:#6b21a8;font-weight:700}
+.targetBox{display:inline-block;background:#eef6ff;border:1px solid #bcd5ef;border-radius:8px;padding:6px 10px;margin:4px 0;font-size:12px}
+
+@media print{
+  @page{size:A4 landscape;margin:7mm}
+  body{background:#fff!important;margin:0!important}
+  header,.card:first-child,.tabs,.note,.actions,#summaryPane,#issuesPane,#msg,
+  button,input,select,.emp-list,h2,h3{display:none!important}
+  main,.layout,.card,#schedulePane,.table-wrap{display:block!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;box-shadow:none!important;overflow:visible!important}
+  #scheduleTable{width:100%!important;min-width:0!important;table-layout:fixed!important;border-collapse:collapse!important}
+  #scheduleTable th,#scheduleTable td{
+    font-size:7.5pt!important;
+    padding:2px 1px!important;
+    min-width:0!important;
+    height:18px!important;
+    border:1px solid #555!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important
+  }
+  #scheduleTable th.name,#scheduleTable td.name{
+    position:static!important;
+    width:28mm!important;
+    min-width:28mm!important;
+    font-size:8pt!important;
+    text-align:right!important
+  }
+  .shiftA{background:#d9ecff!important}
+  .shiftN{background:#fff2a8!important}
+  .shiftM{background:#eef8ee!important}
+  .shiftO{background:#f3f4f6!important}
+  .shiftV{background:#f3ddff!important}
+  .wk{color:#d40000!important}
+  .printTitle{display:block!important;text-align:center;font-size:14pt;font-weight:700;margin:0 0 5mm}
+}
+.printTitle{display:none}
+
+
+.employeePortal{margin-top:14px;border:1px solid #d9e2ec;border-radius:14px;padding:14px;background:#fff}.employeeActions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.calendarWrap{display:none;margin-top:12px}.empCalendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;direction:rtl}.calDow,.calDay{border:1px solid #d8dee8;border-radius:8px;padding:5px;text-align:center;box-sizing:border-box;min-width:0}.calDow{height:36px;min-height:36px;display:flex;align-items:center;justify-content:center}.calDay{height:64px;min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center}.calDow{font-weight:700;background:#f5f7fb}.calDay .num{font-size:11px;font-weight:700}.calDay .sh{font-size:16px;font-weight:800;margin-top:5px}.calWeekend{color:#b42318!important;background:#fff6f6!important;border-color:#f1b8b8!important}.calA,.calN,.calM,.calV{background:#fff}.calO{background:#dff3df}.empStats{font-size:12px;margin-top:8px;padding:8px;background:#f8fafc;border-radius:8px}@media print{body.employee-print header,body.employee-print main>*:not(.employeePortal){display:none!important}body.employee-print .employeePortal>*:not(.calendarWrap){display:none!important}body.employee-print .calendarWrap{display:block!important}}
+
+.portal-shell{max-width:720px;margin:18px auto;padding:14px}
+.portal-card{background:#fff;border:1px solid #d8e0ea;border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.portal-title{font-size:22px;font-weight:800;margin-bottom:5px}
+.portal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.portal-actions button{font-size:15px;padding:13px}
+.portal-back{margin:8px 0}
+.empcal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;direction:rtl;margin-top:10px}
+.empcal .dow,.empcal .day{border:1px solid #d8dee8;border-radius:9px;padding:5px;text-align:center;background:#fff;box-sizing:border-box;min-width:0}
+.empcal .dow{height:36px;min-height:36px;display:flex;align-items:center;justify-content:center}
+.empcal .day{height:64px;min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.empcal .dow{font-weight:700;background:#f5f7fb}
+.empcal .weekend{color:#b42318!important;background:#fff6f6!important;border-color:#f1b8b8!important}
+.empcal .A,.empcal .N,.empcal .M,.empcal .V{background:#fff}.empcal .O{background:#dff3df}
+.empcal .shift{font-size:18px;font-weight:800;margin-top:6px}
+.readonly-note{font-size:12px;color:#667085;margin-top:4px}
+@media(max-width:600px){.portal-actions{grid-template-columns:1fr}.portal-shell{padding:8px}}
+
+#quickNav{position:sticky;top:0;z-index:9999;background:#0f2747;padding:8px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+#quickNav button{padding:8px 11px;border-radius:9px;border:0;background:#fff;color:#0f2747;font-weight:700;font-size:13px}
+@media(max-width:600px){#quickNav{position:fixed;left:0;right:0;bottom:0;top:auto}body{padding-bottom:64px}}
+
+.fullRosterCard{background:#fff;border:1px solid #d8e0ea;border-radius:14px;padding:12px;margin-top:12px}
+.printPreviewBar{position:sticky;top:8px;z-index:50;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 0 12px;padding:8px;background:rgba(255,255,255,.96);border:1px solid #d8e0ea;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.printPreviewBar button{flex:1 1 150px;max-width:260px;padding:13px 12px;border:0;border-radius:12px;background:#0b3156;color:#fff;font-weight:900;font-size:15px}
+.fullRosterWrap{overflow:auto;border:1px solid #e1e7ef;border-radius:10px;margin-top:10px}
+.fullRosterTable{border-collapse:collapse;min-width:1100px;width:100%}
+.fullRosterTable th,.fullRosterTable td{border:1px solid #e3e7ed;padding:5px;text-align:center;font-size:12px;min-width:34px}
+.fullRosterTable th{background:#eef3f8}
+.fullRosterTable th.name,.fullRosterTable td.name{position:sticky;right:0;background:#fff;min-width:170px;text-align:right;z-index:2}
+.fullRosterTable .wkcol{color:#d40000!important;font-weight:700}
+.fullRosterTable .A{background:#d9ecff}
+.fullRosterTable .N{background:#fff2a8}
+.fullRosterTable .M{background:#eef8ee}
+.fullRosterTable .O{background:#f3f4f6}
+.fullRosterTable .V{background:#f3ddff}
+
+.monthNav{display:flex;align-items:center;justify-content:center;gap:10px;margin:10px 0}
+.monthNav button{min-width:44px;padding:8px 12px;font-size:18px}
+.monthNav .monthLabel{font-weight:800;min-width:130px;text-align:center}
+
+/* v0.6.7 glass square navigation */
+:root{--navy:#0b3156;--glass:rgba(255,255,255,.70)}
+.monthNav{display:grid!important;grid-template-columns:58px 1fr 58px;align-items:center;gap:12px;margin:12px 0 18px}
+.monthNav button{
+ width:58px!important;height:58px!important;min-width:58px!important;padding:0!important;
+ border:1px solid rgba(255,255,255,.85)!important;border-radius:15px!important;
+ background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(222,235,248,.62))!important;
+ box-shadow:inset 2px 2px 4px rgba(255,255,255,.95),inset -2px -2px 4px rgba(25,63,99,.12),
+ 0 7px 15px rgba(11,49,86,.18)!important;color:#0b3156!important;font-size:30px!important;
+ font-weight:900!important;line-height:1!important;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)
+}
+.monthNav .monthLabel{font-size:22px;font-weight:900;min-width:0!important;text-align:center}
+.bottom{
+ display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:12px!important;
+ padding:12px max(14px,env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))!important;
+ background:rgba(7,43,77,.94)!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)
+}
+.bottom button{
+ width:58px!important;height:58px!important;min-width:58px!important;max-width:58px!important;
+ margin:auto!important;padding:0!important;border-radius:15px!important;font-size:0!important;
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(205,222,239,.72))!important;
+ border:1px solid rgba(255,255,255,.85)!important;
+ box-shadow:inset 2px 2px 4px #fff,inset -3px -3px 5px rgba(21,56,91,.16),0 7px 15px rgba(0,0,0,.30)!important
+}
+.bottom button::before{font-size:29px!important;line-height:1!important;filter:drop-shadow(0 2px 2px rgba(0,0,0,.15))}
+.bottom button:nth-child(1)::before{content:"🏠"}
+.bottom button:nth-child(2)::before{content:"📋"}
+.bottom button:nth-child(3)::before{content:"📅"}
+.bottom button:nth-child(4)::before{content:"💾"}
+.bottom button:nth-child(5)::before{content:"⚙️"}
+@media(max-width:390px){
+ .bottom{gap:6px!important;padding-left:7px!important;padding-right:7px!important}
+ .bottom button{width:52px!important;height:52px!important;min-width:52px!important}
+}
+
+/* v0.6.8 - actual bottom navigation glass icons */
+#quickNav{
+  display:grid!important;
+  grid-template-columns:repeat(3,1fr)!important;
+  gap:10px!important;
+  padding:11px 12px calc(11px + env(safe-area-inset-bottom))!important;
+  background:linear-gradient(180deg,rgba(8,44,78,.98),rgba(4,33,61,.98))!important;
+  border-top:1px solid rgba(255,255,255,.18)!important;
+  box-shadow:0 -8px 24px rgba(4,33,61,.20)!important;
+  backdrop-filter:blur(18px)!important;
+  -webkit-backdrop-filter:blur(18px)!important;
+}
+#quickNav button{
+  width:58px!important;
+  height:58px!important;
+  min-width:58px!important;
+  max-width:58px!important;
+  margin:auto!important;
+  padding:0!important;
+  border-radius:16px!important;
+  border:1px solid rgba(255,255,255,.90)!important;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.98),rgba(204,221,237,.78))!important;
+  box-shadow:
+    inset 2px 2px 4px rgba(255,255,255,1),
+    inset -3px -3px 6px rgba(25,62,97,.18),
+    0 7px 14px rgba(0,0,0,.32),
+    0 0 0 1px rgba(255,255,255,.18)!important;
+  color:#0b3156!important;
+  font-size:0!important;
+  line-height:1!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+}
+#quickNav button::before{
+  font-size:31px!important;
+  line-height:1!important;
+  display:block!important;
+  filter:drop-shadow(0 2px 2px rgba(0,0,0,.18));
+}
+#quickNav button:nth-child(1)::before{content:"🏠"}
+#quickNav button:nth-child(2)::before{content:"📅"}
+#quickNav button:nth-child(3)::before{content:"⚙️"}
+#quickNav button:active{
+  transform:translateY(2px) scale(.97);
+  box-shadow:
+    inset 3px 3px 7px rgba(22,59,94,.20),
+    inset -2px -2px 4px rgba(255,255,255,.90),
+    0 3px 8px rgba(0,0,0,.26)!important;
+}
+@media(max-width:390px){
+  #quickNav{gap:8px!important;padding-left:10px!important;padding-right:10px!important}
+  #quickNav button{width:56px!important;height:56px!important;min-width:56px!important;max-width:56px!important}
+  #quickNav button::before{font-size:28px!important}
+}
+#quickNav{align-items:center!important;justify-items:center!important}
+#quickNav button{aspect-ratio:1/1!important}
+.homeLoginRow{display:grid;grid-template-columns:1fr;gap:10px;align-items:center;margin-top:12px}
+.homeLoginRow select{width:100%;margin:0!important;min-height:50px}
+.homeLoginRow select{min-height:58px!important;font-size:19px!important;font-weight:900!important;color:#0b3156!important;padding:10px 14px!important}
+.homeLoginRow select option{font-size:19px!important;font-weight:900!important;color:#0b3156!important}
+.portal-card .homeSelectHint{font-size:16px!important;font-weight:800!important;color:#526477!important;line-height:1.7}
+.homeLoginRow button{min-width:92px;height:50px;margin:0!important;font-size:16px;font-weight:800}
+@media(max-width:520px){.homeLoginRow{grid-template-columns:1fr}}
+
+.homeBrand{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:16px;padding:18px;border-radius:24px;background:rgba(255,255,255,.96);border:1px solid #d7e3ee;box-shadow:0 10px 26px rgba(15,54,88,.10)}
+.homeBrand img{width:min(520px,92%);height:auto;border-radius:16px}
+.homeBrand h1{margin:16px 0 4px;color:#0b3156;font-size:clamp(24px,5vw,36px);font-weight:900}
+.homeBrand p{margin:0;color:#6b7d90;font-weight:700}
+
+.adminHub{padding:14px;max-width:760px;margin:0 auto}
+.adminHubGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.adminHubBtn{min-height:130px;border-radius:22px;border:1px solid rgba(255,255,255,.9);
+background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(218,231,243,.78));
+box-shadow:inset 2px 2px 5px #fff,inset -3px -3px 7px rgba(24,60,94,.14),0 10px 22px rgba(8,42,73,.16);
+display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+font-weight:900;color:#0b3156;font-size:17px}
+.adminHubBtn .ico{font-size:38px;filter:drop-shadow(0 3px 3px rgba(0,0,0,.16))}
+.adminPage{display:none;padding:14px;max-width:900px;margin:0 auto}
+.adminPage.active{display:block}
+.adminPageHeader{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.adminPageHeader h2{margin:0;color:#0b3156}
+.adminBack{width:48px;height:48px;border-radius:14px;border:1px solid #d4e1ec;background:#fff;
+box-shadow:0 6px 14px rgba(8,42,73,.12);font-size:24px;font-weight:900;color:#0b3156}
+@media(max-width:520px){.adminHubGrid{grid-template-columns:1fr 1fr}.adminHubBtn{min-height:112px;font-size:15px}}
+
+#adminHubRoot{max-width:760px;margin:18px auto;padding:14px;direction:rtl}
+.adminHubCard{background:#fff;border:1px solid #d9e3ec;border-radius:24px;padding:18px;box-shadow:0 12px 28px rgba(12,48,80,.11)}
+.adminHubGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
+.adminTile{min-height:126px;border-radius:22px;border:1px solid rgba(255,255,255,.95);
+background:linear-gradient(145deg,#fff,#e4eef7);box-shadow:inset 2px 2px 5px #fff,inset -3px -3px 7px rgba(22,58,92,.12),0 9px 20px rgba(8,42,73,.15);
+display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;color:#0b3156;font-weight:900;font-size:16px}
+.adminTile .ai{font-size:38px}
+.adminSubPage{max-width:900px;margin:18px auto;padding:14px;direction:rtl}
+.adminSubHead{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.adminSubHead h2{margin:0;color:#0b3156}
+.adminBack2{width:50px;height:50px;border-radius:15px;border:1px solid #d4e1ec;background:#fff;box-shadow:0 6px 14px rgba(8,42,73,.12);font-size:28px;color:#0b3156;font-weight:900}
+.adminSubBody{background:#fff;border:1px solid #d9e3ec;border-radius:22px;padding:16px;box-shadow:0 10px 24px rgba(12,48,80,.09)}
+@media(max-width:520px){.adminHubGrid{grid-template-columns:1fr 1fr}.adminTile{min-height:112px;font-size:14px}}
+
+
+/* v0.8.6 — print full roster table only */
+#printRosterOnlyHost{display:none}
+@media print{
+  @page{size:A4 landscape;margin:6mm}
+  body.print-roster-only *{visibility:hidden!important}
+  body.print-roster-only #printRosterOnlyHost,
+  body.print-roster-only #printRosterOnlyHost *{visibility:visible!important}
+  body.print-roster-only #printRosterOnlyHost{display:block!important;position:absolute!important;left:0!important;top:0!important;width:100%!important;background:#fff!important}
+  body.print-roster-only #printRosterOnlyHost .printOnlyTitle{display:block!important;text-align:center;font-size:12pt;font-weight:800;margin:0 0 4mm}
+  body.print-roster-only #printRosterOnlyHost table{width:100%!important;min-width:0!important;table-layout:fixed!important;border-collapse:collapse!important;direction:rtl}
+  body.print-roster-only #printRosterOnlyHost th,body.print-roster-only #printRosterOnlyHost td{border:1px solid #555!important;font-size:6.7pt!important;padding:1px!important;height:14pt!important;text-align:center!important;white-space:nowrap!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body.print-roster-only #printRosterOnlyHost th.name,body.print-roster-only #printRosterOnlyHost td.name{position:static!important;width:25mm!important;min-width:25mm!important;text-align:right!important;font-size:7pt!important;background:#fff!important}
+  body.print-roster-only #printRosterOnlyHost .wkcol{color:#d40000!important}
+  body.print-roster-only #printRosterOnlyHost .A{background:#d9ecff!important}.print-roster-only #printRosterOnlyHost .N{background:#fff2a8!important}.print-roster-only #printRosterOnlyHost .M{background:#eef8ee!important}.print-roster-only #printRosterOnlyHost .O{background:#f3f4f6!important}.print-roster-only #printRosterOnlyHost .V{background:#f3ddff!important}
+}
+/* v0.8.6 — Reliable A4 landscape preview (no device rotation) */
+#fullRosterLandscapeOverlay{
+  display:none;position:fixed;inset:0;z-index:20000;background:#e9eef4;color:#111;overflow:auto;
+}
+#fullRosterLandscapeOverlay.active{display:block}
+.landscapeToolbar{
+  position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:8px 10px;background:rgba(7,43,77,.98);color:#fff;
+}
+.landscapeToolbar b{font-size:13px;text-align:center;flex:1}
+.landscapeToolbar button{border:0;border-radius:12px;padding:9px 11px;background:#fff;color:#0b3156;font-weight:900;white-space:nowrap}
+.landscapeViewport{width:100%;min-height:calc(100vh - 58px);overflow:auto;padding:12px 0 28px;box-sizing:border-box;display:flex;justify-content:center;align-items:flex-start}
+.landscapeRosterCanvas{
+  width:1120px;min-width:1120px;min-height:760px;padding:18px;box-sizing:border-box;background:#fff;
+  box-shadow:0 8px 28px rgba(0,0,0,.18);transform-origin:top center;
+}
+.landscapeRosterTitle{text-align:center;font-weight:900;font-size:20px;margin:2px 0 12px;color:#0b3156}
+.landscapeRosterWrap{width:100%;overflow:visible;border:1px solid #d7e1eb;background:#fff}
+.landscapeRosterTable{width:100%;border-collapse:collapse;table-layout:fixed;direction:rtl}
+.landscapeRosterTable th,.landscapeRosterTable td{border:1px solid #cfd8e3;text-align:center;padding:2px 1px;font-size:10px;height:26px;white-space:nowrap}
+.landscapeRosterTable th{background:#eef3f8;font-weight:900}
+.landscapeRosterTable th.emp,.landscapeRosterTable td.emp{width:105px;min-width:105px;text-align:right;padding-right:5px;background:#fff;font-size:11px;font-weight:800}
+.landscapeRosterTable .wkcol{color:#d40000!important}.landscapeRosterTable .A{background:#d9ecff}.landscapeRosterTable .N{background:#fff2a8}.landscapeRosterTable .M{background:#eef8ee}.landscapeRosterTable .O{background:#f3f4f6}.landscapeRosterTable .V{background:#f3ddff}
+@media print{
+  @page{size:A4 landscape;margin:6mm}
+  body.print-full-roster *{visibility:hidden!important}
+  body.print-full-roster #fullRosterLandscapeOverlay,body.print-full-roster #fullRosterLandscapeOverlay *{visibility:visible!important}
+  body.print-full-roster #fullRosterLandscapeOverlay{display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:auto!important;background:#fff!important;overflow:visible!important}
+  body.print-full-roster .landscapeToolbar{display:none!important}
+  body.print-full-roster .landscapeViewport{display:block!important;padding:0!important;min-height:0!important;overflow:visible!important}
+  body.print-full-roster .landscapeRosterCanvas{width:100%!important;min-width:0!important;min-height:0!important;padding:0!important;box-shadow:none!important;transform:none!important}
+  body.print-full-roster .landscapeRosterWrap{border:0!important;overflow:visible!important}
+  body.print-full-roster .landscapeRosterTable{width:100%!important;table-layout:fixed!important}
+  body.print-full-roster .landscapeRosterTable th,body.print-full-roster .landscapeRosterTable td{font-size:6.7pt!important;padding:1px!important;height:14pt!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body.print-full-roster .landscapeRosterTable th.emp,body.print-full-roster .landscapeRosterTable td.emp{width:25mm!important;min-width:25mm!important;font-size:7pt!important}
+}
+
+
+/* v0.8.9.2 employee settings + clean manual editor */
+
+.fullRosterTable tr.selectedEmployeeRow td{outline:2px solid #0b3156;outline-offset:-2px;font-weight:900;background-image:linear-gradient(rgba(255,235,130,.34),rgba(255,235,130,.34))}
+.fullRosterTable tr.selectedEmployeeRow td.name{background:#0b3156!important;color:#fff!important;position:sticky;right:0;z-index:4}
+.fullRosterTable td.name.employeePick{cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
+.selectedEmployeeBanner{margin:8px 0 12px;padding:10px 12px;border-radius:12px;background:#eef6ff;border:1px solid #b9d7f2;color:#0b3156;font-weight:900}
+.homeBrandMark{width:72px;height:72px;border-radius:22px;background:#0b3156;color:#fff;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:900;box-shadow:0 8px 20px rgba(15,54,88,.16);margin-bottom:8px}
+.empListBtn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;margin:7px 0;border:1px solid #dbe4ed;border-radius:14px;background:#fff;color:#0b3156;font-weight:800;text-align:right}
+.empListBtn .state{font-size:12px;color:#667085;font-weight:700}
+.empEditorRow{display:grid;grid-template-columns:1fr;gap:8px;margin:12px 0}
+.empEditorRow label{font-weight:800;color:#0b3156}
+.empEditorRow input,.empEditorRow select{width:100%;box-sizing:border-box;min-height:48px}
+.empTypeGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 14px}
+.empTypeGrid button{min-height:52px;background:#eef3f8;color:#0b3156;border:1px solid #d4e0eb}
+.empTypeGrid button.active{background:#0b3156;color:#fff}
+.manualEditorWrap{overflow:auto;border:1px solid #dbe4ed;border-radius:12px;background:#fff}
+.manualEditorTable{border-collapse:collapse;min-width:1050px;width:100%}
+.manualEditorTable th,.manualEditorTable td{border:1px solid #d9e0e7;text-align:center;padding:5px;font-size:12px}
+.manualEditorTable th{background:#eef3f8}
+.manualEditorTable .name{position:sticky;right:0;background:#fff;min-width:150px;z-index:2;text-align:right}
+.manualEditorTable .wk{color:#d40000;font-weight:800}
+.manualEditorTable button{min-width:34px;width:100%;padding:6px 2px;margin:0;border:0;border-radius:6px;font-weight:900}
+.manualEditorTable button.M{background:#eef8ee;color:#163d1e}.manualEditorTable button.A{background:#d9ecff;color:#134f8c}.manualEditorTable button.N{background:#fff2a8;color:#664d00}.manualEditorTable button.O{background:#f3f4f6;color:#333}.manualEditorTable button.V{background:#f3ddff;color:#6b21a8}
+@media(max-width:520px){.empTypeGrid{grid-template-columns:1fr}.empListBtn{padding:11px}.manualEditorTable th,.manualEditorTable td{font-size:11px;padding:3px}}
+
+/* v0.9.9 employee page refinements */
+.empListBtn span:first-child{font-size:18px!important;font-weight:900!important;line-height:1.45}
+.empListBtn .state{font-size:13px!important;font-weight:800!important}
+@media(max-width:520px){.empListBtn span:first-child{font-size:19px!important}}
+/* v0.9.82: keep employee tools fixed and scroll names only */
+.employeeListScroll{
+  height:clamp(280px,calc(100dvh - 390px),640px);
+  min-height:280px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-gutter:stable;
+  padding:0 2px 8px;
+}
+.employeeListScroll .empListBtn:first-child{margin-top:0}
+@media(max-width:520px){
+  body.employeesToolsActive{overflow:hidden!important}
+  body.employeesToolsActive #adminHubRoot{height:calc(100dvh - 126px);overflow:hidden}
+  body.employeesToolsActive .adminSubPage{height:100%;box-sizing:border-box;margin:0 auto;padding:14px;display:flex;flex-direction:column}
+  body.employeesToolsActive .adminSubHead{flex:0 0 auto}
+  body.employeesToolsActive .adminSubBody{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+  body.employeesToolsActive .employeePageAdd,
+  body.employeesToolsActive .employeeListHint{flex:0 0 auto}
+  body.employeesToolsActive .employeeListScroll{flex:1 1 auto;height:auto;min-height:0}
+}
+</style><header><b>منظّم جدول المناوبات v0.9.84 PWA</b><div class="sm" style="color:white">M صباح • A أول ليل • N آخر ليل • O أوف • V إجازة</div></header><div id="quickNav" style="display:none!important">
+<div class="employeeAddTool" aria-label="إضافة موظف">
+  <input id="newEmpName" placeholder="اسم الموظف" autocomplete="off" onkeydown="if(event.key==='Enter')addEmployeeSimple()">
+  <button onclick="addEmployeeSimple()"><span>＋</span> إضافة</button>
+</div>
+<button class="scheduleTool" aria-label="إنشاء" title="إنشاء" onclick="createScheduleFromPicker()"><span>➕</span><small>إنشاء</small></button>
+<button class="scheduleTool" aria-label="تعديل" title="تعديل" onclick="openManualAndLeaveSchedule()"><span>✏️</span><small>تعديل</small></button>
+<button class="scheduleTool" aria-label="إصلاح تلقائي" title="إصلاح تلقائي" onclick="autoFixScheduleAndOpen()"><span>🔧</span><small>إصلاح</small></button>
+<button class="scheduleTool" aria-label="حفظ" title="حفظ" onclick="saveScheduleAndOpen()"><span>💾</span><small>حفظ</small></button>
+<button class="scheduleTool approveTool" aria-label="اعتماد" title="اعتماد" onclick="approveAndLeaveSchedule()"><span>✅</span><small>اعتماد</small></button>
+<button class="scheduleTool pdfTool" aria-label="مشاركة PDF أفقي" title="مشاركة PDF أفقي" onclick="shareRosterPdfLandscape()"><span>⬆️</span><small>PDF</small></button>
+<button class="scheduleTool deleteTool" aria-label="حذف الجدول" title="حذف الجدول" onclick="deleteCurrentSchedule()"><span>🗑️</span><small>حذف</small></button>
+</div><main><div id="homePortal"></div><div id="adminArea" style="display:none"><div class="grid"><section class="card"><b>الإعدادات</b><div><select id=m></select><input id=y type=number value=2026 style="width:90px"></div><div>العادي: M <input id=wm value=4 size=2> A <input id=wa value=2 size=2> N <input id=wn value=2 size=2></div><div>الويكند: M <input id=em value=1 size=2> A <input id=ea value=1 size=2> N <input id=en value=1 size=2></div><div>أيام العمل <span id=t class=targetBox>تلقائي</span> بلوك الليل <input id=b value=7 size=2></div><div class=sm>المستهدف يُحسب تلقائيًا: أيام الشهر ناقص الجمعة والسبت. الموازنة تطبق على الموظفين المرنين فقط؛ المثبت M أو A أو N مستثنى من التدوير. عقيلة وعبدالمنعم يتناوبان على M للجمعة والسبت، ومن يغطي الويكند يأخذ أوف بديل خلال الأسبوع. الحد الأقصى للدوام المتواصل 7 أيام فقط. إذا كان الموظف ناقص أيام، المحرك يعوضه أولًا من بلوكات الأوف الطويلة ثم يعمل تبديلات مع الموظفين الزائدين. شفت A أو N للموظف المرن يُجمع في بلوك 7 أيام متواصلة قدر الإمكان، وبعده تكون أيام التعويض M بدل تشتيت A/N خلال الشهر. الإجازة V تخصم فقط إذا وقعت في يوم عمل.</div><div class="actions"></div><hr><b>الموظفون</b><div id=emps></div><button onclick=add()>+ موظف</button><button onclick=gen()>توليد ذكي</button><button onclick=check()>✓ فحص الجدول</button><button id=fixBtn style="display:none;background:#b45309" onclick=autoFix()>🔧 إصلاح تلقائي</button><button onclick=csv()></button><button class=secondary onclick=printRoster()>📄 PDF الجدول</button><div id=msg class=sm></div></section><section class="card"><div class=wrap><table id=tab></table></div><h3>الإحصائيات</h3><div class=wrap><table id=sum></table></div></section></div></div></main><div id="adminHubRoot" style="display:none"></div><script>const M=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];let E=[['طاهر المحيميد',1,0,0,[]],['عبدالمنعم البلادي',1,0,0,[]],['مصطفى الزقعان',0,0,0,[]],['عقيله الحبابي',1,0,0,[]],['صالح الهاشم',1,0,0,[]],['جعفر الشهيب',0,0,0,[]],['مختار الخلف',0,0,0,[]],['عبدالخالق التريكي',0,0,0,[]],['حسين الحسن',0,0,0,[]],['محمد العيثان',1,0,0,[]],['حيدر الحسن',0,0,0,[]],['ساره الخليفة',0,0,0,[]],['ندى العلي',0,0,0,[]],['رحاب العلي',0,0,0,[]],['زهرة بو حسن',1,0,0,[]]],S=[];function loadAgreedSeptember2026(){
+  if(+y.value!==2026 || +m.value!==8) return false;
+  const n=30;
+  S=E.map(()=>Array(n).fill('O'));
+  // 8-hour fixed day staff: Sunday-Thursday 07:00-16:00, Friday-Saturday OFF.
+  const fixedNames=['طاهر المحيميد','عبدالمنعم البلادي','عقيله الحبابي','صالح الهاشم','محمد العيثان','زهرة بو حسن'];
+  E.forEach((e,i)=>{ if(fixedNames.includes(e[0])) for(let d=1;d<=n;d++) S[i][d-1]=wk(d)?'O':'D'; });
+  // 8 staff: 7 days work / 7 days off. Each gets one 7-day N block in this 4-week cycle.
+  const pairs=[
+    [2,5,6,7], // Mustafa/Jafar N; Mukhtar/Abdulkhaleq M
+    [6,7,10,11], // Mukhtar/Abdulkhaleq N; Hussain/Haider M
+    [10,11,12,13], // Hussain/Haider N; Sarah/Nada M
+    [12,13,2,5] // Sarah/Nada N; Mustafa/Jafar M
+  ];
+  const weeks=[[8,14],[15,21],[22,28],[29,30]];
+  // Clear rotating rows first.
+  [2,5,6,7,8,10,11,12,13].forEach(i=>{if(S[i]) S[i].fill('O')});
+  weeks.forEach((range,w)=>{
+    const [a,b]=range, [n1,n2,m1,m2]=pairs[w];
+    for(let d=a;d<=b;d++){
+      S[n1][d-1]='N'; S[n2][d-1]='N'; S[m1][d-1]='M'; S[m2][d-1]='M';
+    }
+  });
+  // Rehab is not in the new 12-hour group this month; keep her regular day schedule.
+  const ri=E.findIndex(e=>e[0]==='رحاب العلي');
+  if(ri>=0) for(let d=1;d<=n;d++) S[ri][d-1]=wk(d)?'O':'D';
+  save(); return true;
+}
+onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v046');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};loadAgreedSeptember2026();rend();summary()};function save(){localStorage.setItem('lab-roster-v046',JSON.stringify({E,m:m.value,y:y.value}))}
+function vacDateParts(v){
+  if(!Array.isArray(v)||v.length<2)return null;
+  if(typeof v[0]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[0])&&typeof v[1]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[1]))
+    return {from:v[0],to:v[1],dated:true};
+  return {from:+v[0],to:+v[1],dated:false};
+}
+function vacLabel(v){
+  let q=vacDateParts(v); if(!q)return '';
+  if(!q.dated)return 'V '+q.from+'-'+q.to;
+  let a=q.from.split('-'),z=q.to.split('-');
+  return 'V '+a[2]+'/'+a[1]+'/'+a[0]+' - '+z[2]+'/'+z[1]+'/'+z[0];
+}
+function vacationCoversDay(v,d){
+  let q=vacDateParts(v); if(!q)return false;
+  if(!q.dated)return d>=q.from&&d<=q.to;
+  let mm=String(+m.value+1).padStart(2,'0'),dd=String(d).padStart(2,'0');
+  let cur=String(+y.value)+'-'+mm+'-'+dd;
+  return cur>=q.from&&cur<=q.to;
+}
+function vacationTouchesCurrentMonth(v){
+  let q=vacDateParts(v); if(!q)return false;
+  if(!q.dated)return true;
+  let mm=String(+m.value+1).padStart(2,'0');
+  let first=String(+y.value)+'-'+mm+'-01';
+  let last=String(+y.value)+'-'+mm+'-'+String(days()).padStart(2,'0');
+  return q.to>=first&&q.from<=last;
+}
+function rendE(){emps.innerHTML='';E.forEach((e,i)=>{let vv=(e[4]||[]).map((v,j)=>`<span style="display:inline-block;background:#e8f0fe;color:#123;padding:3px 7px;border-radius:10px;margin:2px">${vacLabel(v)} <b onclick="delVac(${i},${j})" style="cursor:pointer;color:#b00">×</b></span>`).join('')||'<span>لا توجد إجازة</span>';let typ=e[5]?'مثبت A':e[1]?'مثبت صباح M':e[2]?'مثبت آخر ليل N':'موظف مرن';emps.innerHTML+=`<div class=emp><input value="${e[0]}" oninput="E[${i}][0]=this.value;save()"><div class=sm style="margin-top:4px;font-weight:bold">${typ}</div><label><input type=checkbox ${e[3]?'checked':''} onchange="E[${i}][3]=+this.checked;save()"> M ويكند</label><div class=sm style="margin-top:7px"><b>الإجازات V</b><br><label>من <input type=date style="width:auto" id=vs${i}></label> <label>إلى <input type=date style="width:auto" id=ve${i}></label> <button onclick=vac(${i})>+ إضافة إجازة</button><div style="margin-top:4px">${vv}</div></div></div>`})}function vac(i){let a=document.getElementById('vs'+i).value,z=document.getElementById('ve'+i).value;if(!a||!z||a>z){alert('حدد تاريخ بداية ونهاية الإجازة بشكل صحيح');return}E[i][4]=E[i][4]||[];E[i][4].push([a,z]);E[i][4].sort((x,y)=>String(x[0]).localeCompare(String(y[0])));save();rendE();msg.innerHTML='تمت إضافة الإجازة. عند إنشاء الجدول ستُطبّق V تلقائيًا على الأيام الواقعة ضمن الشهر.'}function delVac(i,j){E[i][4].splice(j,1);save();rendE();msg.innerHTML='تم حذف فترة الإجازة.'}function add(){E.push(['موظف جديد',0,0,0,[]]);save();rendE()}function days(){return new Date(+y.value,+m.value+1,0).getDate()}function wk(d){let z=new Date(+y.value,+m.value,d).getDay();return z==5||z==6}
+function monthTarget(){let n=days(),x=0;for(let d=1;d<=n;d++)if(!wk(d))x++;return x}
+function vacWeekdays(i){let n=days(),x=0;for(let d=1;d<=n;d++)if(S[i]&&S[i][d-1]=='V'&&!wk(d))x++;return x}
+function req(i){
+  let base=Math.max(0,monthTarget()-vacWeekdays(i));
+  const flexible=E[i]&&!E[i][1]&&!E[i][2]&&!E[i][5];
+  if(flexible&&typeof compensationBalanceForEmployee==='function')base-=compensationBalanceForEmployee(E[i][0]);
+  return Math.max(0,Math.min(days(),base));
+}
+function updateTarget(){if(typeof t!='undefined')t.textContent=monthTarget()+' يوم'}function cnt(d,s){return S.filter(r=>r[d-1]==s).length}function work(i){return S[i].filter(x=>x!='O'&&x!='V').length}
+/* v0.9.9 — ربط نهاية الشهر السابق ببداية الشهر الحالي */
+function rosterMonthKey(yy,mm){return String(yy)+'-'+String(mm+1).padStart(2,'0')}
+function rosterArchive(){
+  try{return JSON.parse(localStorage.getItem('lab-roster-month-archive')||'{}')}catch(e){return {}}
+}
+function archiveCurrentSchedule(){
+  if(!S||!S.length)return;
+  try{
+    let a=rosterArchive(),key=rosterMonthKey(+y.value,+m.value);
+    a[key]={year:+y.value,month:+m.value,employees:E.map(e=>e[0]),schedule:S.map(r=>r.slice())};
+    localStorage.setItem('lab-roster-month-archive',JSON.stringify(a));
+  }catch(e){}
+}
+function annualVStats(employeeIndex,year){
+  const counts=Array(12).fill(0),archive=rosterArchive();
+  const employeeName=E[employeeIndex]&&E[employeeIndex][0];
+  for(let month=0;month<12;month++){
+    let snap=archive[rosterMonthKey(+year,month)]||null;
+    if(+year===+y.value&&month===+m.value&&S&&S.length){
+      snap={employees:E.map(e=>e[0]),schedule:S};
+    }
+    if(!snap||!Array.isArray(snap.schedule))continue;
+    let rowIndex=Array.isArray(snap.employees)?snap.employees.indexOf(employeeName):-1;
+    if(rowIndex<0&&employeeIndex<snap.schedule.length)rowIndex=employeeIndex;
+    const row=rowIndex>=0?snap.schedule[rowIndex]:null;
+    if(Array.isArray(row))counts[month]=row.filter(shift=>shift==='V').length;
+  }
+  return {counts,total:counts.reduce((sum,n)=>sum+n,0)};
+}
+function annualVStatsHtml(employeeIndex,year){
+  const stats=annualVStats(employeeIndex,year);
+  const months=stats.counts.map((count,month)=>`<div class="annualVMonth ${count?'hasV':''}"><span>${M[month]}</span><b>${count}</b></div>`).join('');
+  return `<section class="annualVCard">
+    <div class="annualVHead"><div><b>إجازات السنة الميلادية ${year}</b><small>الأيام المسجلة بالرمز V فقط</small></div><div class="annualVTotal"><b>${stats.total}</b><span>يوم</span></div></div>
+    <div class="annualVGrid">${months}</div>
+  </section>`;
+}
+function previousMonthSnapshot(){
+  let yy=+y.value,mm=+m.value-1;
+  if(mm<0){mm=11;yy--}
+  let a=rosterArchive();
+  return a[rosterMonthKey(yy,mm)]||null;
+}
+function previousEmployeeRow(i,snap){
+  if(!snap||!snap.schedule)return null;
+  let nm=E[i]&&E[i][0],j=Array.isArray(snap.employees)?snap.employees.indexOf(nm):-1;
+  if(j<0 && i<snap.schedule.length)j=i;
+  return j>=0?snap.schedule[j]:null;
+}
+function trailingWorkInfo(row){
+  if(!row||!row.length)return {run:0,last:'O',same:0};
+  let run=0,same=0,last=row[row.length-1]||'O';
+  for(let k=row.length-1;k>=0;k--){if(isWorkShift(row[k]))run++;else break}
+  if(isWorkShift(last))for(let k=row.length-1;k>=0&&row[k]===last;k--)same++;
+  return {run:run,last:last,same:same};
+}
+function boundaryMaxWorkRun(i){
+  let snap=previousMonthSnapshot(),row=previousEmployeeRow(i,snap),prefix=0;
+  if(row)for(let k=row.length-1;k>=0;k--){if(isWorkShift(row[k]))prefix++;else break}
+  let best=prefix,cur=prefix;
+  for(let d=0;d<(S[i]||[]).length;d++){
+    if(isWorkShift(S[i][d])){cur++;best=Math.max(best,cur)}else cur=0;
+  }
+  return best;
+}
+function boundaryIssues(){
+  let snap=previousMonthSnapshot(),q=[];
+  if(!snap||!S||!S.length)return q;
+  E.forEach((e,i)=>{
+    let row=previousEmployeeRow(i,snap); if(!row)return;
+    let info=trailingWorkInfo(row),first=null,firstDay=0;
+    for(let d=1;d<=Math.min(days(),7);d++){
+      let x=S[i][d-1];
+      if(x==='V'||x==='O'){if(first===null&&d===1)break;continue}
+      if(isWorkShift(x)){first=x;firstDay=d;break}
+    }
+    let mx=boundaryMaxWorkRun(i);
+    if(mx>7)q.push(`${e[0]}: تعارض بين الشهرين، دوام متواصل ${mx} أيام`);
+    if(info.run>0&&info.last==='N'&&firstDay===1&&first&&first!=='N')
+      q.push(`${e[0]}: انتقال مباشر من N إلى ${first} بين الشهرين`);
+    if(info.run>0&&info.last==='A'&&firstDay===1&&first==='M')
+      q.push(`${e[0]}: انتقال مباشر من A إلى M بين الشهرين`);
+  });
+  return q;
+}
+function canBoundaryTurnOff(i,d){
+  if(d<1||d>days()||!isWorkShift(S[i][d-1]))return false;
+  let sh=S[i][d-1];
+  return cnt(d,sh)>needForDay(d,sh);
+}
+function enforcePreviousMonthBoundary(n){
+  let snap=previousMonthSnapshot();
+  if(!snap)return false;
+  let changed=false;
+
+  E.forEach((e,i)=>{
+    let row=previousEmployeeRow(i,snap); if(!row)return;
+    let info=trailingWorkInfo(row);
+    if(!info.run)return;
+
+    // 1) لا يتجاوز العمل المتواصل 7 أيام عبر حد الشهر.
+    let allowed=Math.max(0,7-info.run),currentRun=0;
+    for(let d=1;d<=n;d++){
+      if(S[i][d-1]==='V'||S[i][d-1]==='O')break;
+      if(!isWorkShift(S[i][d-1]))break;
+      currentRun++;
+      if(currentRun>allowed){
+        if(canBoundaryTurnOff(i,d)){S[i][d-1]='O';changed=true;break}
+        // إذا لم يمكن إزالة هذا اليوم بسبب التغطية، ابحث عن أول يوم قابل للإزالة داخل بداية الشهر.
+        let done=false;
+        for(let x=1;x<=Math.min(n,currentRun+2);x++){
+          if(canBoundaryTurnOff(i,x)){S[i][x-1]='O';changed=true;done=true;break}
+        }
+        if(done)break;
+      }
+    }
+
+    // 2) امنع الانتقال المباشر المتعارض من نهاية N إلى M/A، ومن A إلى M.
+    let first=S[i][0];
+    if(isWorkShift(first)){
+      let conflict=(info.last==='N'&&first!=='N')||(info.last==='A'&&first==='M');
+      if(conflict){
+        // الأفضل يوم راحة إذا كانت التغطية تسمح.
+        if(canBoundaryTurnOff(i,1)){S[i][0]='O';changed=true}
+        // وإلا استمر بنفس الشفت السابق إن كان نوع الموظف يسمح بذلك والتغطية لا تتضرر.
+        else{
+          let allowedShift=!e[1]&&!e[2]&&!e[5] || (e[2]&&info.last==='N') || (e[5]&&info.last==='A');
+          if(allowedShift && ['A','N'].includes(info.last)){S[i][0]=info.last;changed=true}
+        }
+      }
+    }
+  });
+
+  if(changed){
+    // أعد موازنة الشهر مع الحفاظ على قواعد الربط، ثم أعد تطبيق الإجازات.
+    try{finalExactBalance(n)}catch(e){}
+    E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));
+  }
+  return changed;
+}
+function gen(){let n=days(),target=monthTarget(),block=7;updateTarget();S=E.map(()=>Array(n).fill('O'));E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));let fixed=[],afixed=[],rot=[],nonly=[],wkm=[];E.forEach((e,i)=>{if(e[5])afixed.push(i);else if(e[1])fixed.push(i);else rot.push(i);if(e[2])nonly.push(i);if(e[3])wkm.push(i)});fixed.forEach(i=>{for(let d=1;d<=n;d++)if(S[i][d-1]!='V')S[i][d-1]=wk(d)?'O':'M'});afixed.forEach(i=>{for(let d=1;d<=n;d++)if(S[i][d-1]!='V')S[i][d-1]=wk(d)?'O':'A'});let w=0;for(let d=1;d<=n;d++)if(new Date(+y.value,+m.value,d).getDay()==5&&wkm.length){let i=wkm[w++%wkm.length];if(S[i][d-1]!='V')S[i][d-1]='M';if(d<n&&S[i][d]!='V')S[i][d]='M'};nonly.forEach(i=>{for(let d=1;d<=n;d++)if(S[i][d-1]!='V')S[i][d-1]=wk(d)?'O':'N'});let flex=rot.filter(i=>!E[i][2]),A=flex.filter((x,p)=>p%2==0),N=flex.filter((x,p)=>p%2);function pool(P,s,need){if(!P.length||need<=0)return;for(let d=1;d<=n;d++){let dt=new Date(Date.UTC(+y.value,+m.value,d)),offset=(dt.getUTCDay()-4+7)%7,anchor=Date.UTC(+y.value,+m.value,d-offset),week=Math.floor(anchor/604800000),start=((week%P.length)+P.length)%P.length;for(let k=0;k<need;k++){let i=P[(start+k)%P.length];if(i!=null&&S[i][d-1]=='O')S[i][d-1]=s}}}if(A.length)pool(A,'A',+wa.value);if(N.length)pool(N,'N',Math.max(1,+wn.value-nonly.length));for(let d=1;d<=n;d++){let rr=wk(d)?[+em.value,+ea.value,+en.value]:[+wm.value,+wa.value,+wn.value];fill(d,'A',rr[1],flex);fill(d,'N',rr[2],rot);if(!wk(d))fill(d,'M',rr[0],flex.filter(i=>!E[i][2]));else{trim(d,'M',rr[0]);trim(d,'A',rr[1]);trim(d,'N',rr[2])}}compWeekendM(n);balanceFair(n);enforceMax7(n);finalExactBalance(n);E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));enforcePreviousMonthBoundary(n);enforceRosterRestRules(n);save();rend();summary();check()}
+function needForDay(d,s){if(wk(d))return 1;if(s==='M')return Math.max(0,+wm.value||0);if(s==='A')return Math.max(1,Math.min(2,+wa.value||2));if(s==='N')return Math.max(1,Math.min(2,+wn.value||2));return 0}
+function minimumNeedForDay(d,s){let preferred=needForDay(d,s);return (s=='A'||s=='N')&&preferred>0?1:preferred}
+function canRemove(i,d){let s=S[i][d-1];return ['M','A','N'].includes(s)&&cnt(d,s)>minimumNeedForDay(d,s)}
+function edgeScore(i,d){let L=d==1?'X':S[i][d-2],R=d==days()?'X':S[i][d];let sc=0;if(L=='O'||L=='V')sc+=4;if(R=='O'||R=='V')sc+=4;if(L==S[i][d-1])sc+=1;if(R==S[i][d-1])sc+=1;return sc}
+function compWeekendM(n){
+  let wem=E.map((e,i)=>e[3]?i:-1).filter(i=>i>=0);
+  // صباح الجمعة والسبت موظف واحد: الأولوية لعبدالمنعم أو عقيله،
+  // وعند تعذرهما يُختار أي موظف مناسب متاح.
+  for(let d=1;d<=n;d++)if(wk(d)){
+    if(cnt(d,'M')>1)trim(d,'M',1);
+    if(cnt(d,'M')<1){
+      const candidates=[];
+      E.forEach((e,i)=>{
+        if(!S[i]||S[i][d-1]!=='O'||!employeeCanWorkShift(i,'M'))return;
+        if(!canSetWithoutRestConflict(i,d,'M',n))return;
+        const preferred=e[3]||['عبدالمنعم البلادي','عقيله الحبابي'].includes(e[0]);
+        candidates.push([i,(preferred?100:0)+(e[1]?20:0)-work(i)]);
+      });
+      candidates.sort((a,b)=>b[1]-a[1]);
+      if(candidates.length)S[candidates[0][0]][d-1]='M';
+    }
+  }
+  wem.forEach(i=>{
+    let extra=0;
+    for(let d=1;d<=n;d++)if(wk(d)&&S[i][d-1]=='M')extra++;
+    // Each weekend day worked replaces one weekday M. Prefer adjacent weekday OFFs as blocks.
+    let cand=[];
+    for(let d=1;d<=n;d++)if(!wk(d)&&S[i][d-1]=='M'&&cnt(d,'M')>+wm.value){
+      let score=0;
+      if(d>1&&(S[i][d-2]=='O'||S[i][d-2]=='V'))score+=5;
+      if(d<n&&(S[i][d]=='O'||S[i][d]=='V'))score+=5;
+      cand.push([d,score]);
+    }
+    cand.sort((a,z)=>z[1]-a[1]);
+    for(let k=0;k<Math.min(extra,cand.length);k++)S[i][cand[k][0]-1]='O';
+  });
+}
+
+function isWorkShift(x){return x=='M'||x=='A'||x=='N'}
+function maxWorkRun(i){
+  let best=0,cur=0;
+  for(let d=0;d<S[i].length;d++){
+    if(isWorkShift(S[i][d])){cur++;if(cur>best)best=cur}else cur=0;
+  }
+  return best
+}
+function workRuns(i){
+  let out=[],st=null;
+  for(let d=0;d<=S[i].length;d++){
+    let w=d<S[i].length&&isWorkShift(S[i][d]);
+    if(w&&st===null)st=d;
+    if(!w&&st!==null){out.push([st+1,d,d-st]);st=null}
+  }
+  return out
+}
+function canTurnOff(i,d){
+  if(d<1||d>days())return false;
+  let x=S[i][d-1];
+  if(!isWorkShift(x))return false;
+  return cnt(d,x)>minimumNeedForDay(d,x)
+}
+function enforceMax7(n){
+  // Hard rule: no employee may exceed 7 consecutive working days.
+  // Repair by inserting O at a removable edge/center position, preferring two-day OFF blocks.
+  let guard=1000,changed=true;
+  while(changed&&guard--){
+    changed=false;
+    for(let i=0;i<E.length;i++){
+      let runs=workRuns(i);
+      for(let r of runs){
+        let a=r[0],z=r[1],len=r[2];
+        if(len<=7)continue;
+
+        let preferred=[];
+        // Prefer positions that create/extend an OFF block and keep coverage.
+        for(let d=a;d<=z;d++){
+          if(!canTurnOff(i,d))continue;
+          let score=0;
+          let L=d>1?S[i][d-2]:'',R=d<n?S[i][d]:'';
+          if(L=='O'||L=='V')score+=8;
+          if(R=='O'||R=='V')score+=8;
+          // Prefer around day 7/8 of the run to split long runs naturally.
+          score+=Math.max(0,6-Math.abs((d-a+1)-7));
+          preferred.push([d,score]);
+        }
+        preferred.sort((x,y)=>y[1]-x[1]);
+        if(preferred.length){
+          S[i][preferred[0][0]-1]='O';
+          changed=true;
+          break;
+        }
+      }
+      if(changed)break;
+    }
+  }
+}
+
+function offBlocks(i){
+  let out=[],st=null;
+  for(let d=0;d<=S[i].length;d++){
+    let o=d<S[i].length&&S[i][d]=='O';
+    if(o&&st===null)st=d;
+    if(!o&&st!==null){out.push([st+1,d,d-st]);st=null}
+  }
+  return out
+}
+function employeeCanWorkShift(i,sh){if(E[i][5])return sh==='A';if(E[i][2])return sh==='N';if(E[i][1])return sh==='M';return ['M','A','N'].includes(sh)}
+function isAllowedSingleOffBeforeN(i,d,n){
+  return d<n&&S[i]&&S[i][d]==='N'
+}
+function repairSingletonOffs(n){
+  let changed=0,guard=300;
+  while(guard--){
+    let moved=false;
+    for(let i=0;i<E.length&&!moved;i++){
+      for(let d=1;d<=n&&!moved;d++){
+        if(S[i][d-1]!=='O')continue;
+        const left=d>1&&S[i][d-2]==='O',right=d<n&&S[i][d]==='O';
+        if(left||right)continue;
+        // أوف يوم واحد قبل N مقبول؛ الراحة الفعلية تمتد حتى بداية مناوبة الليل التالية.
+        if(isAllowedSingleOffBeforeN(i,d,n))continue;
+        const candidates=[];
+        E.forEach((e,j)=>{
+          if(j===i||!S[j])return;
+          const sh=S[j][d-1];
+          if(!['M','A','N'].includes(sh)||!employeeCanWorkShift(i,sh)||wouldExceed7(i,d,sh))return;
+          if(!((d>1&&S[j][d-2]==='O')||(d<n&&S[j][d]==='O')))return;
+          const score=(work(i)<req(i)?20:0)+(work(j)>req(j)?20:0)+(d>1&&S[j][d-2]==='O'?3:0)+(d<n&&S[j][d]==='O'?3:0);
+          candidates.push([j,sh,score]);
+        });
+        candidates.sort((a,b)=>b[2]-a[2]);
+        if(candidates.length){const [j,sh]=candidates[0];S[i][d-1]=sh;S[j][d-1]='O';changed+=2;moved=true;continue}
+
+        // إذا تعذر إلغاء الأوف المنفرد، مدّده إلى يومين مع نقل المناوبة
+        // المجاورة لموظف مناسب كان أوفًا في اليوم نفسه. هكذا تبقى التغطية
+        // وعدد أيام العمل لكل موظف محفوظين بالتبديل المباشر.
+        const adjacent=[];
+        if(d<n)adjacent.push(d+1);
+        if(d>1)adjacent.push(d-1);
+        for(const x of adjacent){
+          const sh=S[i][x-1];
+          if(!['M','A','N'].includes(sh))continue;
+          const receivers=[];
+          E.forEach((e,j)=>{
+            if(j===i||!S[j]||S[j][x-1]!=='O'||!employeeCanWorkShift(j,sh)||wouldExceed7(j,x,sh))return;
+            const score=(work(j)<req(j)?20:0)+(x>1&&S[j][x-2]==='O'?2:0)+(x<n&&S[j][x]==='O'?2:0);
+            receivers.push([j,score]);
+          });
+          receivers.sort((a,b)=>b[1]-a[1]);
+          if(receivers.length){const j=receivers[0][0];S[i][x-1]='O';S[j][x-1]=sh;changed+=2;moved=true;break}
+        }
+        if(moved)continue;
+
+        // الحل الأخير للأوف المنفرد: اجعل اليوم التالي N بتبديل مناوبتين
+        // لا يغيّر التغطية أو مجموع أيام العمل.
+        if(d<n&&employeeCanWorkShift(i,'N')){
+          const nextShift=S[i][d];
+          if(['M','A'].includes(nextShift)){
+            const swaps=[];
+            E.forEach((e,j)=>{
+              if(j===i||!S[j]||S[j][d]!=='N'||!employeeCanWorkShift(j,nextShift))return;
+              if(wouldExceed7(i,d+1,'N')||wouldExceed7(j,d+1,nextShift))return;
+              swaps.push(j);
+            });
+            if(swaps.length){const j=swaps[0];S[i][d]='N';S[j][d]=nextShift;changed+=2;moved=true}
+          }
+        }
+      }
+    }
+    if(!moved)break;
+  }
+  return changed
+}
+function invalidSingletonOffs(n){
+  const out=[];
+  for(let i=0;i<E.length;i++)for(let d=1;d<=n;d++){
+    if(!S[i]||S[i][d-1]!=='O')continue;
+    const left=d>1&&S[i][d-2]==='O',right=d<n&&S[i][d]==='O';
+    if(!left&&!right&&!isAllowedSingleOffBeforeN(i,d,n))out.push([i,d]);
+  }
+  return out
+}
+function enforceSingleOffRule(n){
+  if(!S||!S.length)return 0;
+  let changed=repairSingletonOffs(n),guard=100;
+  // ضمان نهائي: لا يُسمح ببقاء O منفرد يتبعه M أو A حتى إذا تعذر
+  // إيجاد تبديل كامل بسبب قيود التغطية. الأولوية هنا لصحة فترة الراحة،
+  // ويعرض الفحص أي نقص تغطية ناتج كي يُراجع بدل إظهار جدول مخالف.
+  while(guard--){
+    const bad=invalidSingletonOffs(n);
+    if(!bad.length)break;
+    let progress=false;
+    for(const [i,d] of bad){
+      if(d<n&&employeeCanWorkShift(i,'N')&&['M','A'].includes(S[i][d])&&cnt(d+1,'N')<maximumAllowedForDay(d+1,'N')){
+        S[i][d]='N';changed++;progress=true;continue
+      }
+      const choices=[];
+      if(d<n&&['M','A','N'].includes(S[i][d]))choices.push(d+1);
+      if(d>1&&['M','A','N'].includes(S[i][d-2]))choices.push(d-1);
+      if(choices.length){S[i][choices[0]-1]='O';changed++;progress=true}
+    }
+    if(!progress)break;
+    changed+=repairSingletonOffs(n);
+  }
+  return changed
+}
+function forbiddenRestTransition(from,to){
+  return (from==='N'&&(to==='M'||to==='A'))||(from==='A'&&to==='M')
+}
+function invalidRestTransitions(n){
+  const out=[];
+  for(let i=0;i<E.length;i++)for(let d=1;d<n;d++){
+    if(S[i]&&forbiddenRestTransition(S[i][d-1],S[i][d]))out.push([i,d,S[i][d-1],S[i][d]])
+  }
+  return out
+}
+function canSetWithoutRestConflict(i,d,shift,n){
+  if(!employeeCanWorkShift(i,shift))return false;
+  const prev=d>1?S[i][d-2]:null,next=d<n?S[i][d]:null;
+  return !(prev&&forbiddenRestTransition(prev,shift))&&!(next&&forbiddenRestTransition(shift,next))
+}
+function repairRestTransitions(n){
+  let changed=0,guard=200;
+  while(guard--){
+    const bad=invalidRestTransitions(n);
+    if(!bad.length)break;
+    let progress=false;
+    for(const [i,d,from,oldShift] of bad){
+      if(!S[i]||S[i][d-1]!==from||S[i][d]!==oldShift)continue;
+      const wanted=from==='N'?'N':'A',swapDay=d+1,swaps=[];
+      E.forEach((e,j)=>{
+        if(j===i||!S[j]||S[j][d]!==wanted)return;
+        if(!canSetWithoutRestConflict(i,swapDay,wanted,n))return;
+        if(!canSetWithoutRestConflict(j,swapDay,oldShift,n))return;
+        swaps.push(j);
+      });
+      if(swaps.length){
+        const j=swaps[0];S[i][d]=wanted;S[j][d]=oldShift;changed+=2;progress=true;continue
+      }
+      // إذا لم يوجد تبديل محافظ على الأعداد، صحح راحة الموظف أولاً
+      // وسيعرض الفحص أي فرق في التغطية بدل إبقاء انتقال غير آمن.
+      if(employeeCanWorkShift(i,wanted)&&cnt(swapDay,wanted)<maximumAllowedForDay(swapDay,wanted)){S[i][d]=wanted;changed++;progress=true}
+      else if(d>0){S[i][d-1]='O';changed++;progress=true}
+    }
+    if(!progress)break;
+  }
+  return changed
+}
+function maximumAllowedForDay(d,shift){
+  if(wk(d))return 1;
+  if(shift==='A'||shift==='N')return 2;
+  return Infinity
+}
+function isFlexibleEmployee(i){return !!E[i]&&!E[i][1]&&!E[i][2]&&!E[i][5]}
+function flexibleEveningCount(i){return S[i]?S[i].filter(x=>x==='A'||x==='N').length:0}
+function trimExcessShifts(n){
+  let changed=0;
+  for(let d=1;d<=n;d++)for(const sh of ['M','A','N']){
+    const cap=maximumAllowedForDay(d,sh);
+    while(cnt(d,sh)>cap){
+      const candidates=[];
+      E.forEach((e,i)=>{
+        if(!S[i]||S[i][d-1]!==sh)return;
+        const fixed=(sh==='M'&&e[1])||(sh==='A'&&e[5])||(sh==='N'&&e[2]);
+        let replacement='O',score=fixed?-100:20;
+        if(!wk(d)&&sh!=='M'&&!e[1]&&!e[2]&&!e[5]&&canSetWithoutRestConflict(i,d,'M',n)){
+          replacement='M';score+=15;
+        }
+        score+=work(i)-req(i);candidates.push([i,replacement,score]);
+      });
+      candidates.sort((a,b)=>b[2]-a[2]);
+      if(!candidates.length)break;
+      const [i,replacement]=candidates[0];S[i][d-1]=replacement;changed++;
+    }
+  }
+  return changed
+}
+function ensureMinimumShiftCoverage(n){
+  let changed=0;
+  for(let d=1;d<=n;d++)for(const sh of ['M','A','N']){
+    const minimum=minimumNeedForDay(d,sh),cap=maximumAllowedForDay(d,sh);
+    while(cnt(d,sh)<minimum&&cnt(d,sh)<cap){
+      const candidates=[];
+      E.forEach((e,i)=>{
+        if(!S[i]||S[i][d-1]==='V'||S[i][d-1]===sh||!employeeCanWorkShift(i,sh))return;
+        const old=S[i][d-1];
+        if(sh==='M'&&old!=='O')return;
+        if((sh==='A'||sh==='N')&&!['M','O'].includes(old))return;
+        if(!canSetWithoutRestConflict(i,d,sh,n))return;
+        if(wouldExceed7(i,d,sh))return;
+        const evening=flexibleEveningCount(i);
+        if((sh==='A'||sh==='N')&&isFlexibleEmployee(i)&&evening>=10)return;
+        const score=(old==='M'?30:0)+(work(i)<req(i)?10:0)-(E[i][1]||E[i][2]||E[i][5]?20:0)+((sh==='A'||sh==='N')&&isFlexibleEmployee(i)?(evening<7?70:-evening*4):0);
+        candidates.push([i,score]);
+      });
+      candidates.sort((a,b)=>b[1]-a[1]);
+      if(!candidates.length)break;
+      S[candidates[0][0]][d-1]=sh;changed++;
+    }
+  }
+  return changed
+}
+function enforceFlexibleEveningLimits(n){
+  let changed=0;
+  function moveOne(i,limit){
+    for(let d=1;d<=n;d++){
+      const sh=S[i][d-1];if(sh!=='A'&&sh!=='N')continue;
+      const candidates=[];
+      E.forEach((e,j)=>{
+        if(j===i||!isFlexibleEmployee(j)||flexibleEveningCount(j)>=limit)return;
+        const old=S[j]&&S[j][d-1];if(old!=='M')return;
+        if(!canSetWithoutRestConflict(j,d,sh,n)||wouldExceed7(j,d,sh))return;
+        if(old==='M'&&!canSetWithoutRestConflict(i,d,'M',n))return;
+        candidates.push([j,old,flexibleEveningCount(j)]);
+      });
+      candidates.sort((a,b)=>a[2]-b[2]);
+      if(candidates.length){const [j,old]=candidates[0];S[j][d-1]=sh;S[i][d-1]=old;changed+=2;return true}
+    }
+    return false
+  }
+  E.forEach((e,i)=>{if(!isFlexibleEmployee(i))return;let guard=40;while(flexibleEveningCount(i)>7&&guard--){if(!moveOne(i,7))break}});
+  E.forEach((e,i)=>{
+    if(!isFlexibleEmployee(i))return;
+    let guard=40;
+    while(flexibleEveningCount(i)>10&&guard--){
+      if(moveOne(i,10))continue;
+      let fixed=false;
+      for(let d=1;d<=n;d++)if((S[i][d-1]==='A'||S[i][d-1]==='N')&&!wk(d)&&canSetWithoutRestConflict(i,d,'M',n)){
+        S[i][d-1]='M';changed++;fixed=true;break;
+      }
+      if(!fixed)for(let d=1;d<=n;d++)if(S[i][d-1]==='A'||S[i][d-1]==='N'){
+        S[i][d-1]='O';changed++;fixed=true;break;
+      }
+      if(!fixed)break;
+    }
+  });
+  return changed
+}
+function weekendStartDay(d){
+  const dow=new Date(+y.value,+m.value,d).getDay();
+  return dow===6?d-1:d
+}
+function employeeWeekendKeys(i,n){
+  const keys=new Set;
+  for(let d=1;d<=n;d++)if(wk(d)&&S[i]&&isWorkShift(S[i][d-1]))keys.add(weekendStartDay(d));
+  return [...keys].sort((a,b)=>a-b)
+}
+function rebalanceWeekendFairness(n){
+  let changed=0,guard=60;
+  while(guard--){
+    let moved=false;
+    const offenders=E.map((e,i)=>[i,employeeWeekendKeys(i,n)]).filter(x=>x[1].length>1).sort((a,b)=>b[1].length-a[1].length);
+    for(const [i,keys] of offenders){
+      for(const start of keys.slice(1)){
+        const pair=[start,start+1].filter(d=>d>=1&&d<=n&&wk(d));
+        if(!pair.length)continue;
+        const shifts=pair.map(d=>S[i][d-1]);
+        if(!shifts.every(sh=>sh===shifts[0]&&isWorkShift(sh)))continue;
+        const sh=shifts[0],candidates=[];
+        E.forEach((e,j)=>{
+          if(j===i||!employeeCanWorkShift(j,sh))return;
+          if(!pair.every(d=>S[j]&&S[j][d-1]==='O'))return;
+          const before=start>1?S[j][start-2]:null,after=start+1<n?S[j][start+1]:null;
+          if((before&&forbiddenRestTransition(before,sh))||(after&&forbiddenRestTransition(sh,after)))return;
+          const used=employeeWeekendKeys(j,n).length;
+          if(used>=2)return;
+          candidates.push([j,used,(E[j][3]?10:0)-work(j)]);
+        });
+        candidates.sort((a,b)=>a[1]-b[1]||b[2]-a[2]);
+        if(!candidates.length)continue;
+        const j=candidates[0][0];
+        pair.forEach(d=>{S[i][d-1]='O';S[j][d-1]=sh;changed+=2});
+        moved=true;break;
+      }
+      if(moved)break;
+    }
+    if(!moved)break;
+  }
+  return changed
+}
+function compensateMissingDaysWithMorning(n){
+  let changed=0;
+  E.forEach((e,i)=>{
+    if(!employeeCanWorkShift(i,'M'))return;
+    let guard=n;
+    while(work(i)<req(i)&&guard--){
+      const deficit=req(i)-work(i);
+      if(deficit>=2){
+        let paired=false;
+        for(let d=1;d<n;d++){
+          if(wk(d)||wk(d+1)||S[i][d-1]!=='O'||S[i][d]!=='O')continue;
+          S[i][d-1]='M';S[i][d]='M';
+          const safe=maxWorkRun(i)<=7&&!invalidSingletonOffs(n).some(x=>x[0]===i)&&!invalidRestTransitions(n).some(x=>x[0]===i);
+          if(safe){changed+=2;paired=true;break}
+          S[i][d-1]='O';S[i][d]='O';
+        }
+        if(paired)continue;
+      }
+      const candidates=[];
+      for(let d=1;d<=n;d++){
+        if(wk(d)||S[i][d-1]!=='O'||wouldExceed7(i,d,'M')||!canSetWithoutRestConflict(i,d,'M',n))continue;
+        S[i][d-1]='M';
+        const keepsOffRule=!invalidSingletonOffs(n).some(x=>x[0]===i);
+        S[i][d-1]='O';
+        if(!keepsOffRule)continue;
+        const neighborWork=(d>1&&isWorkShift(S[i][d-2])?2:0)+(d<n&&isWorkShift(S[i][d])?2:0);
+        candidates.push([d,neighborWork]);
+      }
+      candidates.sort((a,b)=>b[1]-a[1]||a[0]-b[0]);
+      if(!candidates.length)break;
+      S[i][candidates[0][0]-1]='M';changed++;
+    }
+  });
+  return changed
+}
+function enforceAbsoluteMax7(n){
+  let changed=0;
+  E.forEach((e,i)=>{
+    const previous=trailingWorkInfo(previousEmployeeRow(i,previousMonthSnapshot())).run;
+    let run=previous;
+    for(let d=1;d<=n;d++){
+      if(!isWorkShift(S[i][d-1])){run=0;continue}
+      if(run<7){run++;continue}
+      S[i][d-1]='O';changed++;run=0;
+      // اجعل الراحة يومين ما لم يكن الأوف المنفرد قبل N، وهي راحة ممتدة مسموحة.
+      if(d<n&&isWorkShift(S[i][d])&&S[i][d]!=='N'){
+        S[i][d]='O';changed++;
+      }
+    }
+  });
+  return changed
+}
+function enforceThursdayWednesdayRotation(n){
+  const flex=E.map((e,i)=>isFlexibleEmployee(i)?i:null).filter(i=>i!==null);
+  if(flex.length<2)return 0;
+  let changed=0,assigned=new Map(flex.map(i=>[i,0])),weeks=[];
+  for(let d=1;d<=n;d++){
+    const dt=new Date(Date.UTC(+y.value,+m.value,d)),offset=(dt.getUTCDay()-4+7)%7;
+    const anchor=Date.UTC(+y.value,+m.value,d-offset);
+    let w=weeks.find(x=>x.anchor===anchor);
+    if(!w){w={anchor,days:[]};weeks.push(w)}
+    w.days.push(d);
+  }
+  flex.forEach(i=>{for(let d=1;d<=n;d++)if(S[i][d-1]==='A'||S[i][d-1]==='N'){S[i][d-1]='O';changed++}});
+  weeks.sort((a,b)=>a.anchor-b.anchor).forEach(w=>{
+    const weekNumber=Math.floor(w.anchor/604800000),len=w.days.length;
+    function choose(excluded){
+      const available=flex.filter(i=>i!==excluded&&!w.days.some(d=>S[i][d-1]==='V')&&(assigned.get(i)||0)+len<=10);
+      const pool=available.length?available:flex.filter(i=>i!==excluded&&!w.days.some(d=>S[i][d-1]==='V'));
+      pool.sort((a,b)=>(assigned.get(a)||0)-(assigned.get(b)||0)||(((a-weekNumber)%flex.length+flex.length)%flex.length)-(((b-weekNumber)%flex.length+flex.length)%flex.length));
+      return pool[0]
+    }
+    const a=choose(null),nn=choose(a);
+    [[a,'A'],[nn,'N']].forEach(([i,sh])=>{
+      if(i===undefined)return;
+      const first=w.days[0],last=w.days[w.days.length-1];
+      if(first>1&&isWorkShift(S[i][first-2])){S[i][first-2]='O';changed++}
+      if(first>2&&isWorkShift(S[i][first-3])){S[i][first-3]='O';changed++}
+      w.days.forEach(d=>{if(S[i][d-1]!=='V'){S[i][d-1]=sh;changed++}});
+      if(last<n&&isWorkShift(S[i][last])){S[i][last]='O';changed++}
+      if(last+1<n&&isWorkShift(S[i][last+1])){S[i][last+1]='O';changed++}
+      assigned.set(i,(assigned.get(i)||0)+len);
+    });
+  });
+  return changed
+}
+function enforceSpecialFixedMorning(n){
+  const names=new Set(['طاهر المحيميد','مصطفى الزقعان','صالح الهاشم']);
+  let changed=0;
+  E.forEach((e,i)=>{
+    if(!names.has(String(e[0]||'').trim()))return;
+    for(let d=1;d<=n;d++){
+      if(S[i][d-1]==='V')continue;
+      const wanted=wk(d)?'O':'M';
+      if(S[i][d-1]!==wanted){S[i][d-1]=wanted;changed++}
+    }
+  });
+  return changed
+}
+function enforcePreferredWeekendMorning(n){
+  const preferred=['عبدالمنعم البلادي','عقيله الحبابي'].map(name=>E.findIndex(e=>String(e[0]||'').trim()===name)).filter(i=>i>=0);
+  if(!preferred.length)return 0;
+  let changed=0,used=new Map(preferred.map(i=>[i,0])),weekendNo=0;
+  for(let d=1;d<=n;d++){
+    if(new Date(+y.value,+m.value,d).getDay()!==5)continue;
+    const pair=[d,d+1].filter(x=>x<=n&&wk(x));
+    if(!pair.length)continue;
+    let ordered=preferred.slice().sort((a,b)=>(used.get(a)||0)-(used.get(b)||0)||((preferred.indexOf(a)-weekendNo+preferred.length)%preferred.length)-((preferred.indexOf(b)-weekendNo+preferred.length)%preferred.length));
+    let chosen=ordered.find(i=>(used.get(i)||0)<2&&!pair.some(x=>S[i][x-1]==='V'));
+    if(chosen===undefined){weekendNo++;continue}
+    pair.forEach(day=>E.forEach((e,i)=>{if(S[i][day-1]==='M'&&i!==chosen){S[i][day-1]='O';changed++}}));
+    pair.forEach(day=>{if(S[chosen][day-1]!=='M'){S[chosen][day-1]='M';changed++}});
+    // بعد سبعة أيام من الأحد إلى السبت تبدأ راحة يومين لمنع اليوم الثامن.
+    for(let x=d+2;x<=Math.min(n,d+3);x++)if(S[chosen][x-1]!=='V'&&S[chosen][x-1]!=='O'){S[chosen][x-1]='O';changed++}
+    used.set(chosen,(used.get(chosen)||0)+1);weekendNo++;
+  }
+  return changed
+}
+function enforceRosterRestRules(n){
+  let changed=0,guard=8;
+  while(guard--){
+    const before=invalidSingletonOffs(n).length+invalidRestTransitions(n).length;
+    changed+=trimExcessShifts(n);
+    changed+=repairRestTransitions(n);
+    changed+=enforceSingleOffRule(n);
+    changed+=repairRestTransitions(n);
+    changed+=trimExcessShifts(n);
+    changed+=ensureMinimumShiftCoverage(n);
+    changed+=enforceFlexibleEveningLimits(n);
+    changed+=repairRestTransitions(n);
+    changed+=trimExcessShifts(n);
+    changed+=rebalanceWeekendFairness(n);
+    changed+=enforceSingleOffRule(n);
+    changed+=repairRestTransitions(n);
+    const after=invalidSingletonOffs(n).length+invalidRestTransitions(n).length;
+    let deficit=0,excess=0;
+    for(let d=1;d<=n;d++)for(const sh of ['M','A','N']){
+      deficit+=Math.max(0,minimumNeedForDay(d,sh)-cnt(d,sh));
+      excess+=Math.max(0,cnt(d,sh)-maximumAllowedForDay(d,sh));
+    }
+    if(after===0&&deficit===0&&excess===0)break;
+  }
+  // حاجز نهائي: لا يُسمح للموظف المرن بتجاوز 10 مناوبات مسائية مهما كانت الحاجة.
+  changed+=enforceFlexibleEveningLimits(n);
+  changed+=compensateMissingDaysWithMorning(n);
+  changed+=enforceSingleOffRule(n);
+  changed+=repairRestTransitions(n);
+  changed+=enforceFlexibleEveningLimits(n);
+  changed+=compensateMissingDaysWithMorning(n);
+  changed+=enforceAbsoluteMax7(n);
+  changed+=ensureMinimumShiftCoverage(n);
+  changed+=enforceAbsoluteMax7(n);
+  changed+=enforceSingleOffRule(n);
+  changed+=repairRestTransitions(n);
+  changed+=enforceThursdayWednesdayRotation(n);
+  changed+=compensateMissingDaysWithMorning(n);
+  changed+=enforceAbsoluteMax7(n);
+  changed+=enforceSingleOffRule(n);
+  changed+=repairRestTransitions(n);
+  changed+=enforceThursdayWednesdayRotation(n);
+  changed+=enforcePreferredWeekendMorning(n);
+  changed+=enforceSpecialFixedMorning(n);
+  return changed
+}
+function wouldExceed7(i,d,shift){
+  let left=0,right=0;
+  for(let x=d-1;x>=1;x--){if(isWorkShift(S[i][x-1]))left++;else break}
+  for(let x=d+1;x<=days();x++){if(isWorkShift(S[i][x-1]))right++;else break}
+  return left+1+right>7
+}
+function allowedShift(i,d){
+  let e=E[i];
+  if(e[5]) return 'A'; // fixed A
+  if(e[2]) return 'N'; // N-only
+  if(e[1]) return 'M'; // fixed morning
+  // Flexible: extend neighboring shift block if possible, otherwise M as neutral fallback.
+  let L=d>1?S[i][d-2]:'',R=d<days()?S[i][d]:'';
+  // Do not create extra scattered A/N days while compensating deficits.
+  // Once the weekly A/N block is assigned, compensation defaults to M.
+  if(L=='M'||R=='M')return 'M';
+  return 'M';
+}
+function canPlaceWork(i,d,shift){
+  if(d<1||d>days())return false;
+  if(S[i][d-1]!='O')return false;
+  if(wk(d)) return false; // preserve exact weekend staffing
+  if(wouldExceed7(i,d,shift))return false;
+  if(E[i][5]&&shift!='A')return false;
+  if(E[i][2]&&shift!='N')return false;
+  if(E[i][1]&&shift!='M')return false;
+  return true;
+}
+function fillDeficitsFromLongOff(n){
+  // For every employee with a deficit, consume the longest OFF blocks first.
+  // This is done before we create any new OFF days.
+  for(let pass=0;pass<4;pass++){
+    let progressed=false;
+    E.forEach((e,i)=>{
+      let deficit=req(i)-work(i);
+      if(deficit<=0)return;
+
+      let blocks=offBlocks(i).sort((a,b)=>b[2]-a[2]);
+      for(let b of blocks){
+        if(deficit<=0)break;
+        let [a,z,len]=b;
+
+        // Fill from block edges inward to preserve contiguous OFF as long as possible.
+        let order=[];
+        let l=a,r=z;
+        while(l<=r){
+          order.push(l);
+          if(r!=l)order.push(r);
+          l++;r--;
+        }
+
+        for(let d of order){
+          if(deficit<=0)break;
+          let sh=allowedShift(i,d);
+          if(!canPlaceWork(i,d,sh))continue;
+
+          // Prefer genuinely useful coverage, but allow extra weekday staffing if needed
+          // because equal required workdays is a hard rule.
+          S[i][d-1]=sh;
+          deficit--;
+          progressed=true;
+        }
+      }
+    });
+    if(!progressed)break;
+  }
+}
+function moveWorkFromSurplusToDeficit(n){
+  // Swap coverage from surplus employees to deficit employees where possible.
+  let guard=1500;
+  while(guard--){
+    let deficits=E.map((e,i)=>[i,req(i)-work(i)]).filter(x=>x[1]>0);
+    let surplus=E.map((e,i)=>[i,work(i)-req(i)]).filter(x=>x[1]>0);
+    if(!deficits.length)break;
+    let moved=false;
+
+    for(let [di,need] of deficits){
+      for(let d=1;d<=n && !moved;d++){
+        if(S[di][d-1]!='O'||wk(d))continue;
+
+        for(let [si,extra] of surplus){
+          let sh=S[si][d-1];
+          if(!isWorkShift(sh)||!canRemove(si,d))continue;
+          if(E[di][5]&&sh!='A')continue;
+          if(E[di][2]&&sh!='N')continue;
+          if(E[di][1]&&sh!='M')continue;
+          if(wouldExceed7(di,d,sh))continue;
+
+          S[si][d-1]='O';
+          S[di][d-1]=sh;
+          moved=true;
+          break;
+        }
+      }
+      if(moved)break;
+    }
+    if(!moved)break;
+  }
+}
+
+function shiftBlocks(i,shift){
+  let out=[],st=null;
+  for(let d=0;d<=S[i].length;d++){
+    let yes=d<S[i].length&&S[i][d]==shift;
+    if(yes&&st===null)st=d;
+    if(!yes&&st!==null){out.push([st+1,d,d-st]);st=null}
+  }
+  return out
+}
+function normalizeNightBlocks(n){
+  // Flexible employees: A/N should be one contiguous 7-day block where possible.
+  E.forEach((e,i)=>{
+    if(e[1]||e[2]||e[5])return; // fixed M/A/N are handled by their own rules
+    ['A','N'].forEach(sh=>{
+      let daysWith=[];
+      for(let d=1;d<=n;d++)if(S[i][d-1]==sh)daysWith.push(d);
+      if(!daysWith.length)return;
+
+      // Find best 7-day window around existing A/N days, excluding vacations.
+      let best=null;
+      for(let a=1;a<=n-6;a++){
+        let ok=true,score=0;
+        for(let d=a;d<a+7;d++){
+          if(S[i][d-1]=='V'){ok=false;break}
+          if(S[i][d-1]==sh)score+=5;
+          if(isWorkShift(S[i][d-1]))score+=1;
+        }
+        if(ok&&(!best||score>best[1]))best=[a,score];
+      }
+      if(!best)return;
+      let a=best[0],z=a+6;
+
+      // Remove scattered occurrences only when daily coverage allows.
+      for(let d=1;d<=n;d++){
+        if((d<a||d>z)&&S[i][d-1]==sh&&cnt(d,sh)>needForDay(d,sh))S[i][d-1]='O';
+      }
+
+      // Fill the chosen 7-day block with this shift if it does not collide with V.
+      // Weekend exact staffing is preserved: only fill weekend when the shift is needed.
+      for(let d=a;d<=z;d++){
+        if(S[i][d-1]=='V')continue;
+        if(wk(d)){
+          if(cnt(d,sh)<needForDay(d,sh))S[i][d-1]=sh;
+        }else{
+          S[i][d-1]=sh;
+        }
+      }
+    });
+  });
+}
+function countANBlocks(i){
+  return shiftBlocks(i,'A').length+shiftBlocks(i,'N').length;
+}
+function finalExactBalance(n){
+  // First consolidate A/N into 7-day blocks to reduce shift changes.
+  normalizeNightBlocks(n);
+  // Phase 1: use existing long OFF blocks to fill deficits.
+  fillDeficitsFromLongOff(n);
+
+  // Phase 2: swap surplus work to deficit employees.
+  moveWorkFromSurplusToDeficit(n);
+
+  // Phase 3: one more long-off fill after swaps.
+  fillDeficitsFromLongOff(n);
+
+  // Phase 4: enforce max 7 and then refill any new deficits caused by repairs.
+  enforceMax7(n);
+  fillDeficitsFromLongOff(n);
+  moveWorkFromSurplusToDeficit(n);
+  enforceMax7(n);
+}
+function balanceFair(n){
+  E.forEach((e,i)=>{if(e[1]||e[2]||e[5])return;let guard=300;while(work(i)>req(i)&&guard--){let cand=[];for(let d=1;d<=n;d++)if(canRemove(i,d)&&S[i][d-1]!='V')cand.push(d);cand.sort((a,z)=>edgeScore(i,z)-edgeScore(i,a));if(!cand.length)break;S[i][cand[0]-1]='O'}});
+  E.forEach((e,i)=>{if(e[1]||e[2]||e[5])return;let guard=300;while(work(i)<req(i)&&guard--){let cand=[];for(let d=1;d<=n;d++){if(S[i][d-1]!='O'||wk(d))continue;let shift=e[2]?'N':'M';if(shift=='N'&&cnt(d,'N')>=+wn.value)continue;let L=d>1?S[i][d-2]:'',R=d<n?S[i][d]:'';let score=(L==shift?5:0)+(R==shift?5:0)+(L!='O'&&L!='V'?1:0)+(R!='O'&&R!='V'?1:0);cand.push([d,shift,score])}cand.sort((a,z)=>z[2]-a[2]);if(!cand.length)break;S[i][cand[0][0]-1]=cand[0][1]}});
+  E.forEach((e,i)=>{if(e[1]||e[2]||e[5])return;let guard=300;while(work(i)>req(i)&&guard--){let cand=[];for(let d=1;d<=n;d++)if(canRemove(i,d))cand.push(d);cand.sort((a,z)=>edgeScore(i,z)-edgeScore(i,a));if(!cand.length)break;S[i][cand[0]-1]='O'}});
+}
+function fill(d,s,need,C){while(cnt(d,s)<need){let a=C.filter(i=>S[i][d-1]=='O');if(!a.length)break;a.sort((x,z)=>work(x)-work(z));S[a[0]][d-1]=s}}function trim(d,s,need){let a=[];S.forEach((r,i)=>{if(r[d-1]==s)a.push(i)});if(s=='N')a.sort((x,z)=>(E[z][2]||0)-(E[x][2]||0));if(s=='M')a.sort((x,z)=>(E[z][3]||0)-(E[x][3]||0));a.slice(need).forEach(i=>S[i][d-1]='O')}function rend(){let n=days();tab.innerHTML='<tr><th class=name>الموظف</th>'+Array.from({length:n},(_,i)=>{let dt=new Date(+y.value,+m.value,i+1),dn=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][dt.getDay()];return `<th class="${wk(i+1)?'wk':''}">${dn}<br>${i+1}</th>`}).join('')+'</tr>';E.forEach((e,i)=>{tab.innerHTML+=`<tr><td class=name>${e[0]}</td>`+S[i].map((x,d)=>{let sc=x=='A'?'shiftA':x=='N'?'shiftN':x=='M'?'shiftM':x=='V'?'shiftV':'shiftO';return `<td class="${sc} ${wk(d+1)?'wk':''}" onclick="cy(${i},${d})">${x}</td>`}).join('')+'</tr>'})}function cy(i,d){let a=['M','A','N','O','V'],x=a[(a.indexOf(S[i][d])+1)%5];if(E[i][5]&&!['A','O','V'].includes(x))x='A';if(E[i][2]&&!['N','O','V'].includes(x))x='N';if(E[i][1]&&!['M','O','V'].includes(x))x='M';S[i][d]=x;rend();summary();check()}function summary(){sum.innerHTML='<tr><th>الموظف</th><th>M</th><th>A</th><th>N</th><th>O</th><th>V</th><th>العمل</th><th>المطلوب</th><th>أطول دوام متواصل</th><th>العجز/الزيادة</th><th>الحالة</th></tr>'+E.map((e,i)=>{let c=x=>S[i].filter(z=>z==x).length,r=req(i),w=work(i);return `<tr><td>${e[0]}</td><td>${c('M')}</td><td>${c('A')}</td><td>${c('N')}</td><td>${c('O')}</td><td>${c('V')}</td><td>${w}</td><td>${r}</td><td style="font-weight:bold;color:${maxWorkRun(i)<=7?'#138a38':'#b91c1c'}">${maxWorkRun(i)} ${maxWorkRun(i)<=7?'✓':'⚠'}</td><td style="font-weight:bold;color:${w==r?'#138a38':'#c2410c'}">${w-r>0?'+':''}${w-r}</td><td style="font-weight:bold;color:${w==r&&maxWorkRun(i)<=7?'#138a38':'#c2410c'}">${w}/${r} ${w==r&&maxWorkRun(i)<=7?'✓':'⚠'}</td></tr>`}).join('')}function collectIssues(){
+  let n=days(),q=[];
+  for(let d=1;d<=n;d++){
+    let r=wk(d)?[+em.value,+ea.value,+en.value]:[+wm.value,+wa.value,+wn.value];
+    ['M','A','N'].forEach((s,k)=>{
+      const minimum=minimumNeedForDay(d,s);
+      if(cnt(d,s)<minimum)q.push(`يوم ${d}: نقص ${s}`);
+      const maximum=maximumAllowedForDay(d,s);
+      if(cnt(d,s)>maximum)q.push(`يوم ${d}: عدد ${s} هو ${cnt(d,s)} والحد الأعلى ${maximum}`);
+    });
+  }
+  E.forEach((e,i)=>{
+    if(e[2]&&S[i].some(x=>!['N','O','V'].includes(x)))q.push(`${e[0]} لديه شفت غير N`);
+    if(e[5]&&S[i].some(x=>!['A','O','V'].includes(x)))q.push(`${e[0]} لديه شفت غير A`);
+    if(work(i)!=req(i))q.push(`${e[0]}: ${work(i)}/${req(i)} يوم عمل`);
+    if(isFlexibleEmployee(i)&&flexibleEveningCount(i)>10)q.push(`${e[0]}: مجموع مناوبات A وN هو ${flexibleEveningCount(i)} والحد الأعلى 10`);
+    let mx=maxWorkRun(i);if(mx>7)q.push(`${e[0]}: دوام متواصل ${mx} أيام (الحد 7)`);
+    if(!e[1]&&!e[2]&&!e[5]){
+      ['A','N'].forEach(sh=>{
+        let bs=shiftBlocks(i,sh);
+        if(bs.length>1)q.push(`${e[0]}: ${sh} موزع على أكثر من بلوك`);
+        bs.forEach(b=>{if(b[2]!=7)q.push(`${e[0]}: بلوك ${sh} طوله ${b[2]} وليس 7`)});
+      });
+    }
+    for(let d=1;d<=n;d++)if(S[i][d-1]=='O'){
+      let L=d==1||S[i][d-2]!='O',R=d==n||S[i][d]!='O';
+      if(L&&R&&!isAllowedSingleOffBeforeN(i,d,n))q.push(`${e[0]}: أوف منفرد يوم ${d}`);
+    }
+    for(let d=1;d<n;d++)if(forbiddenRestTransition(S[i][d-1],S[i][d])){
+      q.push(`${e[0]}: انتقال غير مسموح ${S[i][d-1]}→${S[i][d]} بين يومي ${d} و${d+1}`);
+    }
+    const weekendCount=employeeWeekendKeys(i,n).length;
+    if(weekendCount>2)q.push(`${e[0]}: غطّى ${weekendCount} ويكندات والحد الأعلى عند الاضطرار مرتان`);
+  });
+  return q;
+}
+function fill(d,s,need,C){
+  while(cnt(d,s)<need){
+    let a=C.filter(i=>S[i][d-1]==='O'&&employeeCanWorkShift(i,s)&&(!isFlexibleEmployee(i)||!['A','N'].includes(s)||flexibleEveningCount(i)<10));
+    if(!a.length)break;
+    a.sort((x,z)=>{
+      if(['A','N'].includes(s)){
+        const ex=flexibleEveningCount(x),ez=flexibleEveningCount(z);
+        if((ex<7)!==(ez<7))return ex<7?-1:1;
+        if(ex!==ez)return ex-ez;
+      }
+      return work(x)-work(z)
+    });
+    S[a[0]][d-1]=s;
+  }
+}
+function check(){
+  if(!S||!S.length){msg.innerHTML='أنشئ الجدول أولاً';return []}
+  let q=collectIssues(); q=q.concat(boundaryIssues());
+  let exact=E.every((e,i)=>work(i)==req(i)&&boundaryMaxWorkRun(i)<=7)&&boundaryIssues().length===0;
+  msg.innerHTML=q.length?'ملاحظات: '+q.slice(0,14).join(' • '):(exact?'✅ الجدول متوازن: جميع الموظفين حققوا الأيام المطلوبة والحد الأقصى 7 أيام متواصلة':'الجدول يحتاج إعادة موازنة');
+  let fb=document.getElementById('fixBtn');if(fb)fb.style.display=q.length?'inline-block':'none';
+  return q;
+}
+function autoFix(){
+  if(!S||!S.length){alert('أنشئ الجدول أولاً');return}
+  let before=S.map(r=>r.slice()),n=days();
+  // ثبّت الإجازات أولاً حتى لا يغيّرها الإصلاح.
+  E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));
+  // موظف N فقط: صحح أي شفت مخالف مع أقل تغيير ممكن.
+  E.forEach((e,i)=>{if(!e[2])return;for(let d=1;d<=n;d++)if(['M','A'].includes(S[i][d-1]))S[i][d-1]='N'});
+  // موظف A ثابت: صحح أي شفت عمل مخالف إلى A مع الحفاظ على O وV.
+  E.forEach((e,i)=>{if(!e[5])return;for(let d=1;d<=n;d++)if(['M','N'].includes(S[i][d-1]))S[i][d-1]='A'});
+  // عالج نقص التغطية اليومية من الموظفين المتاحين، مع تفضيل من لديه عجز في أيام العمل.
+  for(let pass=0;pass<3;pass++){
+    for(let d=1;d<=n;d++){
+      for(let sh of ['M','A','N']){
+        let need=needForDay(d,sh),guard=50;
+        while(cnt(d,sh)<need&&guard--){
+          let cand=[];
+          E.forEach((e,i)=>{
+            if(S[i][d-1]!='O')return;
+            if(e[5]&&sh!='A')return;
+            if(e[2]&&sh!='N')return;
+            if(e[1]&&sh!='M')return;
+            if(!e[1]&&!e[2]&&!e[5]&&!['M','A','N'].includes(sh))return;
+            if(wouldExceed7(i,d,sh))return;
+            if((sh==='A'||sh==='N')&&isFlexibleEmployee(i)&&flexibleEveningCount(i)>=10)return;
+            let deficit=req(i)-work(i),adj=0;
+            if(d>1&&S[i][d-2]==sh)adj+=2;if(d<n&&S[i][d]==sh)adj+=2;
+            let eveningBonus=(sh==='A'||sh==='N')&&isFlexibleEmployee(i)?(flexibleEveningCount(i)<7?70:-flexibleEveningCount(i)*4):0;
+            cand.push([i,deficit*10+adj+eveningBonus]);
+          });
+          cand.sort((a,b)=>b[1]-a[1]);
+          if(!cand.length)break;
+          S[cand[0][0]][d-1]=sh;
+        }
+        if(wk(d)&&cnt(d,sh)>need)trim(d,sh,need);
+      }
+    }
+    compWeekendM(n);
+    balanceFair(n);
+    enforceMax7(n);
+    finalExactBalance(n);
+  }
+  // أعد تطبيق الإجازات كقاعدة نهائية.
+  E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));
+  enforceRosterRestRules(n);
+  let changed=0;for(let i=0;i<S.length;i++)for(let d=0;d<S[i].length;d++)if(before[i]&&before[i][d]!==S[i][d])changed++;
+  save();rend();summary();
+  let q=check();
+  if(q.length)msg.innerHTML=`🔧 تم تعديل ${changed} خانة تلقائياً. بقيت ${q.length} ملاحظة تحتاج مراجعة يدوية: `+q.slice(0,10).join(' • ');
+  else msg.innerHTML=`✅ تم الإصلاح التلقائي بنجاح. عُدّلت ${changed} خانة فقط حسب الحاجة، ولا توجد ملاحظات حالياً.`;
+}
+function csv(){if(!S.length)return;let n=days(),r=[['الموظف',...Array.from({length:n},(_,i)=>i+1)],...E.map((e,i)=>[e[0],...S[i]])],c='\ufeff'+r.map(x=>x.join(',')).join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:'text/csv'}));a.download='roster.csv';a.click()}
+function printRoster(){
+  // صفحة توليد الجدول: PDF/طباعة للجدول فقط، بدون الإحصائيات، A4 أفقي.
+  return printFullRosterOnly();
+}
+
+
+let currentPortalEmp=null;
+function portalEmployees(selectedIndex){
+  let s=document.getElementById('portalEmp'); if(!s)return;
+  s.innerHTML='';
+  const ph=new Option('اختر اسم الموظف',''); ph.disabled=true; ph.selected=selectedIndex===undefined||selectedIndex===null; s.add(ph);
+  E.forEach((e,i)=>s.add(new Option(e[0],i)));
+  if(selectedIndex!==undefined&&selectedIndex!==null)s.value=String(selectedIndex);
+}
+function stabilizeFullRosterNames(scope){
+  const root=scope&&scope.querySelectorAll?scope:document;
+  root.querySelectorAll('.fullRosterWrap').forEach(w=>{
+    w.style.direction='rtl';
+    w.scrollLeft=0;
+    void w.offsetWidth;
+    requestAnimationFrame(()=>{
+      w.scrollLeft=0;
+      w.querySelectorAll('.name').forEach(cell=>{cell.style.visibility='visible';void cell.offsetWidth});
+      w.classList.add('namesReady');
+    });
+  });
+}
+function showHome(){
+  document.body.classList.remove('employeesToolsActive','scheduleToolsActive');
+  document.body.classList.add('homeActionsInPage');
+  document.getElementById('adminArea').style.display='none';
+  const hub=document.getElementById('adminHubRoot');
+  if(hub){hub.style.display='none';hub.innerHTML='';}
+  renderHomePortal();
+}
+function showAdmin(){resetPortalMonth();
+  document.body.classList.remove('homeActionsInPage');
+  const home=document.getElementById('homePortal');
+  home.innerHTML='';
+  home.classList.remove('calendarWallpaper');
+  const aa=document.getElementById('adminArea'); if(aa) aa.style.display='none';
+  renderAdminHub();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderHomePortal(){
+  let root=document.getElementById('homePortal');
+  root.classList.remove('calendarWallpaper');
+  root.innerHTML=`<div class="portal-shell">
+    <div class="homeBrand">
+      <div class="homeBrandMark" aria-hidden="true">🧪</div>
+      <h1 class="homeHospitalTitle">مختبر مستشفى العمران العام</h1>
+      <p>تجمع الأحساء الصحي</p>
+    </div>
+    <div class="homeTopActions" aria-label="القائمة الرئيسية">
+      <button onclick="leaveHomeFor(()=>openAdminSection('generate'))" aria-label="إنشاء"><span>➕</span><small>إنشاء</small></button>
+      <button onclick="leaveHomeFor(()=>openAdminSection('employees'))" aria-label="الموظفين"><span>👥</span><small>الموظفين</small></button>
+      <button onclick="openEmployeePortalPicker()" aria-label="تقويمي"><span>📅</span><small>تقويمي</small></button>
+      <button onclick="leaveHomeFor(openTodayDutyPage)" aria-label="المناوبات"><span>🗓️</span><small>المناوبات</small></button>
+      <button onclick="leaveHomeFor(()=>openAdminSection('vacations'))" aria-label="الإجازات"><span>🏖️</span><small>الإجازات</small></button>
+      <button onclick="leaveHomeFor(()=>openAdminSection('stats'))" aria-label="إحصاء"><span>📊</span><small>إحصاء</small></button>
+      <button onclick="leaveHomeFor(openCompensationLedger)" aria-label="رصيد"><span>⚖️</span><small>رصيد</small></button>
+      <button onclick="leaveHomeFor(openApprovedArchive)" aria-label="أرشيف"><span>🗄️</span><small>أرشيف</small></button>
+    </div>
+  </div>`;
+}
+function leaveHomeFor(action){
+  document.body.classList.remove('homeActionsInPage');
+  const home=document.getElementById('homePortal');
+  if(home){home.innerHTML='';home.classList.remove('calendarWallpaper')}
+  const aa=document.getElementById('adminArea');if(aa)aa.style.display='none';
+  const hub=document.getElementById('adminHubRoot');if(hub){hub.style.display='none';hub.innerHTML=''}
+  if(typeof action==='function')action();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function openEmployeePortalPicker(){
+  document.body.classList.remove('homeActionsInPage','employeesToolsActive','scheduleToolsActive');
+  const aa=document.getElementById('adminArea');if(aa)aa.style.display='none';
+  const hub=document.getElementById('adminHubRoot');if(hub){hub.style.display='none';hub.innerHTML=''}
+  const root=document.getElementById('homePortal');if(!root)return;
+  root.classList.remove('calendarWallpaper');
+  root.innerHTML=`<div class="portal-shell"><div class="portal-card employeePickerCard">
+    <div class="adminSubHead"><button class="adminBack2" aria-label="الرجوع للرئيسية" title="الرئيسية" onclick="showHome()">‹</button><div class="portal-title">تقويم الموظفين</div></div>
+    <div class="homeSelectHint">اختر اسم الموظف لفتح تقويمه مباشرة.</div>
+    <div class="homeLoginRow"><select id="portalEmp" onchange="selectEmployeeCalendar(this.value)"></select></div>
+  </div></div>`;
+  portalEmployees(currentPortalEmp);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function selectEmployeeCalendar(value){
+  if(value==='')return;
+  currentPortalEmp=+value;
+  resetPortalMonth();
+  openEmployeePage(currentPortalEmp);
+}
+function openEmployeePage(forceIndex){
+  ensurePortalMonth();
+  let idx=forceIndex;
+  if(idx===undefined || idx===null){
+    const sel=document.getElementById('portalEmp');
+    if(!sel || sel.value==='')return;
+    idx=+sel.value;
+  }
+  currentPortalEmp=+idx;
+  const aa=document.getElementById('adminArea'); if(aa) aa.style.display='none';
+  const root=document.getElementById('homePortal');
+  if(!root)return;
+  root.classList.add('calendarWallpaper');
+  const emp=E[currentPortalEmp];
+  if(!emp)return;
+
+  let content='';
+  if(!S || !S.length){
+    content='<div class="portal-card">لا يوجد جدول مولّد على هذا الجهاز حتى الآن.</div>';
+  }else if(portalViewMonth!=+m.value || portalViewYear!=+y.value){
+    content=`<div class="portal-card"><div class="monthNav"><button onclick="changePortalMonth(-1,'employee')">‹</button><span class="monthLabel">${portalMonthLabel()}</span><button onclick="changePortalMonth(1,'employee')">›</button></div><div class="readonly-note">لا يوجد جدول محفوظ لهذا الشهر على هذا الجهاز.</div></div>`;
+  }else{
+    const i=currentPortalEmp;
+    const dow=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
+    const first=new Date(portalViewYear,portalViewMonth,1).getDay();
+    let cells='';
+    dow.forEach(x=>cells+=`<div class="dow ${(x=='جمعة'||x=='سبت')?'weekend':''}">${x}</div>`);
+    for(let k=0;k<first;k++)cells+='<div class="day" style="visibility:hidden"></div>';
+    for(let d=1;d<=days();d++){
+      const sh=(S[i]&&S[i][d-1])?S[i][d-1]:'O';
+      cells+=`<div class="day ${sh} ${wk(d)?'weekend':''}"><div>${d}</div><div class="shift">${sh}</div></div>`;
+    }
+    const c=x=>S[i].filter(z=>z==x).length;
+
+    const n=days();
+    let head='<tr><th class="name">الموظف</th>';
+    for(let d=1;d<=n;d++){
+      const dt=new Date(+y.value,+m.value,d), dn=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][dt.getDay()];
+      head+=`<th class="${wk(d)?'wkcol':''}">${dn}<br>${d}</th>`;
+    }
+    head+='</tr>';
+    let body='';
+    E.forEach((e,r)=>{
+      const sel=r===currentPortalEmp?' class="selectedEmployeeRow"':'';
+      body+=`<tr${sel}><td class="name employeePick" onclick="selectFullRosterEmployee(${r})">${e[0]}</td>`;
+      for(let d=1;d<=n;d++){
+        const sh=(S[r]&&S[r][d-1])?S[r][d-1]:'O';
+        body+=`<td class="${sh} ${wk(d)?'wkcol':''}">${sh}</td>`;
+      }
+      body+='</tr>';
+    });
+
+    content=`
+      <div class="portal-card">
+        <div class="monthNav"><button onclick="changePortalMonth(-1,'employee')">‹</button><span class="monthLabel">${portalMonthLabel()}</span><button onclick="changePortalMonth(1,'employee')">›</button></div>
+        <b>تقويم ${emp[0]}</b>
+        <div class="empcal">${cells}</div>
+        <div class="readonly-note" style="margin-top:10px">العمل ${work(i)} • M ${c('M')} • A ${c('A')} • N ${c('N')} • O ${c('O')} • V ${c('V')}</div>
+        ${compensationStatNote(emp[0])}
+        ${annualVStatsHtml(i,portalViewYear)}
+      </div>
+      <div class="fullRosterCard">
+        <div><b>الجدول الكامل — مشاهدة فقط</b><div class="readonly-note">${portalMonthLabel()}</div></div>
+        <div class="fullRosterWrap"><table class="fullRosterTable">${head}${body}</table></div>
+      </div>`;
+  }
+
+  root.innerHTML=`<div class="portal-shell">
+    <div class="portal-card employeeCalendarPicker" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <button class="adminBack2" aria-label="الرجوع للرئيسية" title="الرئيسية" onclick="showHome()">‹</button>
+      <div class="employeeCalendarSelect"><div class="readonly-note">صفحة الموظف — مشاهدة فقط</div><select id="portalEmp" onchange="selectEmployeeCalendar(this.value)"></select></div>
+    </div>
+    ${content}
+  </div>`;
+  portalEmployees(currentPortalEmp);
+  stabilizeFullRosterNames(root);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function selectFullRosterEmployee(i){
+  if(i<0||i>=E.length)return;
+  currentPortalEmp=i;
+  showFullReadOnlyLegacy();
+}
+
+function showFullReadOnlyLegacy(){
+  resetPortalMonth();
+  const aa=document.getElementById('adminArea'); if(aa)aa.style.display='none';
+  const hub=document.getElementById('adminHubRoot'); if(hub){hub.style.display='none';hub.innerHTML='';}
+  const root=document.getElementById('homePortal'); if(!root)return;
+  root.classList.remove('calendarWallpaper');
+  if(!S || !S.length){root.innerHTML='<div class="portal-shell"><div class="portal-card">لا يوجد جدول مولّد على هذا الجهاز حتى الآن.</div></div>';return}
+  let n=days();
+  let head='<tr><th class="name">الموظف</th>';
+  for(let d=1;d<=n;d++){
+    let dt=new Date(+y.value,+m.value,d), dn=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][dt.getDay()];
+    head+=`<th class="${wk(d)?'wkcol':''}">${dn}<br>${d}</th>`;
+  }
+  head+='</tr>';
+  let body='';
+  E.forEach((e,i)=>{
+    const sel=i===currentPortalEmp?' class="selectedEmployeeRow"':'';
+    body+=`<tr${sel}><td class="name employeePick" onclick="selectFullRosterEmployee(${i})">${e[0]}</td>`;
+    for(let d=1;d<=n;d++){
+      let sh=(S[i]&&S[i][d-1])?S[i][d-1]:'O';
+      body+=`<td class="${sh} ${wk(d)?'wkcol':''}">${sh}</td>`;
+    }
+    body+='</tr>';
+  });
+  root.innerHTML=`<div class="portal-shell">
+    <div class="adminSubHead"><button class="adminBack2" aria-label="الرجوع للرئيسية" title="الرئيسية" onclick="showHome()">‹</button><h2 style="margin:0;color:#0b3156">الجدول الكامل</h2></div>
+    <div class="fullRosterCard">
+      <div><b>الجدول الكامل</b><div class="readonly-note">${M[+m.value]} ${y.value}</div></div>
+      ${currentPortalEmp!==null&&E[currentPortalEmp]?`<div class="selectedEmployeeBanner">الموظف المميز: ${E[currentPortalEmp][0]} — صفه ظاهر بشكل مميز داخل الجدول.</div>`:'<div class="readonly-note" style="margin:8px 0">اضغط على اسم أي موظف لتمييز جدوله.</div>'}
+      <div class="fullRosterWrap"><table class="fullRosterTable">${head}${body}</table></div>
+    </div>
+  </div>`;
+  stabilizeFullRosterNames(root);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderMyCalendar(open){
+  ensurePortalMonth();
+  const aa=document.getElementById('adminArea'); if(aa)aa.style.display='none';
+  const hub=document.getElementById('adminHubRoot'); if(hub){hub.style.display='none';hub.innerHTML='';}
+  const root=document.getElementById('homePortal'); if(!root)return;
+  root.classList.add('calendarWallpaper');
+  if(currentPortalEmp===null || !E[currentPortalEmp]){showHome();setTimeout(()=>{const sel=document.getElementById('portalEmp');if(sel)sel.focus()},60);return;}
+  const i=currentPortalEmp;
+  const emp=E[i];
+  if(!S || !S.length){root.innerHTML=`<div class="portal-shell"><div class="portal-card"><div class="portal-title">${emp[0]}</div><div>لا يوجد جدول مولّد على هذا الجهاز حتى الآن.</div></div></div>`;return}
+  if(portalViewMonth!=+m.value||portalViewYear!=+y.value){
+    root.innerHTML=`<div class="portal-shell"><div class="portal-card"><div class="portal-title">${emp[0]}</div><div class="monthNav"><button onclick="changePortalMonth(-1,'mine')">‹</button><span class="monthLabel">${portalMonthLabel()}</span><button onclick="changePortalMonth(1,'mine')">›</button></div><div class="readonly-note">لا يوجد جدول محفوظ لهذا الشهر على هذا الجهاز.</div></div></div>`;return;
+  }
+  let dow=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
+  let first=new Date(portalViewYear,portalViewMonth,1).getDay();
+  let cells='';
+  dow.forEach(x=>cells+=`<div class="dow ${(x=='جمعة'||x=='سبت')?'weekend':''}">${x}</div>`);
+  for(let k=0;k<first;k++)cells+='<div class="day" style="visibility:hidden"></div>';
+  for(let d=1;d<=days();d++){
+    let sh=(S[i]&&S[i][d-1])?S[i][d-1]:'O';
+    cells+=`<div class="day ${sh} ${wk(d)?'weekend':''}"><div>${d}</div><div class="shift">${sh}</div></div>`;
+  }
+  let c=x=>S[i].filter(z=>z==x).length;
+  root.innerHTML=`<div class="portal-shell">
+    <div class="portal-card">
+      <div class="portal-title">${emp[0]}</div>
+      <div class="readonly-note">تقويم الموظف</div>
+      <div class="monthNav"><button aria-label="الشهر السابق" onclick="changePortalMonth(-1,'mine')">‹</button><span class="monthLabel">${portalMonthLabel()}</span><button aria-label="الشهر التالي" onclick="changePortalMonth(1,'mine')">›</button></div>
+      <div class="empcal">${cells}</div>
+      <div class="readonly-note" style="margin-top:10px">العمل ${work(i)} • M ${c('M')} • A ${c('A')} • N ${c('N')} • O ${c('O')} • V ${c('V')}</div>
+      ${compensationStatNote(emp[0])}
+      ${annualVStatsHtml(i,portalViewYear)}
+    </div>
+  </div>`;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+window.addEventListener('load',()=>{
+  const title=document.querySelector('header b');
+  if(title)title.textContent=title.textContent.replace(/v\d+\.\d+\.\d+/,'v0.9.84');
+  setTimeout(showHome,100)
+});
+
+function openMyCalendar(){
+  if(currentPortalEmp===null){showHome();setTimeout(()=>{const sel=document.getElementById('portalEmp');if(sel)sel.focus()},60);return;}
+  resetPortalMonth();
+  openEmployeePage(currentPortalEmp);
+}
+
+function openHomeAdminSection(which){
+  document.getElementById('homePortal').innerHTML='';
+  const aa=document.getElementById('adminArea'); if(aa) aa.style.display='none';
+  renderAdminHub();
+  openAdminSection(which);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function openManualFromNav(){
+  document.getElementById('homePortal').innerHTML='';
+  hideAdminHub();
+  openManualOnly();
+}
+
+
+function saveScheduleNow(silent){
+  try{
+    if(S&&S.length)enforceRosterRestRules(days());
+    const payload={
+      employees:E,
+      schedule:S,
+      month:+m.value,
+      year:+y.value
+    };
+    localStorage.setItem('lab-roster-saved-schedule',JSON.stringify(payload));
+    archiveCurrentSchedule();
+    if(typeof save==='function') save();
+    if(typeof msg!=='undefined') msg.innerHTML='تم حفظ الجدول بنجاح';
+    if(!silent)alert('تم حفظ الجدول بنجاح');
+  }catch(e){
+    alert('تعذر حفظ الجدول');
+  }
+}
+function loadSavedSchedule(){
+  try{
+    const raw=localStorage.getItem('lab-roster-saved-schedule');
+    if(!raw)return;
+    const p=JSON.parse(raw);
+    try{
+      let a=rosterArchive(),k=rosterMonthKey(+p.year,+p.month);
+      if(!a[k]&&p.schedule){
+        a[k]={year:+p.year,month:+p.month,employees:(p.employees||[]).map(e=>Array.isArray(e)?e[0]:e),schedule:p.schedule};
+        localStorage.setItem('lab-roster-month-archive',JSON.stringify(a));
+      }
+    }catch(_e){}
+    if(p.month!=null)m.value=p.month;
+    if(p.year!=null)y.value=p.year;
+    if(p.employees)E=p.employees;
+    if(p.schedule)S=p.schedule;
+    // أصلح كذلك الجداول المحفوظة قبل إضافة القاعدة، لا الجداول الجديدة فقط.
+    if(S&&S.length){
+      const repaired=enforceRosterRestRules(days());
+      if(repaired){
+        p.employees=E;p.schedule=S;p.month=+m.value;p.year=+y.value;
+        localStorage.setItem('lab-roster-saved-schedule',JSON.stringify(p));
+        archiveCurrentSchedule();
+      }
+    }
+    if(typeof rendE==='function')rendE();
+    if(typeof rend==='function'&&S&&S.length)rend();
+    if(typeof summary==='function'&&S&&S.length)summary();
+    if(typeof refreshEmployeeSelect==='function')refreshEmployeeSelect();
+  }catch(e){}
+}
+window.addEventListener('load',()=>setTimeout(loadSavedSchedule,150));
+
+
+let portalViewMonth=null,portalViewYear=null;
+function ensurePortalMonth(){
+  if(portalViewMonth===null){portalViewMonth=+m.value;portalViewYear=+y.value}
+}
+function portalMonthLabel(){
+  ensurePortalMonth();
+  return M[portalViewMonth]+' '+portalViewYear;
+}
+function changePortalMonth(delta,view){
+  ensurePortalMonth();
+  portalViewMonth+=delta;
+  if(portalViewMonth<0){portalViewMonth=11;portalViewYear--}
+  if(portalViewMonth>11){portalViewMonth=0;portalViewYear++}
+  // Current generated schedule exists only for its own month; navigation still shows the selected month,
+  // and displays a clear message when no schedule for that month is stored.
+  if(view==='employee'){openEmployeePage(currentPortalEmp);}
+  else if(view==='mine')renderMyCalendar(true);
+  else showFullReadOnly();
+}
+function resetPortalMonth(){
+  portalViewMonth=+m.value;portalViewYear=+y.value;
+}
+
+</script>
+<script>
+function adminHubRoot(){return document.getElementById('adminHubRoot')}
+function hideAdminHub(){
+  const r=adminHubRoot(); if(r){r.style.display='none';r.innerHTML=''}
+}
+function renderAdminHub(){
+  document.body.classList.remove('employeesToolsActive');
+  const r=adminHubRoot(); if(!r)return;
+  r.style.display='block';
+  r.innerHTML=`<div class="adminHubCard">
+    <h2 style="margin:0;color:#0b3156">الإعدادات</h2>
+    <div class="readonly-note">اختر الوظيفة التي تريد فتحها.</div>
+    <div class="adminHubGrid">
+      <button class="adminTile" onclick="openAdminSection('employees')"><span class="ai">👤➕</span><span>الموظفين</span></button>
+      <button class="adminTile" onclick="openAdminSection('generate')"><span class="ai">🗓️</span><span>إنشاء جدول</span></button>
+      <button class="adminTile" onclick="openAdminSection('vacations')"><span class="ai">🏖️</span><span>الإجازات</span></button>
+      <button class="adminTile" onclick="openAdminSection('stats')"><span class="ai">📊</span><span>الإحصائيات</span></button>
+      <button class="adminTile" onclick="openApprovedArchive()"><span class="ai">🗄️</span><span>الأرشيف</span></button>
+      <button class="adminTile" onclick="openCompensationLedger()"><span class="ai">⚖️</span><span>رصيد التعويض</span></button>
+    </div>
+  </div>`;
+}
+function showHomeFromAdmin(){
+  document.body.classList.remove('employeesToolsActive');
+  hideAdminHub();
+  const aa=document.getElementById('adminArea'); if(aa)aa.style.display='none';
+  showHome();
+}
+function renderSubPage(title,body,backToGenerate){
+  const r=adminHubRoot(); if(!r)return;
+  r.style.display='block';
+  r.innerHTML=`<div class="adminSubPage">
+    <div class="adminSubHead"><button class="adminBack2" aria-label="الرجوع للرئيسية" title="الرئيسية" onclick="${backToGenerate?'renderGeneratedSchedulePage()':'showHomeFromAdmin()'}">‹</button><h2>${title}</h2></div>
+    <div class="adminSubBody">${body}</div>
+  </div>`;
+}
+
+function employeeType(i){return E[i][5]?'afixed':(E[i][2]?'nonly':(E[i][1]?'fixed':'flex'))}
+function employeeTypeLabel(i){let t=employeeType(i);return t==='fixed'?'ثابت M':t==='afixed'?'ثابت A':t==='nonly'?'ثابت N':'مرن'}
+function openAdminSection(which){
+  if(which==='employees'){
+    const names=E.map((e,i)=>`<button class="empListBtn" onclick="openEmployeeEditor(${i})"><span>${e[0]}</span><span class="state">${employeeTypeLabel(i)} ›</span></button>`).join('');
+    renderSubPage('الموظفين',`
+      <div class="employeePageAdd"><input id="newEmpName" placeholder="اسم الموظف الجديد" autocomplete="off" onkeydown="if(event.key==='Enter')addEmployeeSimple()"><button onclick="addEmployeeSimple()"><span>＋</span> إضافة موظف</button></div>
+      <div class="readonly-note employeeListHint" style="margin-bottom:8px">اضغط على اسم الموظف لتحديد نوع مناوبته وإعداداته.</div>
+      <div class="employeeListScroll">${names||'<div class="readonly-note">لا يوجد موظفون.</div>'}</div>
+    `);
+    document.body.classList.remove('scheduleToolsActive');
+    document.body.classList.add('employeesToolsActive');
+    return;
+  }
+
+  if(which==='vacations'){
+    renderVacationBrowser();
+    return;
+  }
+
+  if(which==='generate'){
+    renderGeneratedSchedulePage();
+    return;
+  }
+
+  if(which==='manual'){
+    renderManualEditor();
+    return;
+  }
+  if(which==='stats'){
+    renderStatsOnly();
+    return;
+  }
+}
+
+
+function generatedScheduleTableHtml(){
+  if(!S||!S.length)return '';
+  let n=days();
+  let h='<div class="generatedTableWrap"><table class="generatedScheduleTable"><tr><th class="name">الموظف</th>';
+  for(let i=0;i<n;i++){
+    let dt=new Date(+y.value,+m.value,i+1),dn=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][dt.getDay()];
+    h+=`<th class="${wk(i+1)?'wk':''}">${dn}<br>${i+1}</th>`;
+  }
+  h+='</tr>';
+  E.forEach((e,i)=>{
+    h+=`<tr><td class="name">${e[0]}</td>`;
+    S[i].forEach((x,d)=>{let sc=x==='A'?'shiftA':x==='N'?'shiftN':x==='M'?'shiftM':x==='V'?'shiftV':'shiftO';h+=`<td class="${sc} ${wk(d+1)?'wk':''}">${x}</td>`});
+    h+='</tr>';
+  });
+  return h+'</table></div>';
+}
+function schedulePickerValue(){
+  return String(+y.value)+'-'+String(+m.value+1).padStart(2,'0');
+}
+function applySchedulePicker(){
+  const p=document.getElementById('scheduleMonthPicker');
+  if(!p||!p.value)return true;
+  const a=p.value.split('-'),yy=+a[0],mm=+a[1]-1;
+  if(!yy||mm<0||mm>11){alert('حدد الشهر والسنة بشكل صحيح');return false}
+  y.value=yy;m.value=mm;
+  resetPortalMonth();
+  try{updateTarget()}catch(e){}
+  return true;
+}
+function createScheduleFromPicker(){
+  if(!applySchedulePicker())return;
+  gen();
+  renderGeneratedScheduleTablePage();
+}
+function regenerateScheduleFromPicker(){
+  if(!applySchedulePicker())return;
+  if(S&&S.length&&!confirm('سيتم استبدال الجدول الحالي بجدول جديد حسب الشهر المحدد والإعدادات الحالية. هل تريد المتابعة؟'))return;
+  gen();
+  renderGeneratedScheduleTablePage();
+}
+function renderGeneratedScheduleTablePage(){
+  const table=(S&&S.length)?generatedScheduleTableHtml():'<div class="scheduleEmptyNote">لا يوجد جدول مولّد حتى الآن. اختر الشهر ثم اضغط زر الإنشاء.</div>';
+  const tools=`<div class="schedulePageTools" aria-label="أدوات إنشاء الجدول">
+    <button onclick="createScheduleFromPicker()"><span>➕</span><small>إنشاء</small></button>
+    <button onclick="openManualAndLeaveSchedule()"><span>✏️</span><small>تحرير</small></button>
+    <button onclick="autoFixScheduleAndOpen()"><span>🔧</span><small>إصلاح</small></button>
+    <button onclick="saveScheduleAndOpen()"><span>💾</span><small>حفظ</small></button>
+    <button onclick="approveAndLeaveSchedule()"><span>✅</span><small>اعتماد</small></button>
+    <button onclick="shareRosterPdfLandscape()"><span>⬆️</span><small>PDF</small></button>
+    <button class="danger" onclick="deleteCurrentSchedule()"><span>🗑️</span><small>حذف</small></button>
+  </div>`;
+  renderSubPage(`<input class="scheduleMonthAtTitle" id="scheduleMonthPicker" type="month" value="${schedulePickerValue()}" aria-label="اختيار الشهر والسنة">`,tools+table,false);
+  document.body.classList.add('scheduleToolsActive');
+}
+function saveScheduleAndOpen(){
+  if(!S||!S.length){alert('أنشئ الجدول أولًا');return}
+  saveScheduleNow();
+  renderGeneratedScheduleTablePage();
+}
+function deleteCurrentSchedule(){
+  if(!S||!S.length){alert('لا يوجد جدول حالي لحذفه');return}
+  if(!confirm('سيتم حذف جدول '+M[+m.value]+' '+y.value+' الجاري من هذا الجهاز. الجداول المعتمدة في الأرشيف لن تُحذف. هل تريد المتابعة؟'))return;
+  try{
+    const key=rosterMonthKey(+y.value,+m.value),archive=rosterArchive();
+    if(archive[key]){delete archive[key];localStorage.setItem('lab-roster-month-archive',JSON.stringify(archive))}
+    const saved=JSON.parse(localStorage.getItem('lab-roster-saved-schedule')||'null');
+    if(saved&&+saved.month===+m.value&&+saved.year===+y.value)localStorage.removeItem('lab-roster-saved-schedule');
+    S=[];save();renderGeneratedScheduleTablePage();
+    alert('تم حذف الجدول الجاري. الأرشيف المعتمد لم يتغير.');
+  }catch(e){alert('تعذر حذف الجدول على هذا الجهاز')}
+}
+function checkScheduleAndOpen(){
+  if(!S||!S.length){alert('أنشئ الجدول أولًا');return}
+  const issues=check();
+  const safe=v=>String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  const body=issues.length?`
+    <div class="checkReport checkHasIssues">
+      <div class="checkReportHead"><span>⚠️ توجد ملاحظات تحتاج مراجعة</span><b>${issues.length}</b></div>
+      <ol>${issues.map((issue,i)=>`<li><span class="issueNo">${i+1}</span><span>${safe(issue)}</span></li>`).join('')}</ol>
+      <button class="checkFixButton" onclick="autoFix();checkScheduleAndOpen()">🔧 محاولة الإصلاح التلقائي ثم إعادة الفحص</button>
+    </div>`:`
+    <div class="checkReport checkPassed">
+      <div class="checkPassedIcon">✅</div>
+      <h3>الجدول سليم</h3>
+      <p>لا توجد ملاحظات أو مخالفات مكتشفة، ويمكن متابعة الاعتماد.</p>
+    </div>`;
+  renderSubPage('نتيجة فحص الجدول',body,true);
+}
+function autoFixScheduleAndOpen(){
+  if(!S||!S.length){alert('أنشئ الجدول أولًا');return}
+  autoFix();
+  renderGeneratedScheduleTablePage();
+}
+function renderGeneratedSchedulePage(){
+  renderGeneratedScheduleTablePage();
+}
+function openScheduleDirect(){
+  const home=document.getElementById('homePortal');if(home)home.innerHTML='';
+  const aa=document.getElementById('adminArea');if(aa)aa.style.display='none';
+  renderGeneratedScheduleTablePage();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function regenerateGeneratedSchedule(){regenerateScheduleFromPicker()}
+function createScheduleAndOpen(){createScheduleFromPicker()}
+
+function openEmployeeEditor(i){
+  if(i<0||i>=E.length)return;
+  const e=E[i], typ=employeeType(i);
+  const vac=(e[4]||[]).map((v,j)=>`<span style="display:inline-block;background:#eef3f8;padding:5px 8px;border-radius:10px;margin:3px">${vacLabel(v)} <b style="color:#b00;cursor:pointer" onclick="deleteEmployeeVacationFromEditor(${i},${j})">×</b></span>`).join('')||'<span class="readonly-note">لا توجد إجازات.</span>';
+  renderSubPage('إعدادات الموظف',`
+    <div class="empEditorRow"><label>اسم الموظف</label><input id="editEmpName" value="${String(e[0]).replace(/&/g,'&amp;').replace(/"/g,'&quot;')}"></div>
+    <label style="display:block;font-weight:800;color:#0b3156;margin-top:8px">نوع المناوبة</label>
+    <div class="empTypeGrid">
+      <button class="${typ==='fixed'?'active':''}" onclick="setEmployeeType(${i},'fixed')">ثابت M</button>
+      <button class="${typ==='afixed'?'active':''}" onclick="setEmployeeType(${i},'afixed')">ثابت A</button>
+      <button class="${typ==='flex'?'active':''}" onclick="setEmployeeType(${i},'flex')">مرن</button>
+      <button class="${typ==='nonly'?'active':''}" onclick="setEmployeeType(${i},'nonly')">ثابت N</button>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;margin:12px 0;font-weight:800"><input id="editWeekendM" type="checkbox" ${e[3]? 'checked':''} style="width:24px;height:24px"> يعمل M في الويكند</label>
+    <hr style="border:0;border-top:1px solid #e4e9ef;margin:16px 0">
+    <b style="color:#0b3156">الإجازات V</b>
+    <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:7px;align-items:end;margin-top:8px">
+      <label>من<input id="editVacFrom" type="date"></label>
+      <label>إلى<input id="editVacTo" type="date"></label>
+      <button onclick="addEmployeeVacationFromEditor(${i})">+ إضافة</button>
+    </div>
+    <div style="margin:8px 0 16px">${vac}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <button onclick="saveEmployeeEditor(${i})">💾 حفظ</button>
+      <button style="background:#a61b1b" onclick="deleteEmployeeSimple(${i})">🗑️ حذف الموظف</button>
+    </div>
+  `);
+  document.body.classList.add('employeesToolsActive');
+}
+function setEmployeeType(i,type){
+  E[i][5]=0;
+  if(type==='fixed'){E[i][1]=1;E[i][2]=0}
+  else if(type==='afixed'){E[i][1]=0;E[i][2]=0;E[i][5]=1}
+  else if(type==='nonly'){E[i][1]=0;E[i][2]=1}
+  else {E[i][1]=0;E[i][2]=0}
+  save(); openEmployeeEditor(i);
+}
+function saveEmployeeEditor(i){
+  const nm=(document.getElementById('editEmpName')?.value||'').trim();
+  if(nm)E[i][0]=nm;
+  E[i][3]=document.getElementById('editWeekendM')?.checked?1:0;
+  save(); try{rendE()}catch(e){}
+  openAdminSection('employees');
+}
+function addEmployeeVacationFromEditor(i){
+  let a=document.getElementById('editVacFrom').value,z=document.getElementById('editVacTo').value;
+  if(!a||!z||a>z){alert('حدد تاريخ بداية ونهاية الإجازة بشكل صحيح');return}
+  E[i][4]=E[i][4]||[];E[i][4].push([a,z]);E[i][4].sort((x,y)=>String(x[0]).localeCompare(String(y[0])));save();openEmployeeEditor(i);
+}
+function deleteEmployeeVacationFromEditor(i,j){E[i][4].splice(j,1);save();openEmployeeEditor(i)}
+
+function regenerateFromManual(){
+  if(!confirm('سيتم استبدال الجدول الحالي بجدول جديد حسب إعدادات الموظفين والإجازات الحالية. هل تريد المتابعة؟'))return;
+  gen();
+  renderManualEditor();
+  try{msg.innerHTML='تمت إعادة إنشاء الجدول. راجعه ثم اضغط حفظ.'}catch(e){}
+}
+function renderManualEditor(){
+  if(!S||!S.length){renderSubPage('تحرير','<div class="readonly-note">لا يوجد جدول مولّد. أنشئ الجدول أولًا من «إنشاء جدول».</div>',true);return}
+  let n=days();
+  let head='<tr><th class="name">الموظف</th>'+Array.from({length:n},(_,k)=>{let d=k+1,dt=new Date(+y.value,+m.value,d),dn=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][dt.getDay()];return `<th class="${wk(d)?'wk':''}">${dn}<br>${d}</th>`}).join('')+'</tr>';
+  let rows=E.map((e,i)=>`<tr><td class="name">${e[0]}</td>`+(S[i]||[]).map((x,k)=>`<td><button class="${x}" onclick="manualCycle(${i},${k})">${x}</button></td>`).join('')+'</tr>').join('');
+  renderSubPage('تحرير',`
+    <div class="readonly-note" style="margin-bottom:10px">هذه الصفحة للجدول فقط. إعدادات الموظفين موجودة داخل أيقونة «الموظفون».</div>
+    <div class="manualActionGrid" style="display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;width:100%!important;margin:14px 0 18px!important">
+      <button class="manualActionTile" style="display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:10px!important;width:100%!important;height:126px!important;min-height:126px!important;padding:12px 8px!important;margin:0!important;border-radius:22px!important;white-space:normal!important;text-align:center!important;font-size:15px!important;font-weight:800!important;line-height:1.25!important;color:#fff!important;background:linear-gradient(145deg,#2567b8,#153d72)!important" onclick="saveScheduleNow()"><span class="manualActionIcon" style="display:flex!important;align-items:center!important;justify-content:center!important;width:54px!important;height:54px!important;min-height:54px!important;border-radius:16px!important;background:rgba(255,255,255,.12)!important;font-size:31px!important;line-height:1!important">💾</span><span>حفظ</span></button>
+      <button class="manualActionTile" style="display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:10px!important;width:100%!important;height:126px!important;min-height:126px!important;padding:12px 8px!important;margin:0!important;border-radius:22px!important;white-space:normal!important;text-align:center!important;font-size:15px!important;font-weight:800!important;line-height:1.25!important;color:#fff!important;background:linear-gradient(145deg,#2567b8,#153d72)!important" onclick="regenerateFromManual()"><span class="manualActionIcon" style="display:flex!important;align-items:center!important;justify-content:center!important;width:54px!important;height:54px!important;min-height:54px!important;border-radius:16px!important;background:rgba(255,255,255,.12)!important;font-size:31px!important;line-height:1!important">🔄</span><span>إعادة إنشاء الجدول</span></button>
+      <button class="manualActionTile" style="display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:10px!important;width:100%!important;height:126px!important;min-height:126px!important;padding:12px 8px!important;margin:0!important;border-radius:22px!important;white-space:normal!important;text-align:center!important;font-size:15px!important;font-weight:800!important;line-height:1.25!important;color:#fff!important;background:linear-gradient(145deg,#2567b8,#153d72)!important" onclick="check()"><span class="manualActionIcon" style="display:flex!important;align-items:center!important;justify-content:center!important;width:54px!important;height:54px!important;min-height:54px!important;border-radius:16px!important;background:rgba(255,255,255,.12)!important;font-size:31px!important;line-height:1!important">✓</span><span>فحص الجدول</span></button>
+      <button id="manualFixBtn" class="manualActionTile manualFixTile" style="display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:10px!important;width:100%!important;height:126px!important;min-height:126px!important;padding:12px 8px!important;margin:0!important;border-radius:22px!important;white-space:normal!important;text-align:center!important;font-size:15px!important;font-weight:800!important;line-height:1.25!important;color:#fff!important;background:linear-gradient(145deg,#2567b8,#153d72)!important" onclick="autoFix();renderManualEditor()"><span class="manualActionIcon" style="display:flex!important;align-items:center!important;justify-content:center!important;width:54px!important;height:54px!important;min-height:54px!important;border-radius:16px!important;background:rgba(255,255,255,.12)!important;font-size:31px!important;line-height:1!important">🔧</span><span>إصلاح تلقائي</span></button>
+    </div>
+    <div class="manualEditorWrap"><table class="manualEditorTable">${head}${rows}</table></div>
+  `,true);
+}
+function manualCycle(i,d){cy(i,d);renderManualEditor()}
+
+function renderStatsOnly(){
+  if(!S || !S.length){
+    renderSubPage('الإحصائيات','<div class="readonly-note">لا يوجد جدول مولّد لعرض الإحصائيات.</div>');
+    return;
+  }
+  let rows='';
+  E.forEach((e,i)=>{
+    let c={M:0,A:0,N:0,O:0,V:0};
+    (S[i]||[]).forEach(x=>{if(c[x]!==undefined)c[x]++});
+    rows+=`<tr><td>${e[0]}</td><td>${c.M}</td><td>${c.A}</td><td>${c.N}</td><td>${c.O}</td><td>${c.V}</td><td>${c.M+c.A+c.N}</td></tr>`;
+  });
+  renderSubPage('الإحصائيات',`
+    <div style="overflow:auto">
+      <table class="statsTable">
+        <thead><tr><th>الموظف</th><th>M</th><th>A</th><th>N</th><th>O</th><th>V</th><th>العمل</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`);
+}
+
+function addEmployeeSimple(){
+  const inp=document.getElementById('newEmpName');
+  const name=(inp?.value||'').trim();
+  if(!name)return;
+  E.push([name,0,0,0,[]]);
+  if(inp)inp.value='';
+  try{save()}catch(e){}
+  try{rendE()}catch(e){}
+  openAdminSection('employees');
+}
+function deleteEmployeeSimple(i){
+  if(!confirm('حذف الموظف '+E[i][0]+'؟'))return;
+  E.splice(i,1);
+  if(Array.isArray(S))S.splice(i,1);
+  try{save()}catch(e){}
+  try{rendE()}catch(e){}
+  openAdminSection('employees');
+}
+function vacationTouchesMonth(v,yy,mm){
+  const q=vacDateParts(v);if(!q)return false;
+  if(!q.dated)return +y.value===+yy&&+m.value===+mm;
+  const first=String(yy)+'-'+String(mm+1).padStart(2,'0')+'-01';
+  const last=String(yy)+'-'+String(mm+1).padStart(2,'0')+'-'+String(new Date(yy,mm+1,0).getDate()).padStart(2,'0');
+  return q.to>=first&&q.from<=last;
+}
+function vacationCoversMonthDay(v,yy,mm,d){
+  const q=vacDateParts(v);if(!q)return false;
+  if(!q.dated)return +y.value===+yy&&+m.value===+mm&&d>=q.from&&d<=q.to;
+  const cur=String(yy)+'-'+String(mm+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+  return cur>=q.from&&cur<=q.to;
+}
+function vacationBrowserYears(){
+  const current=new Date().getFullYear(),years=new Set([+y.value,current]);
+  for(let year=current-5;year<=current+10;year++)years.add(year);
+  E.forEach(e=>(e[4]||[]).forEach(v=>{const q=vacDateParts(v);if(q&&q.dated){years.add(+q.from.slice(0,4));years.add(+q.to.slice(0,4))}}));
+  return [...years].filter(Boolean).sort((a,b)=>b-a);
+}
+function renderVacationBrowser(yearValue,monthValue){
+  let yy=yearValue==null?+y.value:+yearValue,mm=monthValue==null?+m.value:+monthValue;
+  const yearOptions=vacationBrowserYears().map(year=>`<option value="${year}" ${year===yy?'selected':''}>${year}</option>`).join('');
+  const monthOptions=M.map((name,i)=>`<option value="${i}" ${i===mm?'selected':''}>${name}</option>`).join('');
+  let items=[];
+  E.forEach((e,i)=>{const vac=(e[4]||[]).filter(v=>vacationTouchesMonth(v,yy,mm));if(vac.length)items.push(`<button class="vacationEmployeeBtn" onclick="showEmployeeVacationCalendar(${i},${yy},${mm})"><span>${e[0]}</span><small>${vac.map(v=>vacLabel(v)).join(' • ')}</small></button>`)});
+  const change=`renderVacationBrowser(document.getElementById('vacationYearSelect').value,document.getElementById('vacationMonthSelect').value)`;
+  renderSubPage('الإجازات',`<div class="vacationFilters"><label class="vacationMonthLabel">السنة<select id="vacationYearSelect" onchange="${change}">${yearOptions}</select></label><label class="vacationMonthLabel">الشهر<select id="vacationMonthSelect" onchange="${change}">${monthOptions}</select></label></div><div class="vacationMonthTitle">${M[mm]} ${yy}</div><div class="vacationEmployeeList">${items.join('')||'<div class="readonly-note">لا توجد إجازات مسجلة في هذا الشهر.</div>'}</div>`,false);
+}
+function showEmployeeVacationCalendar(i,yy,mm){
+  yy=yy==null?+y.value:+yy;mm=mm==null?+m.value:+mm;
+  const e=E[i];
+  const vac=e[4]||[];
+  let n=new Date(yy,mm+1,0).getDate(), first=new Date(yy,mm,1).getDay();
+  let cells=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'].map(x=>`<div class="dow ${(x==='جمعة'||x==='سبت')?'weekend':''}">${x}</div>`).join('');
+  for(let k=0;k<first;k++)cells+='<div class="day" style="visibility:hidden"></div>';
+  for(let d=1;d<=n;d++){
+    const on=vac.some(v=>vacationCoversMonthDay(v,yy,mm,d)),weekend=[5,6].includes(new Date(yy,mm,d).getDay());
+    cells+=`<div class="day ${on?'V':''} ${weekend?'weekend':''}"><div>${d}</div><div class="shift">${on?'V':''}</div></div>`;
+  }
+  renderSubPage('إجازة '+e[0],`<div class="vacationMonthTitle">${M[mm]} ${yy}</div><div class="empcal">${cells}</div>`,false);
+  const back=document.querySelector('#adminHubRoot .adminBack2');if(back)back.onclick=()=>renderVacationBrowser(yy,mm);
+}
+function openManualOnly(){
+  hideAdminHub();
+  const aa=document.getElementById('adminArea'); if(!aa)return;
+  aa.style.display='block';
+  // Hide everything except the generated schedule area and save button where possible
+  [...aa.children].forEach(ch=>ch.style.display='none');
+  const candidates=[...aa.querySelectorAll('table,.table-wrap,#schedulePane,#scheduleTable')];
+  candidates.forEach(x=>{let p=x;while(p&&p.parentElement!==aa)p=p.parentElement;if(p)p.style.display='block'});
+  let back=document.getElementById('manualBackTop');
+  if(!back){
+    back=document.createElement('div');back.id='manualBackTop';
+    back.innerHTML='<button onclick="showAdmin()">‹ رجوع</button> <button onclick="saveScheduleNow()">💾 حفظ</button>';
+    back.style.cssText='position:sticky;top:8px;z-index:10000;padding:8px;background:#fff';
+    aa.prepend(back);
+  } else back.style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function openLegacyAdmin(which){
+  hideAdminHub();
+  const aa=document.getElementById('adminArea'); if(!aa)return;
+  aa.style.display='block';
+  // Employee configuration is managed exclusively from the Employees page.
+  if(which==='generate'){
+    const empBox=document.getElementById('emps'); if(empBox)empBox.style.display='none';
+    const empHead=[...aa.querySelectorAll('b')].find(x=>(x.textContent||'').trim()==='الموظفون'); if(empHead)empHead.style.display='none';
+    const addBtn=[...aa.querySelectorAll('button')].find(x=>(x.textContent||'').includes('+ موظف')); if(addBtn)addBtn.style.display='none';
+  }
+
+  let back=document.getElementById('legacyHubBack');
+  if(!back){
+    back=document.createElement('button');
+    back.id='legacyHubBack';
+    back.textContent='‹ الرجوع لإدارة الجدول';
+    back.style.cssText='position:sticky;top:8px;z-index:10000;margin:8px;padding:11px 15px;border:0;border-radius:13px;background:#0b3156;color:white;font-weight:900';
+    back.onclick=()=>{aa.style.display='none';renderAdminHub();window.scrollTo({top:0,behavior:"smooth"})};
+    aa.prepend(back);
+  }
+
+  // Scroll to the appropriate original working section.
+  const textNeedle={employees:'الموظفون',generate:'الإعدادات',vacations:'الإجازات',manual:'جدول'}[which];
+  if(textNeedle){
+    const all=[...aa.querySelectorAll('h1,h2,h3,b,legend')];
+    const target=all.find(x=>(x.textContent||'').includes(textNeedle));
+    if(target) setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'start'}),80);
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Ensure any existing admin shortcut uses the new hub.
+window.openAdminHub=showAdmin;
+</script>
+
+<div id="printRosterOnlyHost"></div>
+
+<div id="fullRosterLandscapeOverlay">
+  <div class="landscapeToolbar">
+    <button onclick="closeLandscapeRoster()">✕ إغلاق</button>
+    <b>معاينة الجدول للطباعة</b>
+    <button onclick="printLandscapeRoster()">🖨️ طباعة</button>
+  </div>
+  <div class="landscapeViewport"><div class="landscapeRosterCanvas">
+    <div id="landscapeRosterTitle" class="landscapeRosterTitle"></div>
+    <div class="landscapeRosterWrap">
+      <table id="landscapeRosterTable" class="landscapeRosterTable"></table>
+    </div>
+  </div></div>
+</div>
+
+
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script>
+
+function rosterWorkbook(){
+  if(!S || !S.length){alert('لا يوجد جدول مولّد حتى الآن');return null}
+  if(typeof XLSX==='undefined'){alert('تعذر تحميل أداة Excel. تأكد من اتصال الإنترنت ثم حاول مرة أخرى.');return null}
+  const n=days();
+  const title='جدول مختبر مستشفى العمران العام — '+M[+m.value]+' '+y.value;
+  const headers=['الموظف'];
+  for(let d=1;d<=n;d++){
+    const dt=new Date(+y.value,+m.value,d);
+    const dn=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'][dt.getDay()];
+    headers.push(dn+' ' + d);
+  }
+  const rows=[[title],headers];
+  E.forEach((e,i)=>{
+    const row=[e[0]];
+    for(let d=1;d<=n;d++) row.push((S[i]&&S[i][d-1])?S[i][d-1]:'O');
+    rows.push(row);
+  });
+  const ws=XLSX.utils.aoa_to_sheet(rows);
+  ws['!merges']=[{s:{r:0,c:0},e:{r:0,c:n}}];
+  ws['!cols']=[{wch:22},...Array.from({length:n},()=>({wch:9}))];
+  ws['!views']=[{RTL:true}];
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'جدول المناوبات');
+  wb.Props={Title:title,Subject:'جدول المناوبات',Author:'Lab Roster'};
+  return wb;
+}
+function rosterExcelFilename(){
+  return "جدول_المناوبات_"+M[+m.value]+"_"+y.value+".xlsx";
+}
+function downloadBlob(blob,name){
+  const u=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(u),1500);
+}
+async function exportRosterExcel(shareMode){
+  const wb=rosterWorkbook(); if(!wb)return;
+  const name=rosterExcelFilename();
+  try{
+    const data=XLSX.write(wb,{bookType:'xlsx',type:'array'});
+    const file=new File([data],name,{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    if(shareMode && navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
+      await navigator.share({title:'جدول المناوبات',text:'جدول المناوبات — '+M[+m.value]+' '+y.value,files:[file]});
+      return;
+    }
+    downloadBlob(file,name);
+    if(shareMode) setTimeout(()=>alert('تم حفظ ملف Excel. افتحه من التنزيلات ثم شاركه عبر واتساب أو البريد.'),250);
+  }catch(err){
+    if(err && err.name==='AbortError')return;
+    try{XLSX.writeFile(wb,name);}catch(e){alert('تعذر إنشاء ملف Excel على هذا المتصفح.')}
+  }
+}
+
+function rosterLandscapeCanvas(){
+  if(!S||!S.length){alert('لا يوجد جدول مولّد حتى الآن');return null}
+  const canvas=document.createElement('canvas');canvas.width=2246;canvas.height=1588;
+  const c=canvas.getContext('2d'),n=days(),margin=42,nameW=270;
+  const usableW=canvas.width-margin*2,dayW=(usableW-nameW)/n;
+  const titleH=105,headH=78,rowH=Math.min(82,(canvas.height-margin*2-titleH-headH)/E.length);
+  const tableH=headH+rowH*E.length,top=margin+titleH+(canvas.height-margin*2-titleH-tableH)/2;
+  c.fillStyle='#fff';c.fillRect(0,0,canvas.width,canvas.height);
+  c.direction='rtl';c.textAlign='center';c.textBaseline='middle';
+  c.fillStyle='#0b3156';c.font='900 42px Arial';
+  c.fillText('جدول مختبر مستشفى العمران العام — '+M[+m.value]+' '+y.value,canvas.width/2,margin+45);
+  const right=canvas.width-margin,nameX=right-nameW;
+  c.lineWidth=2;c.strokeStyle='#8795a5';
+  c.fillStyle='#eef3f8';c.fillRect(nameX,top,nameW,headH);
+  c.strokeRect(nameX,top,nameW,headH);
+  c.fillStyle='#172b3d';c.font='900 27px Arial';c.fillText('الموظف',nameX+nameW/2,top+headH/2);
+  for(let d=1;d<=n;d++){
+    const x=nameX-d*dayW,weekend=wk(d),dt=new Date(+y.value,+m.value,d);
+    const dn=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][dt.getDay()];
+    c.fillStyle='#eef3f8';c.fillRect(x,top,dayW,headH);c.strokeRect(x,top,dayW,headH);
+    c.fillStyle=weekend?'#d40000':'#172b3d';c.font='900 21px Arial';
+    c.fillText(dn,x+dayW/2,top+27);c.font='900 24px Arial';c.fillText(String(d),x+dayW/2,top+56);
+  }
+  const bg={M:'#ffffff',A:'#ffffff',N:'#ffffff',O:'#f3f4f6',V:'#f3ddff'};
+  const fg={M:'#2e7d32',A:'#1976b9',N:'#b77900',O:'#333333',V:'#6b21a8'};
+  E.forEach((e,i)=>{
+    const y0=top+headH+i*rowH;
+    c.fillStyle='#fff';c.fillRect(nameX,y0,nameW,rowH);c.strokeRect(nameX,y0,nameW,rowH);
+    c.fillStyle='#172b3d';c.font='900 25px Arial';c.fillText(e[0],nameX+nameW/2,y0+rowH/2);
+    for(let d=1;d<=n;d++){
+      const x=nameX-d*dayW,sh=(S[i]&&S[i][d-1])?S[i][d-1]:'O';
+      c.fillStyle=bg[sh]||'#fff';c.fillRect(x,y0,dayW,rowH);c.strokeRect(x,y0,dayW,rowH);
+      c.fillStyle=wk(d)&&sh==='O'?'#d40000':(fg[sh]||'#111');c.font='900 25px Arial';c.fillText(sh,x+dayW/2,y0+rowH/2);
+    }
+  });
+  return canvas;
+}
+function jpegBytesToPdf(jpegBytes,imgW,imgH){
+  const enc=new TextEncoder(),parts=[],offsets=[0];let length=0;
+  const add=v=>{const b=typeof v==='string'?enc.encode(v):v;parts.push(b);length+=b.length};
+  add('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n');
+  const obj=(id,body)=>{offsets[id]=length;add(id+' 0 obj\n'+body+'\nendobj\n')};
+  obj(1,'<< /Type /Catalog /Pages 2 0 R >>');
+  obj(2,'<< /Type /Pages /Kids [3 0 R] /Count 1 >>');
+  obj(3,'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /XObject << /Im0 5 0 R >> >> /Contents 4 0 R >>');
+  const content='q\n842 0 0 595 0 0 cm\n/Im0 Do\nQ\n';
+  obj(4,'<< /Length '+enc.encode(content).length+' >>\nstream\n'+content+'endstream');
+  offsets[5]=length;add('5 0 obj\n<< /Type /XObject /Subtype /Image /Width '+imgW+' /Height '+imgH+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+jpegBytes.length+' >>\nstream\n');add(jpegBytes);add('\nendstream\nendobj\n');
+  const xref=length;add('xref\n0 6\n0000000000 65535 f \n');
+  for(let i=1;i<=5;i++)add(String(offsets[i]).padStart(10,'0')+' 00000 n \n');
+  add('trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n'+xref+'\n%%EOF');
+  return new Blob(parts,{type:'application/pdf'});
+}
+async function shareRosterPdfLandscape(){
+  const canvas=rosterLandscapeCanvas();if(!canvas)return;
+  try{
+    const jpg=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('image')),'image/jpeg',0.94));
+    const pdf=jpegBytesToPdf(new Uint8Array(await jpg.arrayBuffer()),canvas.width,canvas.height);
+    const name='جدول_المناوبات_'+M[+m.value]+'_'+y.value+'.pdf';
+    const file=new File([pdf],name,{type:'application/pdf'});
+    if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){
+      await navigator.share({title:'جدول المناوبات',text:'جدول المناوبات — '+M[+m.value]+' '+y.value,files:[file]});return;
+    }
+    downloadBlob(pdf,name);setTimeout(()=>alert('تم حفظ ملف PDF الأفقي. يمكنك مشاركته من التنزيلات.'),250);
+  }catch(err){if(err&&err.name==='AbortError')return;alert('تعذر إنشاء ملف PDF على هذا الجهاز. حاول استخدام زر الطباعة.')}
+}
+
+function printFullRosterOnly(){
+  if(!S || !S.length){alert('لا يوجد جدول مولّد حتى الآن');return}
+  const n=days();
+  let out='<div class="printOnlyTitle">جدول مختبر مستشفى العمران العام — '+M[+m.value]+' '+y.value+'</div>';
+  out+='<table class="fullRosterTable"><thead><tr><th class="name">الموظف</th>';
+  for(let d=1;d<=n;d++){
+    const dt=new Date(+y.value,+m.value,d);
+    const dn=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][dt.getDay()];
+    out+=`<th class="${wk(d)?'wkcol':''}">${dn}<br>${d}</th>`;
+  }
+  out+='</tr></thead><tbody>';
+  E.forEach((e,i)=>{
+    out+=`<tr><td class="name">${e[0]}</td>`;
+    for(let d=1;d<=n;d++){
+      const sh=(S[i]&&S[i][d-1])?S[i][d-1]:'O';
+      out+=`<td class="${sh} ${wk(d)?'wkcol':''}">${sh}</td>`;
+    }
+    out+='</tr>';
+  });
+  out+='</tbody></table>';
+  const host=document.getElementById('printRosterOnlyHost');
+  host.innerHTML=out;
+  document.body.classList.add('print-roster-only');
+  window.print();
+  setTimeout(()=>document.body.classList.remove('print-roster-only'),1000);
+}
+window.addEventListener('afterprint',()=>document.body.classList.remove('print-roster-only'));
+
+function buildLandscapeRoster(){
+  if(!S || !S.length){alert('لا يوجد جدول مولّد حتى الآن');return false}
+  const n=days();
+  const table=document.getElementById('landscapeRosterTable');
+  const title=document.getElementById('landscapeRosterTitle');
+  title.textContent='جدول مختبر مستشفى العمران العام — '+M[+m.value]+' '+y.value;
+
+  let out='<thead><tr><th class="emp">الموظف</th>';
+  for(let d=1;d<=n;d++){
+    const dt=new Date(+y.value,+m.value,d);
+    const dn=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][dt.getDay()];
+    out+=`<th class="${wk(d)?'wkcol':''}">${dn}<br>${d}</th>`;
+  }
+  out+='</tr></thead><tbody>';
+
+  E.forEach((e,i)=>{
+    out+=`<tr><td class="emp">${e[0]}</td>`;
+    for(let d=1;d<=n;d++){
+      const sh=(S[i]&&S[i][d-1])?S[i][d-1]:'O';
+      out+=`<td class="${sh} ${wk(d)?'wkcol':''}">${sh}</td>`;
+    }
+    out+='</tr>';
+  });
+  out+='</tbody>';
+  table.innerHTML=out;
+  return true;
+}
+function fitLandscapePreview(){
+  const canvas=document.querySelector('#fullRosterLandscapeOverlay .landscapeRosterCanvas');
+  const vp=document.querySelector('#fullRosterLandscapeOverlay .landscapeViewport');
+  if(!canvas||!vp)return;
+  canvas.style.transform='none';
+  const scale=Math.min(1, Math.max(.28,(window.innerWidth-18)/1120));
+  canvas.style.transform='scale('+scale+')';
+  vp.style.height=(760*scale+32)+'px';
+}
+function openLandscapeRoster(){
+  if(!buildLandscapeRoster())return;
+  const ov=document.getElementById('fullRosterLandscapeOverlay');
+  ov.classList.add('active');
+  document.body.style.overflow='hidden';
+  ov.scrollTop=0;
+  requestAnimationFrame(fitLandscapePreview);
+}
+function closeLandscapeRoster(){
+  document.getElementById('fullRosterLandscapeOverlay').classList.remove('active');
+  document.body.style.overflow='';
+}
+function printLandscapeRoster(){
+  if(!buildLandscapeRoster())return;
+  document.getElementById('fullRosterLandscapeOverlay').classList.add('active');
+  document.body.classList.add('print-full-roster');
+  window.print();
+  setTimeout(()=>document.body.classList.remove('print-full-roster'),800);
+}
+window.addEventListener('afterprint',()=>document.body.classList.remove('print-full-roster'));
+window.addEventListener('resize',()=>{if(document.getElementById('fullRosterLandscapeOverlay')?.classList.contains('active'))fitLandscapePreview();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLandscapeRoster()});
+
+/* Keep normal roster view; landscape overlay is preview/print only. */
+function showFullReadOnly(){ return showFullReadOnlyLegacy(); }
+</script>
+
+
+<script>
+/* v0.8.9.4 — one-time hard cache/service-worker reset */
+(function(){
+  const RESET_KEY='lab-roster-hard-reset-0984-final';
+  window.addEventListener('load', async ()=>{
+    try{
+      if(localStorage.getItem(RESET_KEY)==='done') return;
+      localStorage.setItem(RESET_KEY,'done');
+      if('serviceWorker' in navigator){
+        const regs=await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map(r=>r.unregister()));
+      }
+      if('caches' in window){
+        const keys=await caches.keys();
+        await Promise.all(keys.map(k=>caches.delete(k)));
+      }
+      const u=new URL(location.href);
+      u.searchParams.set('v','0984-final');
+      location.replace(u.toString());
+    }catch(e){ console.warn('Hard reset failed',e); }
+  }, {once:true});
+})();
+</script>
+<script>
+/* v0.8.9.4 — fixed A option, employee highlight, logo-safe home, hard cache reset */
+(function(){
+  if(!('serviceWorker' in navigator)) return;
+  let reloaded=false;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    if(reloaded) return;
+    reloaded=true;
+    location.reload();
+  });
+  window.addEventListener('load',async()=>{
+    try{
+      const reg=await navigator.serviceWorker.register('./sw.js?v=0984-final',{updateViaCache:'none'});
+      await reg.update();
+    }catch(e){console.warn('SW update failed',e);}
+  });
+})();
+</script>
+
+<style id="v0910-final-generate-layout">
+.scheduleMonthCard{
+  padding:12px!important;
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+}
+.scheduleMonthCard input[type="month"]{
+  width:250px!important;
+  max-width:82vw!important;
+  height:52px!important;
+  min-height:52px!important;
+  margin:0!important;
+  font-size:17px!important;
+}
+.generateActionGrid{
+  grid-template-columns:repeat(2,126px)!important;
+  justify-content:center!important;
+  gap:14px!important;
+}
+.generateActionGrid .generateActionTile{
+  width:126px!important;
+  height:126px!important;
+  min-width:126px!important;
+  min-height:126px!important;
+  max-width:126px!important;
+  max-height:126px!important;
+  aspect-ratio:1/1!important;
+  margin:0!important;
+  border-radius:22px!important;
+}
+@media(min-width:700px){
+  .generateActionGrid{grid-template-columns:repeat(3,126px)!important}
+}
+.generateUtilityRow{display:flex;justify-content:center;gap:10px;margin:14px 0 18px}
+.generateUtilityButton{
+  width:46px!important;
+  min-width:46px!important;
+  max-width:46px!important;
+  height:46px!important;
+  min-height:46px!important;
+  max-height:46px!important;
+  margin:0!important;
+  padding:0!important;
+  border-radius:12px!important;
+  font-size:22px!important;
+  font-weight:900!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:linear-gradient(145deg,#2567b8,#153d72)!important;
+  color:#fff!important;
+}
+.adminTile>span:not(.ai),
+.generateActionTile>b,
+.manualActionTile>span:last-child{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+.adminTile,.generateActionTile,.manualActionTile{position:relative!important}
+.generateActionTile,.manualActionTile{gap:0!important}
+.adminTile .ai,.generateActionIcon,.manualActionIcon{margin:0!important}
+</style>
+<style id="v0911-calendar-wallpaper">
+#homePortal.calendarWallpaper{
+  min-height:calc(100vh - 170px)!important;
+  background:#f4ead8!important;
+  padding:1px 0 28px!important;
+}
+#homePortal.calendarWallpaper .portal-shell,
+#homePortal.calendarWallpaper .portal-card,
+#homePortal.calendarWallpaper .empcal,
+#homePortal.calendarWallpaper .monthNav{
+  background:transparent!important;
+}
+#homePortal.calendarWallpaper .portal-card{
+  border-color:#d9c7a7!important;
+  box-shadow:none!important;
+}
+#homePortal.calendarWallpaper .empcal .dow,
+#homePortal.calendarWallpaper .empcal .day,
+#homePortal.calendarWallpaper .empcal .M,
+#homePortal.calendarWallpaper .empcal .A,
+#homePortal.calendarWallpaper .empcal .N,
+#homePortal.calendarWallpaper .empcal .V,
+#homePortal.calendarWallpaper .empcal .O,
+#homePortal.calendarWallpaper .empcal .weekend{
+  background:transparent!important;
+  border-color:#d4c09d!important;
+  color:#222!important;
+}
+#homePortal.calendarWallpaper .empcal .day.O,
+#homePortal.calendarWallpaper .empcal .day.O *,
+#homePortal.calendarWallpaper .empcal .weekend,
+#homePortal.calendarWallpaper .empcal .weekend *{
+  color:#cf1f1f!important;
+}
+</style>
+<style id="v0912-annual-v-stats">
+.annualVCard{
+  margin-top:16px;
+  padding:14px;
+  border:1px solid #d4c09d;
+  border-radius:16px;
+  background:rgba(255,255,255,.28);
+}
+.annualVHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.annualVHead small{display:block;color:#725f43;font-size:11px;margin-top:4px}
+.annualVTotal{display:flex;align-items:baseline;gap:4px;color:#b91c1c;white-space:nowrap}
+.annualVTotal b{font-size:28px}.annualVTotal span{font-size:12px;font-weight:800}
+.annualVGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.annualVMonth{display:flex;align-items:center;justify-content:space-between;gap:5px;padding:8px;border:1px solid rgba(151,126,87,.35);border-radius:10px;background:rgba(255,255,255,.2);font-size:12px}
+.annualVMonth b{font-size:15px}.annualVMonth.hasV{color:#b91c1c;font-weight:800;background:rgba(255,255,255,.42)}
+@media(max-width:430px){.annualVGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<style id="v0923-ios-icons">
+/* أيقونات بحجم وترتيب قريب من شاشة iPhone */
+.adminHubGrid,.generateActionGrid,.manualActionGrid{
+  grid-template-columns:repeat(4,76px)!important;
+  justify-content:center!important;
+  justify-items:center!important;
+  gap:16px 13px!important;
+}
+.adminTile,.generateActionGrid .generateActionTile,.manualActionGrid .manualActionTile{
+  width:76px!important;
+  height:76px!important;
+  min-width:76px!important;
+  min-height:76px!important;
+  max-width:76px!important;
+  max-height:76px!important;
+  aspect-ratio:1/1!important;
+  margin:0!important;
+  padding:0!important;
+  border-radius:18px!important;
+  gap:0!important;
+}
+.adminTile .ai,.generateActionIcon,.manualActionIcon{
+  width:auto!important;
+  height:auto!important;
+  min-width:0!important;
+  min-height:0!important;
+  padding:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  font-size:43px!important;
+  line-height:1!important;
+  transform:scale(1.08)!important;
+  filter:drop-shadow(0 3px 3px rgba(0,0,0,.18))!important;
+}
+@media(max-width:390px){
+  .adminHubGrid,.generateActionGrid,.manualActionGrid{grid-template-columns:repeat(4,70px)!important;gap:14px 10px!important}
+  .adminTile,.generateActionGrid .generateActionTile,.manualActionGrid .manualActionTile{width:70px!important;height:70px!important;min-width:70px!important;min-height:70px!important;max-width:70px!important;max-height:70px!important;border-radius:17px!important}
+  .adminTile .ai,.generateActionIcon,.manualActionIcon{font-size:40px!important}
+}
+</style>
+<style id="v0922-approved-archive">
+.approveScheduleTile{background:linear-gradient(145deg,#23844b,#145d34)!important}
+.archiveIntro{margin-bottom:12px;padding:12px;border-radius:14px;background:#eef7f1;color:#174f30;font-weight:800}
+.archiveFilters{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;padding:12px;border-radius:16px;background:#eef4f9}.archiveFilterLabel{font-size:15px;font-weight:900;color:#0b3156}.archiveFilterLabel select{display:block;width:100%;height:54px;margin:7px 0 0!important;padding:0 14px;border:1px solid #c7d4df;border-radius:14px;background:#fff;color:#0b3156;font-size:18px;font-weight:900;box-sizing:border-box}.archiveResultTitle{text-align:center;margin:3px 0 12px;color:#0b3156;font-size:20px;font-weight:900}@media(max-width:390px){.archiveFilters{gap:8px}.archiveFilterLabel select{padding:0 9px;font-size:16px}}
+.archiveList{display:grid;gap:10px}.archiveItem{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px;border:1px solid #d6e0e8;border-radius:14px;background:#fff;color:#0b3156;text-align:right;box-shadow:0 3px 10px rgba(11,49,86,.06)}
+.archiveItem .archiveMonth{font-size:17px;font-weight:900}.archiveItem small{display:block;margin-top:4px;color:#617083}.archiveReadOnlyBadge{display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border-radius:999px;background:#edf2f7;color:#425466;font-size:11px;font-weight:900;white-space:nowrap}
+.archiveToolbar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}.archiveToolbar button{margin:0}.archiveTableWrap{overflow:auto;border:1px solid #d7dee7;border-radius:12px;background:#fff}
+.archiveRosterTable{border-collapse:collapse;min-width:900px;width:100%;direction:rtl}.archiveRosterTable th,.archiveRosterTable td{border:1px solid #d7dee7;padding:5px;text-align:center;font-weight:800;white-space:nowrap}.archiveRosterTable th:first-child,.archiveRosterTable td:first-child{position:sticky;right:0;background:#fff;min-width:145px;text-align:right;z-index:1}.archiveRosterTable .wkcol{color:#c91d1d}.archiveRosterTable .A{background:#d9ecff}.archiveRosterTable .N{background:#fff2a8}.archiveRosterTable .M{background:#eef8ee}.archiveRosterTable .O{background:#f3f4f6}.archiveRosterTable .V{background:#f3ddff}
+</style>
+<script>
+const APPROVED_ARCHIVE_KEY='lab-roster-approved-archive-v1';
+function approvedArchive(){try{const a=JSON.parse(localStorage.getItem(APPROVED_ARCHIVE_KEY)||'{}');return a&&typeof a==='object'?a:{}}catch(e){return {}}}
+function archiveSafe(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function approveCurrentSchedule(){
+  if(!S||!S.length){alert('أنشئ الجدول أولًا ثم راجعه قبل الاعتماد');return}
+  enforceRosterRestRules(days());
+  const restIssues=collectIssues().filter(x=>String(x).includes('أوف منفرد')||String(x).includes('انتقال غير مسموح')||String(x).includes('الحد الأعلى'));
+  if(restIssues.length){alert('لا يمكن اعتماد الجدول: الأوف المنفرد يجب أن يليه N، وبعد N لا يُسمح بـ M أو A، وبعد A لا يُسمح بـ M. استخدم زر الإصلاح التلقائي ثم راجع الجدول.');return}
+  if(!applySchedulePicker())return;
+  const key=rosterMonthKey(+y.value,+m.value),a=approvedArchive(),exists=!!a[key];
+  if(!confirm(exists?'يوجد جدول معتمد لهذا الشهر. هل تريد استبدال النسخة المعتمدة؟':'بعد الاعتماد سيُحفظ الجدول في الأرشيف للقراءة والطباعة فقط. هل تريد اعتماده؟'))return;
+  a[key]={year:+y.value,month:+m.value,employees:E.map(e=>e[0]),schedule:S.map(r=>r.slice()),approvedAt:new Date().toISOString()};
+  try{localStorage.setItem(APPROVED_ARCHIVE_KEY,JSON.stringify(a));applyAutomaticMonthlyCarryover(key);saveScheduleNow(true);alert('تم اعتماد الجدول وإضافته إلى الأرشيف وترحيل الفروقات تلقائيًا');openApprovedArchive()}catch(e){alert('تعذر اعتماد الجدول على هذا الجهاز')}
+}
+function archiveArabicDate(iso){try{return new Intl.DateTimeFormat('ar-SA',{dateStyle:'medium',timeStyle:'short'}).format(new Date(iso))}catch(e){return ''}}
+function archiveYears(a){
+  const years=Object.values(a).map(s=>+s.year).filter(Number.isFinite),now=new Date().getFullYear();
+  years.push(now);return [...new Set(years)].sort((x,z)=>z-x)
+}
+function openApprovedArchive(selectedYear,selectedMonth){
+  const a=approvedArchive(),items=Object.keys(a).sort().reverse(),latest=items.length?a[items[0]]:null,now=new Date();
+  const yy=Number.isFinite(+selectedYear)?+selectedYear:(latest?+latest.year:now.getFullYear());
+  const mm=Number.isFinite(+selectedMonth)?+selectedMonth:(latest?+latest.month:now.getMonth());
+  const years=archiveYears(a),yearOptions=years.map(v=>`<option value="${v}" ${v===yy?'selected':''}>${v}</option>`).join('');
+  const monthOptions=M.map((v,i)=>`<option value="${i}" ${i===mm?'selected':''}>${archiveSafe(v)}</option>`).join('');
+  const change=`openApprovedArchive(document.getElementById('archiveYearSelect').value,document.getElementById('archiveMonthSelect').value)`;
+  const key=rosterMonthKey(yy,mm),s=a[key];
+  const result=s?`<div class="archiveResultTitle">${archiveSafe(M[mm])} ${yy}</div><div class="archiveList"><button class="archiveItem" onclick="openApprovedSchedule('${archiveSafe(key)}')"><span><span class="archiveMonth">${archiveSafe(M[mm])} ${yy}</span><small>اعتمد في ${archiveSafe(archiveArabicDate(s.approvedAt))}</small></span><span class="archiveReadOnlyBadge">🔒 قراءة فقط</span></button></div>`:`<div class="readonly-note">لا يوجد جدول معتمد لشهر ${archiveSafe(M[mm])} ${yy}.</div>`;
+  const body=`<div class="archiveIntro">اختر الشهر والسنة للوصول إلى الجدول المعتمد. جميع جداول الأرشيف للقراءة والطباعة فقط.</div><div class="archiveFilters"><label class="archiveFilterLabel">الشهر<select id="archiveMonthSelect" onchange="${change}">${monthOptions}</select></label><label class="archiveFilterLabel">السنة<select id="archiveYearSelect" onchange="${change}">${yearOptions}</select></label></div>${result}`;
+  renderSubPage('أرشيف الجداول المعتمدة',body,false);
+}
+function approvedTableHtml(s){
+  if(!s||!Array.isArray(s.schedule))return '<div class="readonly-note">تعذر قراءة هذا الجدول.</div>';
+  const n=new Date(+s.year,+s.month+1,0).getDate();let out='<div class="archiveTableWrap"><table class="archiveRosterTable"><thead><tr><th>الموظف</th>';
+  for(let d=1;d<=n;d++){const dt=new Date(+s.year,+s.month,d),weekend=dt.getDay()==5||dt.getDay()==6,dn=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][dt.getDay()];out+=`<th class="${weekend?'wkcol':''}">${dn}<br>${d}</th>`}out+='</tr></thead><tbody>';
+  (s.employees||[]).forEach((name,i)=>{out+=`<tr><td>${archiveSafe(name)}</td>`;for(let d=1;d<=n;d++){const sh=s.schedule[i]&&s.schedule[i][d-1]||'O',dt=new Date(+s.year,+s.month,d),weekend=dt.getDay()==5||dt.getDay()==6;out+=`<td class="${archiveSafe(sh)} ${weekend?'wkcol':''}">${archiveSafe(sh)}</td>`}out+='</tr>'});return out+'</tbody></table></div>';
+}
+function openApprovedSchedule(key){
+  const s=approvedArchive()[key];if(!s){alert('لم يتم العثور على الجدول المعتمد');return}
+  renderSubPage('جدول '+M[+s.month]+' '+s.year,`<div class="archiveToolbar"><span class="archiveReadOnlyBadge">🔒 جدول معتمد — قراءة فقط</span><button class="secondary" onclick="printApprovedSchedule('${archiveSafe(key)}')">🖨️ طباعة</button></div>${approvedTableHtml(s)}`,false);
+  const back=document.querySelector('#adminHubRoot .adminBack2');if(back)back.onclick=openApprovedArchive;
+}
+function printApprovedSchedule(key){
+  const s=approvedArchive()[key];if(!s)return;const host=document.getElementById('printRosterOnlyHost');
+  const table=approvedTableHtml(s).replace('archiveTableWrap','').replace(/archiveRosterTable/g,'fullRosterTable');
+  host.innerHTML=`<div class="printOnlyTitle">جدول مختبر مستشفى العمران العام — ${archiveSafe(M[+s.month])} ${archiveSafe(s.year)} (معتمد)</div>${table}`;
+  document.body.classList.add('print-roster-only');window.print();setTimeout(()=>document.body.classList.remove('print-roster-only'),1000);
+}
+</script>
+<style id="v0924-direct-schedule-nav">
+body{padding-bottom:82px!important}
+#quickNav{display:grid!important;grid-template-columns:repeat(2,1fr)!important;justify-content:center!important;overflow:hidden!important;gap:12px!important;padding:10px 12px calc(10px + env(safe-area-inset-bottom))!important}
+#quickNav .mainNav{display:flex!important}
+#quickNav .scheduleTool{display:none!important}
+body.scheduleToolsActive #quickNav{display:flex!important;justify-content:flex-start!important;flex-wrap:nowrap!important;overflow-x:auto!important;gap:9px!important}
+body.scheduleToolsActive #quickNav .mainNav{display:none!important}
+body.scheduleToolsActive #quickNav .scheduleTool{display:flex!important}
+#quickNav button:nth-child(n)::before{content:none!important}
+#quickNav button{width:54px!important;height:54px!important;min-width:54px!important;max-width:54px!important;font-size:28px!important;flex:0 0 54px!important;border-radius:15px!important}
+#quickNav .mainNav{width:132px!important;height:68px!important;min-width:132px!important;max-width:132px!important;margin:0 auto!important;font-size:35px!important;flex:0 0 132px!important;border-radius:18px!important;align-items:center!important;justify-content:center!important;text-align:center!important}
+#quickNav{grid-template-columns:repeat(2,minmax(132px,180px))!important;place-content:center!important;justify-items:center!important;align-items:center!important}
+@media(max-width:340px){#quickNav{grid-template-columns:repeat(2,minmax(112px,1fr))!important}#quickNav .mainNav{width:112px!important;min-width:112px!important;max-width:112px!important;height:64px!important;font-size:32px!important}}
+.scheduleMonthAtTitle{width:250px!important;max-width:66vw!important;height:54px!important;min-height:54px!important;margin:0!important;padding:0 16px!important;border-radius:17px!important;border:1px solid #d5e2ee!important;background:linear-gradient(145deg,#fff,#dce9f4)!important;color:#0b3156!important;font-size:18px!important;font-weight:900!important;text-align:center!important;box-shadow:0 7px 15px rgba(11,49,86,.18)!important}
+.scheduleEmptyNote{padding:24px 14px;text-align:center;color:#64748b;font-weight:800}
+.generatedScheduleTable th.name,.generatedScheduleTable td.name,
+.fullRosterTable th.name,.fullRosterTable td.name,
+.manualEditorTable th.name,.manualEditorTable td.name{
+  width:160px!important;min-width:160px!important;max-width:160px!important;
+  white-space:nowrap!important;text-align:right!important;padding-right:9px!important;
+  font-size:15px!important;font-weight:900!important;
+  position:sticky!important;right:0!important;background:#fff!important;
+  box-shadow:-5px 0 8px rgba(11,49,86,.12)!important;
+}
+.generatedScheduleTable th.name,.fullRosterTable th.name,.manualEditorTable th.name{z-index:8!important;background:#eef3f8!important}
+.generatedScheduleTable td.name,.fullRosterTable td.name,.manualEditorTable td.name{z-index:6!important}
+.generatedTableWrap{width:100%!important;max-width:100%!important;overflow-x:auto!important;overflow-y:visible!important;position:relative!important;-webkit-overflow-scrolling:touch!important}
+.todayDutyDate{text-align:center;font-size:18px;font-weight:900;color:#0b3156;margin:2px 0 16px;line-height:1.7}
+.todayDutyDate .hijri{display:block;font-size:16px;color:#526477}
+.todayDutyHeading{text-align:center;color:#0b3156;font-size:24px;font-weight:900;margin:2px 0 16px}
+.todayDutyHeadingRow{display:flex;align-items:center;justify-content:center;gap:10px;margin:2px 0 12px}.todayDutyHeadingRow .todayDutyHeading{margin:0}.dutySearchButton{width:44px;height:44px;min-width:44px;margin:0!important;padding:0!important;border-radius:14px!important;font-size:23px!important;display:inline-flex;align-items:center;justify-content:center}.dutySearchPanel{display:none;max-width:430px;margin:0 auto 16px;padding:12px;border-radius:16px;background:#eef4f9}.dutySearchPanel.active{display:block}.dutyDateFields{display:grid;grid-template-columns:.8fr 1.35fr 1fr;gap:8px;direction:rtl}.dutyDateFields label{display:block;color:#0b3156;font-size:14px;font-weight:900;text-align:center}.dutyDateFields select{display:block;width:100%;height:52px;box-sizing:border-box;margin:7px 0 0!important;padding:0 8px;font-size:17px;font-weight:900;text-align:center;background:#fff;color:#0b3156;border:1px solid #bdcbd8;border-radius:12px}@media(max-width:360px){.dutyDateFields{gap:5px}.dutyDateFields select{font-size:15px;padding:0 4px}}
+.todayDutyGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.todayDutyCard{border:1px solid #d7e1eb;border-radius:18px;padding:14px;background:#fff;box-shadow:0 6px 16px rgba(11,49,86,.08)}
+.todayDutyCard h3{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px;color:#0b3156;font-size:17px}
+.todayDutyCard h3 b{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;border-radius:999px;background:#eef3f8;font-size:13px}
+.todayDutyCard ul{list-style:none;margin:0;padding:0}.todayDutyCard li{padding:8px 4px;border-top:1px solid #edf1f5;font-size:16px;font-weight:900;color:#1f2937}
+.todayDutyCard li:first-child{border-top:0}.todayDutyCard.shiftM{border-right:5px solid #3b8d50}.todayDutyCard.shiftA{border-right:5px solid #4b9bd8}.todayDutyCard.shiftN{border-right:5px solid #d3a900}.todayDutyCard.shiftO{border-right:5px solid #d52b2b}.todayDutyCard.shiftV{border-right:5px solid #8b5cf6}
+.todayDutyCard.shiftO li,.todayDutyCard.shiftV li{color:#c51f1f}
+@media(max-width:520px){.todayDutyGrid{grid-template-columns:1fr}.todayDutyCard li{font-size:17px}}
+.statsTable{width:max-content!important;min-width:620px!important;border-collapse:collapse!important;text-align:center!important;margin:0 auto!important}
+.statsTable th:first-child,.statsTable td:first-child{width:170px!important;min-width:170px!important;max-width:170px!important;white-space:nowrap!important;font-size:18px!important;font-weight:900!important;padding:10px 8px!important}
+.statsTable th:not(:first-child),.statsTable td:not(:first-child){width:58px!important;min-width:58px!important;font-size:15px!important;font-weight:800!important;padding:9px 4px!important}
+.checkReport{border-radius:18px;padding:16px}.checkReportHead{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:18px;font-weight:900;color:#8a2d16;margin-bottom:12px}.checkReportHead b{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:34px;border-radius:999px;background:#b42318;color:#fff}.checkHasIssues{background:#fff8f3;border:1px solid #f2c6b7}.checkReport ol{list-style:none;margin:0;padding:0;display:grid;gap:8px}.checkReport li{display:flex;align-items:flex-start;gap:9px;padding:11px;border-radius:12px;background:#fff;border:1px solid #efd8cf;font-size:15px;font-weight:800;line-height:1.55}.issueNo{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:8px;background:#b42318;color:#fff;font-size:12px}.checkFixButton{width:100%;margin:14px 0 0!important;min-height:50px!important;font-size:15px!important;font-weight:900!important}.checkPassed{text-align:center;background:#f0faf4;border:1px solid #a9dfbd;color:#155d32}.checkPassedIcon{font-size:50px}.checkPassed h3{font-size:24px;margin:6px 0}.checkPassed p{font-size:16px;font-weight:800;margin:0}
+</style>
+<script>
+(function(){
+  const clearScheduleTools=()=>document.body.classList.remove('scheduleToolsActive');
+  const oldHome=showHome;showHome=function(){clearScheduleTools();return oldHome.apply(this,arguments)};
+  const oldAdmin=showAdmin;showAdmin=function(){clearScheduleTools();return oldAdmin.apply(this,arguments)};
+  const oldCalendar=openMyCalendar;openMyCalendar=function(){clearScheduleTools();return oldCalendar.apply(this,arguments)};
+  const oldHub=renderAdminHub;renderAdminHub=function(){clearScheduleTools();return oldHub.apply(this,arguments)};
+  window.openManualAndLeaveSchedule=function(){clearScheduleTools();return renderManualEditor()};
+  window.openStatsAndLeaveSchedule=function(){clearScheduleTools();return renderStatsOnly()};
+  window.approveAndLeaveSchedule=function(){clearScheduleTools();return approveCurrentSchedule()};
+  window.toggleDutyDateSearch=function(){const p=document.getElementById('dutySearchPanel');if(p){p.classList.toggle('active');if(p.classList.contains('active'))document.getElementById('dutySearchDay')?.focus()}};
+  window.applyDutyDateParts=function(){
+    const day=+document.getElementById('dutySearchDay')?.value,month=+document.getElementById('dutySearchMonth')?.value,year=+document.getElementById('dutySearchYear')?.value;
+    if(!day||!month||!year)return;
+    const validDay=Math.min(day,new Date(year,month,0).getDate());
+    openTodayDutyPage(`${year}-${String(month).padStart(2,'0')}-${String(validDay).padStart(2,'0')}`);
+  };
+  window.openTodayDutyPage=function(dateValue){
+    clearScheduleTools();
+    const today=new Date(),chosen=/^\d{4}-\d{2}-\d{2}$/.test(String(dateValue||''))?String(dateValue):`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+    const parts=chosen.split('-').map(Number),now=new Date(parts[0],parts[1]-1,parts[2]),yy=parts[0],mm=parts[1]-1,dd=parts[2],key=rosterMonthKey(yy,mm);
+    let snap=null;
+    try{snap=approvedArchive()[key]||rosterArchive()[key]||null}catch(e){}
+    if(!snap && +y.value===yy && +m.value===mm && S&&S.length)snap={employees:E.map(e=>e[0]),schedule:S};
+    const esc=v=>String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    const hijriLabel=new Intl.DateTimeFormat('ar-SA',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(now);
+    const gregorianLabel=new Intl.DateTimeFormat('ar-SA-u-ca-gregory',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(now);
+    const dateHead=`<div class="todayDutyDate"><span>الميلادي: ${esc(gregorianLabel)}</span><span class="hijri">الهجري: ${esc(hijriLabel)}</span></div>`;
+    const dayOptions=Array.from({length:31},(_,i)=>`<option value="${i+1}" ${i+1===dd?'selected':''}>${i+1}</option>`).join('');
+    const monthOptions=M.map((name,i)=>`<option value="${i+1}" ${i===mm?'selected':''}>${esc(name)}</option>`).join('');
+    const startYear=Math.min(2024,yy-2),endYear=Math.max(2035,yy+5),yearOptions=Array.from({length:endYear-startYear+1},(_,i)=>startYear+i).map(v=>`<option value="${v}" ${v===yy?'selected':''}>${v}</option>`).join('');
+    let body=`<div class="todayDutyHeadingRow"><div class="todayDutyHeading">مناوبات اليوم المحدد</div><button class="dutySearchButton" onclick="toggleDutyDateSearch()" aria-label="البحث بالتاريخ" title="البحث بالتاريخ">🔍</button></div><div id="dutySearchPanel" class="dutySearchPanel"><div class="dutyDateFields"><label>اليوم<select id="dutySearchDay" onchange="applyDutyDateParts()">${dayOptions}</select></label><label>الشهر<select id="dutySearchMonth" onchange="applyDutyDateParts()">${monthOptions}</select></label><label>السنة<select id="dutySearchYear" onchange="applyDutyDateParts()">${yearOptions}</select></label></div></div>`;
+    if(!snap||!Array.isArray(snap.schedule))body+=`<div class="readonly-note">لا يوجد جدول محفوظ أو معتمد لشهر ${esc(M[mm])} ${yy}.</div>`;
+    else{
+      const groups={M:[],A:[],N:[],O:[],V:[]},names=snap.employees||[];
+      snap.schedule.forEach((row,i)=>{const sh=row&&row[dd-1]||'O';if(groups[sh])groups[sh].push(Array.isArray(names[i])?names[i][0]:names[i])});
+      const card=(code,title,cls)=>{const list=groups[code];return `<section class="todayDutyCard ${cls}"><h3><span>${title}</span><b>${list.length}</b></h3>${list.length?`<ul>${list.map(n=>`<li>${esc(n)}</li>`).join('')}</ul>`:'<div class="readonly-note">لا يوجد</div>'}</section>`};
+      body+=`<div class="todayDutyGrid">${card('M','المناوبة الصباحية','shiftM')}${card('A','أول الليل','shiftA')}${card('N','آخر الليل','shiftN')}${card('O','أوف','shiftO')}${card('V','إجازة','shiftV')}</div>`;
+    }
+    const home=document.getElementById('homePortal');if(home){home.innerHTML='';home.classList.remove('calendarWallpaper')}
+    const aa=document.getElementById('adminArea');if(aa)aa.style.display='none';
+    renderSubPage(dateHead,body,false);
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+})();
+</script>
+<style id="v0942-compensation-ledger">
+.compSummary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0 18px}.compBalanceCard{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px;border:1px solid #d9e3ec;border-radius:13px;background:#fff;font-weight:900}.compBalanceCard b{font-size:20px}.compBalanceCard.positive b{color:#18713c}.compBalanceCard.negative b{color:#b42318}.compForm{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:13px;border-radius:16px;background:#eef4f9;margin-bottom:14px}.compForm label{font-size:13px;font-weight:900;color:#0b3156}.compForm input,.compForm select{width:100%;box-sizing:border-box;min-height:46px;margin:4px 0 0!important}.compForm .wide{grid-column:1/-1}.compForm button{grid-column:1/-1;min-height:48px;font-size:16px;font-weight:900}.compEntry{display:grid;gap:7px;padding:12px;margin:9px 0;border:1px solid #dbe4ec;border-radius:14px;background:#fff}.compEntryHead{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:900}.compDelta{font-size:21px}.compDelta.plus{color:#18713c}.compDelta.minus{color:#b42318}.compMeta{font-size:13px;color:#5f6f7f;font-weight:700;line-height:1.6}.compStatus{display:inline-flex;width:max-content;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:900;background:#fff3cd;color:#795b00}.compStatus.approved{background:#e9f8ef;color:#176538}.compStatus.settled{background:#edf2f7;color:#52606d}.compActions{display:flex;gap:7px;flex-wrap:wrap}.compActions button{margin:0!important;padding:8px 10px!important;font-size:12px!important}.compNote{padding:10px;border-radius:12px;background:#fff8e6;color:#72530a;font-size:12px;font-weight:800;line-height:1.6;margin-bottom:12px}@media(max-width:520px){.compSummary,.compForm{grid-template-columns:1fr}.compForm .wide,.compForm button{grid-column:1}.compBalanceCard{font-size:14px}}
+.compForm{gap:14px!important;padding:16px!important}.compForm label{display:block!important;width:100%!important;font-size:17px!important;font-weight:900!important;line-height:1.35!important;color:#0b3156!important}.compForm input,.compForm select{display:block!important;width:100%!important;height:60px!important;min-height:60px!important;max-height:60px!important;box-sizing:border-box!important;margin:7px 0 0!important;padding:0 16px!important;border:1px solid #bdc9d5!important;border-radius:13px!important;background:#fff!important;color:#172b3d!important;font-size:17px!important;font-weight:900!important;line-height:60px!important}.compForm input[type="date"]{text-align:right!important;direction:rtl!important}.compForm input::placeholder{color:#8793a0!important;font-size:16px!important;font-weight:800!important}.compForm button{height:60px!important;min-height:60px!important;max-height:60px!important;margin:2px 0 0!important;border-radius:13px!important;font-size:20px!important;font-weight:900!important}
+.compForm label{min-width:0!important;max-width:100%!important}.compForm #compDate{display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;height:60px!important;min-height:60px!important;max-height:60px!important;box-sizing:border-box!important;padding:0 16px!important;text-align:right!important;direction:rtl!important}.compForm #compDate::-webkit-date-and-time-value{text-align:right!important;margin:0!important;padding:0!important}.compForm #compDate::-webkit-calendar-picker-indicator{margin-left:0!important;margin-right:auto!important}
+.compStatNote{margin:10px 0 0;padding:10px 12px;border-radius:12px;background:#fff8e6;border:1px solid #ead7a0;color:#72530a;font-size:14px;font-weight:900;line-height:1.7;text-align:center}.compStatNote .due{color:#18713c}.compStatNote .owed{color:#b42318}.compStatNote .even{color:#52606d}
+.vacationMonthLabel{display:block;font-size:17px;font-weight:900;color:#0b3156}.vacationMonthLabel select{display:block;width:100%;height:58px;margin:8px 0 14px!important;padding:0 15px;border:1px solid #c7d4df;border-radius:14px;background:#fff;color:#0b3156;font-size:18px;font-weight:900;box-sizing:border-box}.vacationMonthTitle{text-align:center;font-size:22px;font-weight:900;color:#0b3156;margin:8px 0 14px}.vacationEmployeeList{display:grid;gap:9px}.vacationEmployeeBtn{width:100%;min-height:64px;margin:0!important;padding:10px 14px!important;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:right;border-radius:14px!important;background:#fff!important;color:#0b3156!important;border:1px solid #d7e2eb!important}.vacationEmployeeBtn span{font-size:18px;font-weight:900}.vacationEmployeeBtn small{font-size:12px;font-weight:800;color:#68798a;max-width:58%;line-height:1.5}
+.vacationFilters{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end}.vacationFilters .vacationMonthLabel select{margin-bottom:8px!important}@media(max-width:390px){.vacationFilters{gap:8px}.vacationFilters .vacationMonthLabel select{font-size:16px!important;padding:0 10px!important}}
+</style>
+<script>
+const COMPENSATION_LEDGER_KEY='lab-roster-compensation-ledger-v1';
+function compensationLedger(){try{const x=JSON.parse(localStorage.getItem(COMPENSATION_LEDGER_KEY)||'[]');return Array.isArray(x)?x:[]}catch(e){return []}}
+function saveCompensationLedger(rows){localStorage.setItem(COMPENSATION_LEDGER_KEY,JSON.stringify(rows))}
+function applyAutomaticMonthlyCarryover(monthKey){
+  if(!S||!S.length)return;
+  let rows=compensationLedger();
+  // إعادة اعتماد الشهر تستبدل ترحيله السابق ولا تكرره.
+  rows=rows.filter(x=>!(x.autoCarry&&x.sourceMonth===monthKey));
+  rows.forEach(x=>{if(x.settledByMonth===monthKey){x.settled=false;delete x.settledByMonth}});
+  // احسب الفرق بعد إعادة الرصيد إلى حالته السابقة للاعتماد، حتى تكون إعادة الاعتماد مطابقة ولا تضاعف الرصيد.
+  saveCompensationLedger(rows);
+  const differences=E.map((e,i)=>({employee:e[0],delta:work(i)-req(i),flexible:!e[1]&&!e[2]&&!e[5]}));
+  // الرصيد السابق للموظف المرن عولج داخل مستهدف هذا الشهر، لذلك يُغلق عند الاعتماد.
+  const flexibleNames=new Set(differences.filter(x=>x.flexible).map(x=>x.employee));
+  rows.forEach(x=>{
+    if(x.approved&&!x.settled&&flexibleNames.has(x.employee)){
+      x.settled=true;x.settledByMonth=monthKey;
+    }
+  });
+  const now=new Date().toISOString();
+  differences.filter(x=>x.delta!==0).forEach(x=>rows.push({
+    id:'auto-'+monthKey+'-'+x.employee,
+    employee:x.employee,
+    delta:x.delta,
+    date:now.slice(0,10),
+    covered:'',
+    reason:`ترحيل تلقائي من جدول ${M[+m.value]} ${+y.value}: عمل ${work(E.findIndex(e=>e[0]===x.employee))} والمطلوب ${req(E.findIndex(e=>e[0]===x.employee))}`,
+    approved:true,settled:false,autoCarry:true,sourceMonth:monthKey,createdAt:now
+  }));
+  saveCompensationLedger(rows)
+}
+function compensationBalanceForEmployee(name){return compensationLedger().filter(x=>x.employee===name&&x.approved&&!x.settled).reduce((n,x)=>n+(+x.delta||0),0)}
+function compensationStatNote(name){const balance=compensationBalanceForEmployee(name);if(balance>0)return `<div class="compStatNote">ملاحظة إحصائية: <span class="due">له ${balance} ${balance===1?'يوم':'أيام'}</span> تعويضية</div>`;if(balance<0)return `<div class="compStatNote">ملاحظة إحصائية: <span class="owed">عليه ${Math.abs(balance)} ${Math.abs(balance)===1?'يوم':'أيام'}</span></div>`;return '<div class="compStatNote"><span class="even">ملاحظة إحصائية: لا له ولا عليه — الرصيد متوازن</span></div>'}
+function compEsc(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function openCompensationLedger(){
+  document.body.classList.remove('scheduleToolsActive');
+  const rows=compensationLedger(),options=E.map(e=>`<option value="${compEsc(e[0])}">${compEsc(e[0])}</option>`).join('');
+  const balances=E.map(e=>[e[0],compensationBalanceForEmployee(e[0])]).filter(x=>x[1]!==0);
+  const summary=balances.length?balances.map(x=>`<div class="compBalanceCard ${x[1]>0?'positive':'negative'}"><span>${compEsc(x[0])}</span><b>${x[1]>0?'+':''}${x[1]}</b></div>`).join(''):'<div class="readonly-note">لا توجد أرصدة معلّقة حاليًا.</div>';
+  const entries=rows.slice().reverse().map(x=>`<div class="compEntry"><div class="compEntryHead"><span>${compEsc(x.employee)}</span><b class="compDelta ${x.delta>0?'plus':'minus'}">${x.delta>0?'+':''}${x.delta}</b></div><div class="compMeta">${compEsc(x.date||'بدون تاريخ')} • ${compEsc(x.reason||'بدون سبب')}${x.covered?'<br>تغطية عن: '+compEsc(x.covered):''}</div><span class="compStatus ${x.settled?'settled':x.approved?'approved':''}">${x.settled?'تمت التسوية':x.approved?'معتمد':'بانتظار الاعتماد'}</span><div class="compActions">${!x.approved?`<button onclick="approveCompEntry('${compEsc(x.id)}')">✅ اعتماد</button>`:''}${x.approved&&!x.settled?`<button onclick="settleCompEntry('${compEsc(x.id)}')">☑️ تمت التسوية</button>`:''}<button style="background:#a61b1b" onclick="deleteCompEntry('${compEsc(x.id)}')">🗑️ حذف</button></div></div>`).join('')||'<div class="readonly-note">لا توجد حركات مسجلة.</div>';
+  renderSubPage('رصيد التعويض',`<div class="compNote">الرصيد + يعني أن الموظف يستحق يوم أوف تعويضي، والرصيد − يعني أنه يحتاج يوم عمل إضافيًا. الإجازة الرسمية V لا تُسجّل كنقص. يطبق المحرك الرصيد المعتمد تلقائيًا على الموظفين المرنين فقط.</div><div class="compSummary">${summary}</div><div class="compForm"><label>الموظف<select id="compEmployee">${options}</select></label><label>نوع الحركة<select id="compType"><option value="1">+1 داوم إضافي / غطّى زميلًا</option><option value="-1">−1 داوم أقل من المستهدف</option></select></label><label>التاريخ<input id="compDate" type="date" value="${new Date().toISOString().slice(0,10)}"></label><label>غطّى عن<select id="compCovered"><option value="">لا يوجد</option>${options}</select></label><label class="wide">السبب<input id="compReason" placeholder="مثال: تغطية مناوبة مسائية"></label><button onclick="addCompEntry()">➕ إضافة الحركة</button></div><h3>سجل الحركات</h3>${entries}`,false);
+}
+function addCompEntry(){const employee=document.getElementById('compEmployee')?.value;if(!employee)return;const rows=compensationLedger();rows.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),employee,delta:+document.getElementById('compType').value,date:document.getElementById('compDate').value,covered:document.getElementById('compCovered').value,reason:(document.getElementById('compReason').value||'').trim(),approved:false,settled:false});saveCompensationLedger(rows);openCompensationLedger()}
+function approveCompEntry(id){const rows=compensationLedger(),x=rows.find(v=>v.id===id);if(x)x.approved=true;saveCompensationLedger(rows);openCompensationLedger()}
+function settleCompEntry(id){if(!confirm('تأكيد أن هذا الرصيد تمت تسويته؟'))return;const rows=compensationLedger(),x=rows.find(v=>v.id===id);if(x)x.settled=true;saveCompensationLedger(rows);openCompensationLedger()}
+function deleteCompEntry(id){if(!confirm('حذف حركة التعويض؟'))return;saveCompensationLedger(compensationLedger().filter(v=>v.id!==id));openCompensationLedger()}
+</script>
+<style id="v0950-weekend-working-text">
+/* الجمعة والسبت: الأحمر للأوف O ولعنوان اليوم فقط؛ المناوبة الفعلية بلونها الطبيعي. */
+#homePortal.calendarWallpaper .empcal .day.weekend.M,#homePortal.calendarWallpaper .empcal .day.weekend.M *,
+#homePortal.calendarWallpaper .empcal .day.weekend.A,#homePortal.calendarWallpaper .empcal .day.weekend.A *,
+#homePortal.calendarWallpaper .empcal .day.weekend.N,#homePortal.calendarWallpaper .empcal .day.weekend.N *,
+#homePortal.calendarWallpaper .empcal .day.weekend.V,#homePortal.calendarWallpaper .empcal .day.weekend.V *,
+.empcal .day.weekend.M,.empcal .day.weekend.M *,
+.empcal .day.weekend.A,.empcal .day.weekend.A *,
+.empcal .day.weekend.N,.empcal .day.weekend.N *,
+.empcal .day.weekend.V,.empcal .day.weekend.V *{color:#222!important}
+table td.wk.shiftM,table td.wk.shiftA,table td.wk.shiftN,table td.wk.shiftV,
+.fullRosterTable td.wkcol.M,.fullRosterTable td.wkcol.A,.fullRosterTable td.wkcol.N,.fullRosterTable td.wkcol.V,
+.landscapeRosterTable td.wkcol.M,.landscapeRosterTable td.wkcol.A,.landscapeRosterTable td.wkcol.N,.landscapeRosterTable td.wkcol.V,
+.archiveRosterTable td.wkcol.M,.archiveRosterTable td.wkcol.A,.archiveRosterTable td.wkcol.N,.archiveRosterTable td.wkcol.V{color:#222!important}
+</style>
+<style id="v0953-am-text-only">
+/* A وM بلا تعبئة لونية؛ التمييز بلون الحرف فقط. */
+td.shiftA,td.A,.empcal .day.A,.fullRosterTable td.A,.landscapeRosterTable td.A,.manualEditorTable td.A,.archiveRosterTable td.A{background:transparent!important;color:#1976b9!important}
+td.shiftM,td.M,.empcal .day.M,.fullRosterTable td.M,.landscapeRosterTable td.M,.manualEditorTable td.M,.archiveRosterTable td.M{background:transparent!important;color:#2e7d32!important}
+.empcal .day.A *{color:#1976b9!important}.empcal .day.M *{color:#2e7d32!important}
+#homePortal.calendarWallpaper .empcal .day.weekend.A,#homePortal.calendarWallpaper .empcal .day.weekend.A *{color:#1976b9!important}
+#homePortal.calendarWallpaper .empcal .day.weekend.M,#homePortal.calendarWallpaper .empcal .day.weekend.M *{color:#2e7d32!important}
+</style>
+<style id="v0954-schedule-controls">
+body.scheduleToolsActive{padding-bottom:160px!important}
+body.scheduleToolsActive #quickNav{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important;overflow:visible!important;padding:9px 10px calc(9px + env(safe-area-inset-bottom))!important}
+body.scheduleToolsActive #quickNav .scheduleTool{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:2px!important;width:100%!important;max-width:none!important;min-width:0!important;height:58px!important;min-height:58px!important;max-height:58px!important;flex:none!important;margin:0!important;padding:4px 2px!important;border-radius:13px!important;background:linear-gradient(145deg,#174a77,#0b3156)!important;color:#fff!important}
+body.scheduleToolsActive #quickNav .scheduleTool span{font-size:23px!important;line-height:1!important}
+body.scheduleToolsActive #quickNav .scheduleTool small{display:block!important;font-size:11px!important;font-weight:900!important;line-height:1.15!important;color:#fff!important}
+body.scheduleToolsActive #quickNav .approveTool{background:linear-gradient(145deg,#23844b,#145d34)!important}
+body.scheduleToolsActive #quickNav .pdfTool{background:linear-gradient(145deg,#2567b8,#153d72)!important}
+body.scheduleToolsActive #quickNav .deleteTool{background:linear-gradient(145deg,#b42318,#7f1710)!important}
+@media(min-width:700px){body.scheduleToolsActive #quickNav{grid-template-columns:repeat(7,minmax(84px,112px))!important;justify-content:center!important}body.scheduleToolsActive{padding-bottom:92px!important}}
+</style>
+<style id="v0956-single-off-before-n">
+/* N بلا تعبئة لونية؛ التمييز بلون الحرف فقط. */
+td.shiftN,td.N,.empcal .day.N,.fullRosterTable td.N,.landscapeRosterTable td.N,.manualEditorTable td.N,.archiveRosterTable td.N{background:transparent!important;color:#b77900!important}
+.manualEditorTable button.N{background:transparent!important;color:#b77900!important}
+.empcal .day.N *{color:#b77900!important}
+#homePortal.calendarWallpaper .empcal .day.weekend.N,#homePortal.calendarWallpaper .empcal .day.weekend.N *{color:#b77900!important}
+</style>
+<style id="v0963-employee-add-toolbar">
+.employeeAddTool{display:none}
+body.employeesToolsActive{padding-bottom:96px!important}
+body.employeesToolsActive #quickNav{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom))!important;
+  overflow:visible!important
+}
+body.employeesToolsActive #quickNav .mainNav,
+body.employeesToolsActive #quickNav .scheduleTool{display:none!important}
+body.employeesToolsActive #quickNav .employeeAddTool{
+  display:flex!important;align-items:center!important;gap:9px!important;
+  width:min(100%,720px)!important;margin:0 auto!important
+}
+body.employeesToolsActive #quickNav .employeeAddTool input{
+  display:block!important;flex:1 1 auto!important;min-width:0!important;width:auto!important;
+  height:56px!important;margin:0!important;padding:0 16px!important;box-sizing:border-box!important;
+  border:1px solid rgba(255,255,255,.28)!important;border-radius:15px!important;
+  background:#fff!important;color:#172b3d!important;font-size:17px!important;font-weight:900!important
+}
+body.employeesToolsActive #quickNav .employeeAddTool button{
+  display:flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;
+  width:auto!important;min-width:100px!important;max-width:none!important;height:56px!important;
+  margin:0!important;padding:0 15px!important;border-radius:15px!important;
+  background:linear-gradient(145deg,#2567b8,#153d72)!important;color:#fff!important;
+  font-size:16px!important;font-weight:900!important;white-space:nowrap!important;aspect-ratio:auto!important
+}
+body.employeesToolsActive #quickNav .employeeAddTool button span{font-size:25px;line-height:1}
+@media(min-width:700px){body.employeesToolsActive{padding-bottom:88px!important}}
+</style>
+<style id="v0964-home-navigation">
+body.homeActionsInPage{padding-bottom:18px!important}
+body.homeActionsInPage #quickNav{display:none!important}
+.homeTopActions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:100%;max-width:760px;margin:16px auto;align-items:stretch;justify-items:stretch}
+.homeTopActions button{
+  width:100%!important;min-width:0!important;height:104px!important;margin:0!important;padding:9px 5px!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:8px!important;
+  position:relative!important;overflow:hidden!important;
+  border:1px solid #42627f!important;border-radius:18px!important;background:linear-gradient(145deg,#36434f 0%,#202a33 42%,#0b1116 100%)!important;
+  color:#fff!important;box-shadow:inset 2px 2px 3px rgba(255,255,255,.24),inset -4px -5px 8px rgba(0,0,0,.46),0 8px 0 #071019,0 14px 22px rgba(0,0,0,.34)!important;
+  transform:translateY(0)!important;transition:transform .12s ease,box-shadow .12s ease!important
+}
+.homeTopActions button::after{content:"";position:absolute;top:5px;right:10%;left:10%;height:34%;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,0));pointer-events:none}
+.homeTopActions button:active{transform:translateY(6px)!important;box-shadow:inset 2px 2px 4px rgba(0,0,0,.32),inset -2px -2px 3px rgba(255,255,255,.12),0 2px 0 #071019,0 5px 10px rgba(0,0,0,.28)!important}
+.homeTopActions button span{display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.18),rgba(0,0,0,.2));box-shadow:inset 2px 2px 3px rgba(255,255,255,.2),inset -3px -3px 5px rgba(0,0,0,.32),0 4px 6px rgba(0,0,0,.3);font-size:40px;line-height:1;filter:drop-shadow(0 3px 2px rgba(0,0,0,.45));text-shadow:0 2px 2px rgba(0,0,0,.35);z-index:1}.homeTopActions button small{font-size:13px;font-weight:900;color:#fff;text-align:center;line-height:1.25;text-shadow:0 2px 2px rgba(0,0,0,.8);z-index:1}
+.employeePickerCard .homeLoginRow select,.employeeCalendarSelect select{
+  width:100%!important;min-width:240px!important;height:58px!important;margin:7px 0 0!important;padding:0 15px!important;
+  border:1px solid #51606e!important;border-radius:14px!important;background:#fff!important;color:#172b3d!important;
+  font-size:18px!important;font-weight:900!important;box-sizing:border-box!important
+}
+.employeeCalendarSelect{flex:1 1 280px;min-width:0}.employeeCalendarPicker .secondary{min-height:54px;margin:0!important}
+@media(max-width:420px){.homeTopActions{grid-template-columns:repeat(4,minmax(0,1fr));gap:9px 7px;margin-top:14px}.homeTopActions button{height:104px!important;border-radius:16px!important;padding:7px 3px!important}.homeTopActions button span{width:48px;height:48px;border-radius:14px;font-size:35px}.homeTopActions button small{font-size:11px}.employeePickerCard .homeLoginRow select,.employeeCalendarSelect select{min-width:0!important}}
+.schedulePageTools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 16px;padding:12px;border-radius:18px;background:#eaf1f7;border:1px solid #cfdce7}
+.schedulePageTools button{height:88px!important;min-width:0!important;margin:0!important;padding:8px 4px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:5px!important;border-radius:16px!important;background:linear-gradient(145deg,#315f8d,#12395f)!important;box-shadow:inset 2px 2px 3px rgba(255,255,255,.22),inset -3px -3px 5px rgba(0,0,0,.26),0 5px 0 #08233a,0 9px 14px rgba(8,35,58,.22)!important}
+.schedulePageTools button:active{transform:translateY(4px);box-shadow:inset 2px 2px 4px rgba(0,0,0,.28),0 1px 0 #08233a!important}.schedulePageTools button.danger{background:linear-gradient(145deg,#b63b38,#761915)!important;box-shadow:inset 2px 2px 3px rgba(255,255,255,.2),inset -3px -3px 5px rgba(0,0,0,.25),0 5px 0 #4b0f0c,0 9px 14px rgba(80,18,14,.2)!important}.schedulePageTools span{font-size:28px;line-height:1}.schedulePageTools small{font-size:12px;color:#fff;font-weight:900}
+.employeePageAdd{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;align-items:center;margin:0 0 14px;padding:11px;border-radius:15px;background:#eef4f9;border:1px solid #d4e0ea}.employeePageAdd input{width:100%;height:52px;box-sizing:border-box;margin:0!important;font-size:17px;font-weight:800}.employeePageAdd button{height:52px;margin:0!important;font-size:15px;font-weight:900;white-space:nowrap}
+@media(max-width:420px){.schedulePageTools{gap:8px;padding:9px}.schedulePageTools button{height:80px!important}.schedulePageTools span{font-size:25px}.schedulePageTools small{font-size:11px}.employeePageAdd{grid-template-columns:1fr}.employeePageAdd button{width:100%}}
+</style>
+<style id="v0967-full-roster-name-paint">
+.fullRosterWrap{direction:rtl!important;position:relative!important;isolation:isolate!important}
+.fullRosterTable{direction:rtl!important}
+.fullRosterTable th.name,.fullRosterTable td.name{
+  visibility:visible!important;opacity:1!important;
+  background:Canvas!important;color:CanvasText!important;-webkit-text-fill-color:CanvasText!important;
+  transform:translateZ(0)!important;-webkit-transform:translateZ(0)!important;
+  backface-visibility:hidden!important;-webkit-backface-visibility:hidden!important;
+  will-change:transform!important
+}
+.fullRosterTable tr.selectedEmployeeRow td.name{
+  background:#0b3156!important;color:#fff!important;-webkit-text-fill-color:#fff!important
+}
+</style>
+</html>
