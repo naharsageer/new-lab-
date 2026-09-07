@@ -458,15 +458,15 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
   if(+y.value!==2026 || +m.value!==8) return false;
   const n=30;
   S=E.map(()=>Array(n).fill('O'));
-  // 8-hour fixed day staff: Sunday-Thursday 07:00-16:00, Friday-Saturday OFF.
+  // 8-hour fixed day staff: Sunday-Thursday 07:00-16:00, Friday-Saturday OFF. Rendered as M (day) in the table.
   const fixedNames=['طاهر المحيميد','عبدالمنعم البلادي','عقيله الحبابي','صالح الهاشم','محمد العيثان','زهرة بو حسن'];
-  E.forEach((e,i)=>{ if(fixedNames.includes(e[0])) for(let d=1;d<=n;d++) S[i][d-1]=wk(d)?'O':'D'; });
+  E.forEach((e,i)=>{ if(fixedNames.includes(e[0])) for(let d=1;d<=n;d++) S[i][d-1]=wk(d)?'O':'M'; });
   // 8 staff: 7 days work / 7 days off. Each gets one 7-day N block in this 4-week cycle.
   const pairs=[
-    [2,5,6,7], // Mustafa/Jafar N; Mukhtar/Abdulkhaleq M
-    [6,7,10,11], // Mukhtar/Abdulkhaleq N; Hussain/Haider M
-    [10,11,12,13], // Hussain/Haider N; Sarah/Nada M
-    [12,13,2,5] // Sarah/Nada N; Mustafa/Jafar M
+    [2,5,6,7], // Week 1: Mustafa/Jafar N; Mukhtar/Abdulkhaleq M
+    [8,10,11,12], // Week 2: Hussain/Haider N; Sarah/Nada M
+    [6,7,2,5], // Week 3: Mukhtar/Abdulkhaleq N; Mustafa/Jafar M
+    [11,12,8,10] // Week 4: Sarah/Nada N; Hussain/Haider M
   ];
   const weeks=[[8,14],[15,21],[22,28],[29,30]];
   // Clear rotating rows first.
@@ -479,7 +479,7 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
   });
   // Rehab is not in the new 12-hour group this month; keep her regular day schedule.
   const ri=E.findIndex(e=>e[0]==='رحاب العلي');
-  if(ri>=0) for(let d=1;d<=n;d++) S[ri][d-1]=wk(d)?'O':'D';
+  if(ri>=0) for(let d=1;d<=n;d++) S[ri][d-1]=wk(d)?'O':'M';
   save(); return true;
 }
 onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v046');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};loadAgreedSeptember2026();rend();summary()};function save(){localStorage.setItem('lab-roster-v046',JSON.stringify({E,m:m.value,y:y.value}))}
@@ -868,7 +868,8 @@ function enforceSingleOffRule(n){
   return changed
 }
 function forbiddenRestTransition(from,to){
-  return (from==='N'&&(to==='M'||to==='A'))||(from==='A'&&to==='M')
+  // Require an OFF/V day between night and morning shifts in either direction.
+  return (from==='N'&&(to==='M'||to==='A'))||(from==='M'&&to==='N')||(from==='A'&&to==='M')
 }
 function invalidRestTransitions(n){
   const out=[];
