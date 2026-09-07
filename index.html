@@ -805,18 +805,23 @@ function gen(){
   enforceAbsoluteMax7(n);
   enforcePreviousMonthBoundary(n);
   enforceSupervisorAlternation(n);
+  enforceHardShiftSafety(n);
   E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));
+  enforceHardShiftSafety(n);
   save(); archiveCurrentSchedule(); rend(); summary(); check();
 }
 function enforceSupervisorAlternation(n){
+  // المشرف ونائبه متخالفان أسبوعيًا: واحد يعمل M والآخر OFF طوال كتلة الـ7 أيام.
+  // لا نسمح بأن يعمل الاثنان في نفس اليوم/الأسبوع.
   const sup=E.findIndex(e=>e[0]==='طاهر المحيميد'),dep=E.findIndex(e=>e[0]==='عبدالمنعم البلادي');
   if(sup<0||dep<0)return;
   for(let d=1;d<=n;d++){
     const week=Math.floor((d-1)/7),wanted=(week%2===0)?sup:dep,other=wanted===sup?dep:sup;
-    if(S[wanted][d-1]==='O'&&S[other][d-1]==='M'){S[wanted][d-1]='M';S[other][d-1]='O'}
-    if(S[wanted][d-1]!=='M' && S[other][d-1]!=='M'){
-      if(S[wanted][d-1]==='O')S[wanted][d-1]='M';
-    }
+    if(!S[wanted])S[wanted]=Array(n).fill('O');
+    if(!S[other])S[other]=Array(n).fill('O');
+    // المطلوب: المشرف أو النائب فقط هو الموجود صباحًا في هذه الكتلة.
+    S[wanted][d-1]='M';
+    if(S[other][d-1]!=='V')S[other][d-1]='O';
   }
 }
 function needForDay(d,s){if(wk(d))return 1;if(s==='M')return Math.max(0,+wm.value||0);if(s==='N')return Math.max(1,Math.min(2,+wa.value||2));if(s==='N')return Math.max(1,Math.min(2,+wn.value||2));return 0}
@@ -1592,6 +1597,85 @@ function fill(d,s,need,C){
     S[a[0]][d-1]=s;
   }
 }
+
+function enforceHardShiftSafety(n){
+  // قواعد إلزامية: لا انتقال N→M في اليوم التالي، ولا أكثر من 7 أيام عمل متواصلة، وN<=7 للشهر.
+  let changed=0, guard=200;
+  const sup=E.findIndex(e=>e[0]==='طاهر المحيميد'), dep=E.findIndex(e=>e[0]==='عبدالمنعم البلادي');
+  const fixedMNames=new Set(['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم']);
+  const fixedM=E.map((e,i)=>fixedMNames.has(e[0])?i:-1).filter(i=>i>=0);
+  const countShift=(i,sh)=>S[i].filter(x=>x===sh).length;
+  const coverageNeed=(d,sh)=>sh==='N'?2:(wk(d)?2:4);
+  const canPlace=(i,d,sh)=>{
+    if(S[i][d-1]!=='O'||(E[i][4]||[]).some(v=>vacationCoversDay(v,d))) return false;
+    if(fixedM.includes(i)&&sh!=='M') return false;
+    if(sh==='N'&&countShift(i,'N')>=7) return false;
+    if(d>1 && S[i][d-2]==='N' && sh==='M') return false;
+    if(d<n && S[i][d]==='N' && sh==='M') return false;
+    if(wouldExceed7(i,d,sh)) return false;
+    return true;
+  };
+  // أولاً أصلح N→M بتحويل يوم M التالي إلى O أو استبداله بموظف آخر آمن.
+  for(let i=0;i<E.length;i++){
+    for(let d=2;d<=n;d++){
+      if(S[i][d-2]==='N' && S[i][d-1]==='M'){
+        // لا نسمح أبدًا بـ24 ساعة؛ نحاول نقل تغطية M إلى موظف آخر.
+        if(cnt(d,'M')>coverageNeed(d,'M')){
+          S[i][d-1]='O'; changed++;
+        }else{
+          let repl=E.map((e,j)=>j).filter(j=>j!==i&&canPlace(j,d,'M'));
+          repl.sort((a,b)=>(work(a)-work(b))||(countShift(a,'N')-countShift(b,'N')));
+          if(repl.length){S[i][d-1]='O';S[repl[0]][d-1]='M';changed++;}
+          else { S[i][d-1]='O'; changed++; }
+        }
+      }
+    }
+  }
+  // إصلاح تغطية M/N بعد إزالة التعارضات، بدون إنشاء N→M.
+  for(let d=1;d<=n;d++){
+    for(const sh of ['M','N']){
+      let need=coverageNeed(d,sh), tries=50;
+      while(cnt(d,sh)<need&&tries--){
+        let c=E.map((e,i)=>i).filter(i=>canPlace(i,d,sh));
+        c.sort((a,b)=>((hourTarget()-workHours(a))-(hourTarget()-workHours(b)))||(countShift(a,'N')-countShift(b,'N')));
+        if(!c.length)break;
+        S[c[0]][d-1]=sh; changed++;
+      }
+    }
+  }
+  // لا تتجاوز N سبع مناوبات في الشهر: ننقل الزائد إلى M فقط إذا لم يسبب N→M أو >7 عمل متواصل.
+  for(let i=0;i<E.length;i++){
+    while(countShift(i,'N')>7){
+      let cand=[];
+      for(let d=1;d<=n;d++) if(S[i][d-1]==='N'){
+        let safeM = fixedM.includes(i) || true;
+        if(!safeM) continue;
+        if(d>1&&S[i][d-2]==='N'){} // ممكن يكون داخل بلوك، لا نكسره إلا عند الضرورة.
+        if(d<n&&S[i][d]==='M')continue;
+        cand.push(d);
+      }
+      if(!cand.length)break;
+      cand.sort((a,b)=>Math.abs(a-n/2)-Math.abs(b-n/2));
+      let d=cand[0];
+      // نحاول M فقط إن لم يكن اليوم التالي N؛ وإلا O.
+      if(fixedM.includes(i) && canPlace(i,d,'M')) S[i][d-1]='M';
+      else if(!fixedM.includes(i) && d>1&&S[i][d-2]!=='N'&&d<n&&S[i][d]==='O'&&!wouldExceed7(i,d,'M')) S[i][d-1]='M';
+      else S[i][d-1]='O';
+      changed++;
+    }
+  }
+  // المشرف والنائب: لا يجتمعان OFF، مع تناوب أسبوعي ثابت من الأحد إلى السبت.
+  if(sup>=0&&dep>=0){
+    for(let d=1;d<=n;d++){
+      const week=Math.floor((d-1)/7), wanted=(week%2===0)?sup:dep, other=wanted===sup?dep:sup;
+      if(S[wanted][d-1]!=='M' && S[other][d-1]==='O') S[wanted][d-1]='M';
+      if(S[wanted][d-1]==='M' && S[other][d-1]==='M') S[other][d-1]='O';
+      if(S[wanted][d-1]==='O' && S[other][d-1]==='O') S[wanted][d-1]='M';
+    }
+  }
+  return changed;
+}
+
 function check(){
   if(!S||!S.length){msg.innerHTML='أنشئ الجدول أولاً';return []}
   let q=collectIssues(); q=q.concat(boundaryIssues());
