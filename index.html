@@ -465,25 +465,13 @@ function loadAgreed12h2026(){
   if(+y.value!==2026 || +m.value!==8) return false;
   const n=days();
   S=E.map(()=>Array(n).fill('O'));
-  // جميع الموظفين في النظام الحالي 12 ساعة. طاهر وعبدالمنعم مثبتان صباح M للتنسيق الإشرافي.
-  const schedule=['MOOOOOOMMMMMMMMOOOOOOOMMMMMMMO','MMMMMMMMOOOOOOOMMMMMMMOOOOOOOM','MOOOOOOOMMMMMMMMOOOOOOMMMMMMMO','MMOOOOOOOMMMMMMMOOOOOONNNNNNNO','OMMMMMMMOOOOOOONNNNNNNOOOOOOMM','MOOOOOOONNNNNNNOOOOOOMMMMMMMMO','NNNNNOOOOOOOMMMMMMMOOOOOOOMMMM','OMMMMMMMMOOOOOONNNNNNNOOOOOOOM','MMOOOOOONNNNNNNOOOOOOOMMMMMMMO','ONNNNNNNOOOOOOOMMMMMMMMOOOOOOM','NNNNNOOOOOOOMMMMMMMOOOOOOOMMMM','MMOOOOOOMMMMMMMOOOOOOONNNNNNNO','MMOOOOOONNNNNNNOOOOOOOMMMMMMMO','MMMMMMMMOOOOOOOMMMMMMMOOOOOOON','ONNNNNNNOOOOOOMMMMMMMMOOOOOOOM'];
-  schedule.forEach((row,i)=>{ if(i<S.length) S[i]=row.split('').slice(0,n); });
-  // لا يوجد A؛ M وN كلاهما 12 ساعة. الهدف 192 ساعة (16 مناوبة) لكل موظف.
-  // نظام 7×7 هو الأساس، والبلوك الثامن - عند الحاجة - يكون صباح M فقط.
-  // الليل: نستهدف موظفين يومياً قدر الإمكان، ويُسمح بالزيادة عند حاجة العمل.
-  // طاهر وعبدالمنعم: يجب أن يكون أحدهما على الأقل موجوداً كل يوم؛ وقد يتواجدان معاً.
-  E.forEach((e,i)=>{ e[1]=(i===0||i===1)?1:0; e[2]=0; e[5]=0; });
-  E.forEach((e,i)=>(e[4]||[]).forEach(v=>{
-    for(let d=1;d<=n;d++) if(vacationCoversDay(v,d)) S[i][d-1]='V';
-  }));
-  purgeLegacyA();
-  save();
-  return true;
+  // جميع الموظفين في النظام الحالي 12 ساعة. طاهر وعبدالمنعم ومصطفى وعقيله وصالح مثبتون صباح M فقط، 12 ساعة؛ طاهر وعبدالمنعم متناوبان بحيث يتوفر أحدهما يوميًا أو كلاهما عند الحاجة.
+  const schedule=['MMMMMMMMOOOOOOOMMMMMMMOOOOOOOM','MOOOOOOOMMMMMMMOOOOOOOMMMMMMMM','MOMMMMMMMMOOOOOOMMMMMMMOOOOOOO','MOOOOMMMMMMMMOOOOOOMMMMMMMOOOO','MMOOOOOOOMMMMMMMOOOOOOOMMMMMMM','MOOOOOOONNNNNNNOOOOOOMMMMMMMMO','NNNNNOOOOOOOMMMMMMMOOOOOOOMMMM','OMMMMMMMMOOOOOONNNNNNNOOOOOOOM','MMOOOOOONNNNNNNOOOOOOOMMMMMMMO','ONNNNNNNOOOOOOOMMMMMMMMOOOOOOM','NNNNNOOOOOOOMMMMMMMOOOOOOOMMMM','MMOOOOOOMMMMMMMOOOOOOONNNNNNNO','MMOOOOOONNNNNNNOOOOOOOMMMMMMMO','MMMMMMMMOOOOOOOMMMMMMMOOOOOOON','ONNNNNNNOOOOOOMMMMMMMMOOOOOOOM','','V']
+  fixed.forEach(i=>{ if(!S[i]) return; S[i]=S[i].map(x=>x==='N'?'M':x); });
 }
-
 function normalizeLegacyA(){S=(S||[]).map(r=>(r||[]).map(x=>x==='A'?'N':x));E=(E||[]).map(e=>{if(e[5]){e[5]=0;e[2]=1}return e});}
 function purgeLegacyA(){normalizeLegacyA(); if(Array.isArray(S)) S=S.map(r=>(r||[]).map(x=>x==='A'?'N':x));}
-onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v101');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};loadAgreed12h2026();finalRepairHours();normalizeLegacyA();save();rend();summary()};function save(){normalizeLegacyA();localStorage.setItem('lab-roster-v101',JSON.stringify({E,m:m.value,y:y.value}))}
+onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v101');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};loadAgreed12h2026();finalRepairHours();normalizeLegacyA();enforceFixedMorningFive();save();rend();summary()};function save(){normalizeLegacyA();localStorage.setItem('lab-roster-v101',JSON.stringify({E,m:m.value,y:y.value}))}
 function vacDateParts(v){
   if(!Array.isArray(v)||v.length<2)return null;
   if(typeof v[0]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[0])&&typeof v[1]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[1]))
