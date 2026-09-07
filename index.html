@@ -445,7 +445,7 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
   body.employeesToolsActive .employeeListHint{flex:0 0 auto}
   body.employeesToolsActive .employeeListScroll{flex:1 1 auto;height:auto;min-height:0}
 }
-</style><header><b>منظّم جدول المناوبات v1.0.4 — توزيع متوازن 180–192</b><div class="sm" style="color:white">M صباح • N مسائية • O أوف • V إجازة</div></header><div id="quickNav" style="display:none!important">
+</style><header><b>منظّم جدول المناوبات v1.0.5 — توزيع متوازن 180–192</b><div class="sm" style="color:white">M صباح • N مسائية • O أوف • V إجازة</div></header><div id="quickNav" style="display:none!important">
 <div class="employeeAddTool" aria-label="إضافة موظف">
   <input id="newEmpName" placeholder="اسم الموظف" autocomplete="off" onkeydown="if(event.key==='Enter')addEmployeeSimple()">
   <button onclick="addEmployeeSimple()"><span>＋</span> إضافة</button>
@@ -491,7 +491,7 @@ function loadAgreed12h2026(){
 
 function normalizeLegacyA(){S=(S||[]).map(r=>(r||[]).map(x=>x==='A'?'N':x));E=(E||[]).map(e=>{if(e[5]){e[5]=0;e[2]=1}return e});}
 function purgeLegacyA(){normalizeLegacyA(); if(Array.isArray(S)) S=S.map(r=>(r||[]).map(x=>x==='A'?'N':x));}
-onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v104');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};normalizeLegacyA();save();if(+y.value===2026&&+m.value===8){loadAgreed12h2026();}else if(!S||!S.length||S.length!==E.length){S=E.map(()=>Array(days()).fill('O'));}rend();summary()};function save(){normalizeLegacyA();localStorage.setItem('lab-roster-v104',JSON.stringify({E,m:m.value,y:y.value}))}
+onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v105');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};normalizeLegacyA();save();if(+y.value===2026&&+m.value===8){loadAgreed12h2026();}else if(!S||!S.length||S.length!==E.length){S=E.map(()=>Array(days()).fill('O'));}rend();summary()};function save(){normalizeLegacyA();localStorage.setItem('lab-roster-v105',JSON.stringify({E,m:m.value,y:y.value}))}
 function vacDateParts(v){
   if(!Array.isArray(v)||v.length<2)return null;
   if(typeof v[0]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[0])&&typeof v[1]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[1]))
@@ -1809,7 +1809,6 @@ function selectEmployeeCalendar(value){
 function employeeShiftHours(i,sh){
   if(sh==='O'||sh==='V'||!sh)return 0;
   // الموظفون المثبتون على دوام صباحي، ورحاب العلي في المرحلة الانتقالية: 8 ساعات.
-  if(sh==='M' && E[i] && (E[i][1] || E[i][0]==='رحاب العلي')) return 8;
   // موظفو نظام 12 ساعة: الصباح والمساء كلاهما 12 ساعة.
   if(sh==='M'||sh==='N') return 12;
   return 0;
@@ -1896,7 +1895,7 @@ function openEmployeePage(forceIndex){
         <div class="monthNav"><button onclick="changePortalMonth(-1,'employee')">‹</button><span class="monthLabel">${portalMonthLabel()}</span><button onclick="changePortalMonth(1,'employee')">›</button></div>
         <b>تقويم ${emp[0]}</b>
         <div class="empcal">${cells}</div>
-        <div class="hoursBox"><b>ساعات العمل: ${employeeHours(i)} ساعة</b><span>صباح 12س: ${employeeHoursBreakdown(i).m12h} • مساء 12س: ${employeeHoursBreakdown(i).n12h} • صباح 8س: ${employeeHoursBreakdown(i).day8} • أوف: ${employeeHoursBreakdown(i).o} • إجازة: ${employeeHoursBreakdown(i).v}</span></div>
+        <div class="hoursBox"><b>ساعات العمل: ${employeeHours(i)} ساعة</b><span>صباح 12س: ${employeeHoursBreakdown(i).m12h} • مساء 12س: ${employeeHoursBreakdown(i).n12h} • أوف: ${employeeHoursBreakdown(i).o} • إجازة: ${employeeHoursBreakdown(i).v}</span></div>
         ${monthlyHoursTargetHtml(i)}
         ${compensationStatNote(emp[0])}
         ${annualVStatsHtml(i,portalViewYear)}
@@ -1989,7 +1988,7 @@ function renderMyCalendar(open){
       <div class="readonly-note">تقويم الموظف</div>
       <div class="monthNav"><button aria-label="الشهر السابق" onclick="changePortalMonth(-1,'mine')">‹</button><span class="monthLabel">${portalMonthLabel()}</span><button aria-label="الشهر التالي" onclick="changePortalMonth(1,'mine')">›</button></div>
       <div class="empcal">${cells}</div>
-      <div class="hoursBox"><b>ساعات العمل: ${employeeHours(i)} ساعة</b><span>صباح 12س: ${employeeHoursBreakdown(i).m12h} • مساء 12س: ${employeeHoursBreakdown(i).n12h} • صباح 8س: ${employeeHoursBreakdown(i).day8} • أوف: ${employeeHoursBreakdown(i).o} • إجازة: ${employeeHoursBreakdown(i).v}</span></div>
+      <div class="hoursBox"><b>ساعات العمل: ${employeeHours(i)} ساعة</b><span>صباح 12س: ${employeeHoursBreakdown(i).m12h} • مساء 12س: ${employeeHoursBreakdown(i).n12h} • أوف: ${employeeHoursBreakdown(i).o} • إجازة: ${employeeHoursBreakdown(i).v}</span></div>
       ${compensationStatNote(emp[0])}
       ${annualVStatsHtml(i,portalViewYear)}
     </div>
