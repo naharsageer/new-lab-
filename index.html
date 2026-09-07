@@ -115,6 +115,7 @@
 .empCalendar .calO{background:#f3ead7!important;color:#c81e1e!important}
 .empCalendar .calO .num,.empCalendar .calO .sh,.empCalendar .calWeekend .num,.empCalendar .calWeekend .sh{color:#c81e1e!important}
 .empCalendar .calA,.empCalendar .calN,.empCalendar .calM,.empCalendar .calV{background:#f3ead7!important}
+.shiftA{display:none!important}
 </style><!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><title>منظم المناوبات</title><style>body{font-family:Arial;margin:0;background:#f5f7fb;color:#222}header{background:#1f4e78;color:#fff;padding:14px}main{padding:12px}.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px;margin-bottom:12px}input,select,button{padding:8px;margin:3px;border:1px solid #ccc;border-radius:8px}button{background:#1f4e78;color:#fff}.grid{display:grid;grid-template-columns:340px 1fr;gap:12px}@media(max-width:800px){.grid{grid-template-columns:1fr}}table{border-collapse:collapse;min-width:1050px;width:100%}td,th{border:1px solid #ddd;padding:4px;text-align:center;font-size:12px}.wrap{overflow:auto}.wk{color:#d40000!important;font-weight:700}.name{position:sticky;right:0;background:white}.emp{border:1px solid #ddd;padding:7px;border-radius:8px;margin:5px 0}.sm{font-size:12px;color:#666}
 .shiftA{background:#d9ecff!important;color:#134f8c}
 .shiftN{background:#fff2a8!important;color:#664d00}
@@ -442,7 +443,7 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
   body.employeesToolsActive .employeeListHint{flex:0 0 auto}
   body.employeesToolsActive .employeeListScroll{flex:1 1 auto;height:auto;min-height:0}
 }
-</style><header><b>منظّم جدول المناوبات v0.9.9 — 7 أيام عمل / 7 أيام راحة</b><div class="sm" style="color:white">M صباح • A أول ليل • N آخر ليل • O أوف • V إجازة</div></header><div id="quickNav" style="display:none!important">
+</style><header><b>منظّم جدول المناوبات v0.9.9 — 7 أيام عمل / 7 أيام راحة</b><div class="sm" style="color:white">M صباح • N مسائية • O أوف • V إجازة</div></header><div id="quickNav" style="display:none!important">
 <div class="employeeAddTool" aria-label="إضافة موظف">
   <input id="newEmpName" placeholder="اسم الموظف" autocomplete="off" onkeydown="if(event.key==='Enter')addEmployeeSimple()">
   <button onclick="addEmployeeSimple()"><span>＋</span> إضافة</button>
@@ -454,7 +455,7 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
 <button class="scheduleTool approveTool" aria-label="اعتماد" title="اعتماد" onclick="approveAndLeaveSchedule()"><span>✅</span><small>اعتماد</small></button>
 <button class="scheduleTool pdfTool" aria-label="مشاركة PDF أفقي" title="مشاركة PDF أفقي" onclick="shareRosterPdfLandscape()"><span>⬆️</span><small>PDF</small></button>
 <button class="scheduleTool deleteTool" aria-label="حذف الجدول" title="حذف الجدول" onclick="deleteCurrentSchedule()"><span>🗑️</span><small>حذف</small></button>
-</div><main><div id="homePortal"></div><div id="adminArea" style="display:none"><div class="grid"><section class="card"><b>الإعدادات</b><div><select id=m></select><input id=y type=number value=2026 style="width:90px"></div><div>العادي: M <input id=wm value=4 size=2> A <input id=wa value=2 size=2> N <input id=wn value=2 size=2></div><div>الويكند: M <input id=em value=1 size=2> A <input id=ea value=1 size=2> N <input id=en value=1 size=2></div><div>أيام العمل <span id=t class=targetBox>تلقائي</span> بلوك الليل <input id=b value=7 size=2></div><div class=sm>المستهدف يُحسب تلقائيًا: أيام الشهر ناقص الجمعة والسبت. الموازنة تطبق على الموظفين المرنين فقط؛ المثبت M أو A أو N مستثنى من التدوير. عقيلة وعبدالمنعم يتناوبان على M للجمعة والسبت، ومن يغطي الويكند يأخذ أوف بديل خلال الأسبوع. الحد الأقصى للدوام المتواصل 7 أيام فقط. إذا كان الموظف ناقص أيام، المحرك يعوضه أولًا من بلوكات الأوف الطويلة ثم يعمل تبديلات مع الموظفين الزائدين. شفت A أو N للموظف المرن يُجمع في بلوك 7 أيام متواصلة قدر الإمكان، وبعده تكون أيام التعويض M بدل تشتيت A/N خلال الشهر. الإجازة V تخصم فقط إذا وقعت في يوم عمل.</div><div class="actions"></div><hr><b>الموظفون</b><div id=emps></div><button onclick=add()>+ موظف</button><button onclick=gen()>توليد ذكي</button><button onclick=check()>✓ فحص الجدول</button><button id=fixBtn style="display:none;background:#b45309" onclick=autoFix()>🔧 إصلاح تلقائي</button><button onclick=csv()></button><button class=secondary onclick=printRoster()>📄 PDF الجدول</button><div id=msg class=sm></div></section><section class="card"><div class=wrap><table id=tab></table></div><h3>الإحصائيات</h3><div class=wrap><table id=sum></table></div></section></div></div></main><div id="adminHubRoot" style="display:none"></div><script>const M=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];let E=[['طاهر المحيميد',1,0,0,[]],['عبدالمنعم البلادي',1,0,0,[]],['مصطفى الزقعان',0,0,0,[]],['عقيله الحبابي',1,0,0,[]],['صالح الهاشم',1,0,0,[]],['جعفر الشهيب',0,0,0,[]],['مختار الخلف',0,0,0,[]],['عبدالخالق التريكي',0,0,0,[]],['حسين الحسن',0,0,0,[]],['محمد العيثان',1,0,0,[]],['حيدر الحسن',0,0,0,[]],['ساره الخليفة',0,0,0,[]],['ندى العلي',0,0,0,[]],['رحاب العلي',0,0,0,[]],['زهرة بو حسن',1,0,0,[]]],S=[];function loadAgreedSeptember2026(){
+</div><main><div id="homePortal"></div><div id="adminArea" style="display:none"><div class="grid"><section class="card"><b>الإعدادات</b><div><select id=m></select><input id=y type=number value=2026 style="width:90px"></div><div>العادي: M <input id=wm value=4 size=2> N <input id=wn value=2 size=2></div><div>الويكند: M <input id=em value=1 size=2> N <input id=en value=1 size=2></div><div>أيام العمل <span id=t class=targetBox>تلقائي</span> بلوك الليل <input id=b value=7 size=2></div><div class=sm>المستهدف يُحسب تلقائيًا: أيام الشهر ناقص الجمعة والسبت. الموازنة تطبق على الموظفين المرنين فقط؛ المثبت M أو N مستثنى من التدوير. عقيلة وعبدالمنعم يتناوبان على M للجمعة والسبت، ومن يغطي الويكند يأخذ أوف بديل خلال الأسبوع. الحد الأقصى للدوام المتواصل 7 أيام فقط. إذا كان الموظف ناقص أيام، المحرك يعوضه أولًا من بلوكات الأوف الطويلة ثم يعمل تبديلات مع الموظفين الزائدين. شفت N للموظف المرن يُجمع في بلوك 7 أيام متواصلة قدر الإمكان، وبعده تكون أيام التعويض M بدل تشتيت N خلال الشهر. الإجازة V تخصم فقط إذا وقعت في يوم عمل.</div><div class="actions"></div><hr><b>الموظفون</b><div id=emps></div><button onclick=add()>+ موظف</button><button onclick=gen()>توليد ذكي</button><button onclick=check()>✓ فحص الجدول</button><button id=fixBtn style="display:none;background:#b45309" onclick=autoFix()>🔧 إصلاح تلقائي</button><button onclick=csv()></button><button class=secondary onclick=printRoster()>📄 PDF الجدول</button><div id=msg class=sm></div></section><section class="card"><div class=wrap><table id=tab></table></div><h3>الإحصائيات</h3><div class=wrap><table id=sum></table></div></section></div></div></main><div id="adminHubRoot" style="display:none"></div><script>const M=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];let E=[['طاهر المحيميد',1,0,0,[]],['عبدالمنعم البلادي',1,0,0,[]],['مصطفى الزقعان',0,0,0,[]],['عقيله الحبابي',1,0,0,[]],['صالح الهاشم',1,0,0,[]],['جعفر الشهيب',0,0,0,[]],['مختار الخلف',0,0,0,[]],['عبدالخالق التريكي',0,0,0,[]],['حسين الحسن',0,0,0,[]],['محمد العيثان',1,0,0,[]],['حيدر الحسن',0,0,0,[]],['ساره الخليفة',0,0,0,[]],['ندى العلي',0,0,0,[]],['رحاب العلي',0,0,0,[]],['زهرة بو حسن',1,0,0,[]]],S=[];function loadAgreedSeptember2026(){
   if(+y.value!==2026 || +m.value!==8) return false;
   return loadAgreed12h2026();
 }
@@ -502,7 +503,8 @@ function loadAgreed12h2026(){
   return true;
 }
 
-onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v048');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};loadAgreed12h2026();rend();summary()};function save(){localStorage.setItem('lab-roster-v048',JSON.stringify({E,m:m.value,y:y.value}))}
+function normalizeLegacyA(){S=(S||[]).map(r=>(r||[]).map(x=>x==='A'?'N':x));E=(E||[]).map(e=>{if(e[5]){e[5]=0;e[2]=1}return e});}
+onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v048');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};loadAgreed12h2026();normalizeLegacyA();save();rend();summary()};function save(){normalizeLegacyA();localStorage.setItem('lab-roster-v048',JSON.stringify({E,m:m.value,y:y.value}))}
 function vacDateParts(v){
   if(!Array.isArray(v)||v.length<2)return null;
   if(typeof v[0]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[0])&&typeof v[1]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[1]))
@@ -621,7 +623,7 @@ function boundaryIssues(){
     if(info.run>0&&info.last==='N'&&firstDay===1&&first&&first!=='N')
       q.push(`${e[0]}: انتقال مباشر من N إلى ${first} بين الشهرين`);
     if(info.run>0&&info.last==='A'&&firstDay===1&&first==='M')
-      q.push(`${e[0]}: انتقال مباشر من A إلى M بين الشهرين`);
+      q.push(`${e[0]}: انتقال مباشر من N إلى M بين الشهرين`);
   });
   return q;
 }
@@ -657,7 +659,7 @@ function enforcePreviousMonthBoundary(n){
       }
     }
 
-    // 2) امنع الانتقال المباشر المتعارض من نهاية N إلى M/A، ومن A إلى M.
+    // 2) امنع الانتقال المباشر المتعارض من نهاية N إلى M/A، ومن N إلى M.
     let first=S[i][0];
     if(isWorkShift(first)){
       let conflict=(info.last==='N'&&first!=='N')||(info.last==='A'&&first==='M');
@@ -680,7 +682,7 @@ function enforcePreviousMonthBoundary(n){
   }
   return changed;
 }
-function gen(){if(+y.value===2026 && +m.value===8){loadAgreed12h2026();rend();summary();check();return;}let n=days(),target=monthTarget(),block=7;updateTarget();S=E.map(()=>Array(n).fill('O'));E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));let fixed=[],afixed=[],rot=[],nonly=[],wkm=[];E.forEach((e,i)=>{if(e[5])afixed.push(i);else if(e[1])fixed.push(i);else rot.push(i);if(e[2])nonly.push(i);if(e[3])wkm.push(i)});fixed.forEach(i=>{for(let d=1;d<=n;d++)if(S[i][d-1]!='V')S[i][d-1]=wk(d)?'O':'M'});afixed.forEach(i=>{for(let d=1;d<=n;d++)if(S[i][d-1]!='V')S[i][d-1]=wk(d)?'O':'A'});let w=0;for(let d=1;d<=n;d++)if(new Date(+y.value,+m.value,d).getDay()==5&&wkm.length){let i=wkm[w++%wkm.length];if(S[i][d-1]!='V')S[i][d-1]='M';if(d<n&&S[i][d]!='V')S[i][d]='M'};nonly.forEach(i=>{for(let d=1;d<=n;d++)if(S[i][d-1]!='V')S[i][d-1]=wk(d)?'O':'N'});let flex=rot.filter(i=>!E[i][2]),A=flex.filter((x,p)=>p%2==0),N=flex.filter((x,p)=>p%2);function pool(P,s,need){if(!P.length||need<=0)return;for(let d=1;d<=n;d++){let dt=new Date(Date.UTC(+y.value,+m.value,d)),offset=(dt.getUTCDay()-4+7)%7,anchor=Date.UTC(+y.value,+m.value,d-offset),week=Math.floor(anchor/604800000),start=((week%P.length)+P.length)%P.length;for(let k=0;k<need;k++){let i=P[(start+k)%P.length];if(i!=null&&S[i][d-1]=='O')S[i][d-1]=s}}}if(A.length)pool(A,'A',+wa.value);if(N.length)pool(N,'N',Math.max(1,+wn.value-nonly.length));for(let d=1;d<=n;d++){let rr=wk(d)?[+em.value,+ea.value,+en.value]:[+wm.value,+wa.value,+wn.value];fill(d,'A',rr[1],flex);fill(d,'N',rr[2],rot);if(!wk(d))fill(d,'M',rr[0],flex.filter(i=>!E[i][2]));else{trim(d,'M',rr[0]);trim(d,'A',rr[1]);trim(d,'N',rr[2])}}compWeekendM(n);balanceFair(n);enforceMax7(n);finalExactBalance(n);E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));enforcePreviousMonthBoundary(n);enforceRosterRestRules(n);save();rend();summary();check()}
+function gen(){if(+y.value===2026 && +m.value===8){loadAgreed12h2026();rend();summary();check();return;}let n=days(),target=monthTarget(),block=7;updateTarget();S=E.map(()=>Array(n).fill('O'));E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));let fixed=[],afixed=[],rot=[],nonly=[],wkm=[];E.forEach((e,i)=>{if(e[5])nonly.push(i);else if(e[1])fixed.push(i);else rot.push(i);if(e[2])nonly.push(i);if(e[3])wkm.push(i)});fixed=[...new Set(fixed)];nonly=[...new Set(nonly)];fixed.forEach(i=>{for(let d=1;d<=n;d++)if(S[i][d-1]!='V')S[i][d-1]=wk(d)?'O':'M'});let w=0;for(let d=1;d<=n;d++)if(new Date(+y.value,+m.value,d).getDay()==5&&wkm.length){let i=wkm[w++%wkm.length];if(S[i][d-1]!='V')S[i][d-1]='M';if(d<n&&S[i][d]!='V')S[i][d]='M'};nonly.forEach(i=>{for(let d=1;d<=n;d++)if(S[i][d-1]!='V')S[i][d-1]=wk(d)?'O':'N'});let flex=rot.filter(i=>!E[i][2]),N=flex;function pool(P,s,need){if(!P.length||need<=0)return;for(let d=1;d<=n;d++){let dt=new Date(Date.UTC(+y.value,+m.value,d)),offset=(dt.getUTCDay()-4+7)%7,anchor=Date.UTC(+y.value,+m.value,d-offset),week=Math.floor(anchor/604800000),start=((week%P.length)+P.length)%P.length;for(let k=0;k<need;k++){let i=P[(start+k)%P.length];if(i!=null&&S[i][d-1]=='O')S[i][d-1]=s}}}if(N.length)pool(N,'N',Math.max(1,+wn.value-nonly.length));for(let d=1;d<=n;d++){let rr=wk(d)?[+em.value,0,+en.value]:[+wm.value,0,+wn.value];fill(d,'N',rr[2],rot);if(!wk(d))fill(d,'M',rr[0],flex.filter(i=>!E[i][2]));else{trim(d,'M',rr[0]);trim(d,'N',rr[2])}}compWeekendM(n);balanceFair(n);enforceMax7(n);finalExactBalance(n);E.forEach((e,i)=>(e[4]||[]).forEach(v=>{for(let d=1;d<=n;d++)if(vacationCoversDay(v,d))S[i][d-1]='V'}));enforcePreviousMonthBoundary(n);enforceRosterRestRules(n);save();rend();summary();check()}
 function needForDay(d,s){if(wk(d))return 1;if(s==='M')return Math.max(0,+wm.value||0);if(s==='A')return Math.max(1,Math.min(2,+wa.value||2));if(s==='N')return Math.max(1,Math.min(2,+wn.value||2));return 0}
 function minimumNeedForDay(d,s){let preferred=needForDay(d,s);return (s=='A'||s=='N')&&preferred>0?1:preferred}
 function canRemove(i,d){let s=S[i][d-1];return ['M','A','N'].includes(s)&&cnt(d,s)>minimumNeedForDay(d,s)}
@@ -1239,8 +1241,8 @@ function allowedShift(i,d){
   if(e[1]) return 'M'; // fixed morning
   // Flexible: extend neighboring shift block if possible, otherwise M as neutral fallback.
   let L=d>1?S[i][d-2]:'',R=d<days()?S[i][d]:'';
-  // Do not create extra scattered A/N days while compensating deficits.
-  // Once the weekly A/N block is assigned, compensation defaults to M.
+  // Do not create extra scattered N days while compensating deficits.
+  // Once the weekly N block is assigned, compensation defaults to M.
   if(L=='M'||R=='M')return 'M';
   return 'M';
 }
@@ -1336,15 +1338,15 @@ function shiftBlocks(i,shift){
   return out
 }
 function normalizeNightBlocks(n){
-  // Flexible employees: A/N should be one contiguous 7-day block where possible.
+  // Flexible employees: N should be one contiguous 7-day block where possible.
   E.forEach((e,i)=>{
-    if(e[1]||e[2]||e[5])return; // fixed M/A/N are handled by their own rules
+    if(e[1]||e[2]||e[5])return; // fixed M/N are handled by their own rules
     ['A','N'].forEach(sh=>{
       let daysWith=[];
       for(let d=1;d<=n;d++)if(S[i][d-1]==sh)daysWith.push(d);
       if(!daysWith.length)return;
 
-      // Find best 7-day window around existing A/N days, excluding vacations.
+      // Find best 7-day window around existing N days, excluding vacations.
       let best=null;
       for(let a=1;a<=n-6;a++){
         let ok=true,score=0;
@@ -1380,7 +1382,7 @@ function countANBlocks(i){
   return shiftBlocks(i,'A').length+shiftBlocks(i,'N').length;
 }
 function finalExactBalance(n){
-  // First consolidate A/N into 7-day blocks to reduce shift changes.
+  // First consolidate N into 7-day blocks to reduce shift changes.
   normalizeNightBlocks(n);
   // Phase 1: use existing long OFF blocks to fill deficits.
   fillDeficitsFromLongOff(n);
@@ -1902,8 +1904,8 @@ function renderSubPage(title,body,backToGenerate){
   </div>`;
 }
 
-function employeeType(i){return E[i][5]?'afixed':(E[i][2]?'nonly':(E[i][1]?'fixed':'flex'))}
-function employeeTypeLabel(i){let t=employeeType(i);return t==='fixed'?'ثابت M':t==='afixed'?'ثابت A':t==='nonly'?'ثابت N':'مرن'}
+function employeeType(i){return E[i][5]?'nonly':(E[i][2]?'nonly':(E[i][1]?'fixed':'flex'))}
+function employeeTypeLabel(i){let t=employeeType(i);return t==='fixed'?'ثابت M':t==='nonly'?'ثابت N':'مرن'}
 function openAdminSection(which){
   if(which==='employees'){
     const names=E.map((e,i)=>`<button class="empListBtn" onclick="openEmployeeEditor(${i})"><span>${e[0]}</span><span class="state">${employeeTypeLabel(i)} ›</span></button>`).join('');
@@ -2052,7 +2054,6 @@ function openEmployeeEditor(i){
     <label style="display:block;font-weight:800;color:#0b3156;margin-top:8px">نوع المناوبة</label>
     <div class="empTypeGrid">
       <button class="${typ==='fixed'?'active':''}" onclick="setEmployeeType(${i},'fixed')">ثابت M</button>
-      <button class="${typ==='afixed'?'active':''}" onclick="setEmployeeType(${i},'afixed')">ثابت A</button>
       <button class="${typ==='flex'?'active':''}" onclick="setEmployeeType(${i},'flex')">مرن</button>
       <button class="${typ==='nonly'?'active':''}" onclick="setEmployeeType(${i},'nonly')">ثابت N</button>
     </div>
@@ -2075,7 +2076,6 @@ function openEmployeeEditor(i){
 function setEmployeeType(i,type){
   E[i][5]=0;
   if(type==='fixed'){E[i][1]=1;E[i][2]=0}
-  else if(type==='afixed'){E[i][1]=0;E[i][2]=0;E[i][5]=1}
   else if(type==='nonly'){E[i][1]=0;E[i][2]=1}
   else {E[i][1]=0;E[i][2]=0}
   save(); openEmployeeEditor(i);
@@ -2825,7 +2825,7 @@ body.scheduleToolsActive #quickNav .scheduleTool{display:flex!important}
       const groups={M:[],A:[],N:[],O:[],V:[]},names=snap.employees||[];
       snap.schedule.forEach((row,i)=>{const sh=row&&row[dd-1]||'O';if(groups[sh])groups[sh].push(Array.isArray(names[i])?names[i][0]:names[i])});
       const card=(code,title,cls)=>{const list=groups[code];return `<section class="todayDutyCard ${cls}"><h3><span>${title}</span><b>${list.length}</b></h3>${list.length?`<ul>${list.map(n=>`<li>${esc(n)}</li>`).join('')}</ul>`:'<div class="readonly-note">لا يوجد</div>'}</section>`};
-      body+=`<div class="todayDutyGrid">${card('M','المناوبة الصباحية','shiftM')}${card('A','أول الليل','shiftA')}${card('N','آخر الليل','shiftN')}${card('O','أوف','shiftO')}${card('V','إجازة','shiftV')}</div>`;
+      body+=`<div class="todayDutyGrid">${card('M','المناوبة الصباحية','shiftM')}${card('N','المناوبة المسائية','shiftN')}${card('O','أوف','shiftO')}${card('V','إجازة','shiftV')}</div>`;
     }
     const home=document.getElementById('homePortal');if(home){home.innerHTML='';home.classList.remove('calendarWallpaper')}
     const aa=document.getElementById('adminArea');if(aa)aa.style.display='none';
