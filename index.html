@@ -116,7 +116,11 @@
 .empCalendar .calO .num,.empCalendar .calO .sh,.empCalendar .calWeekend .num,.empCalendar .calWeekend .sh{color:#c81e1e!important}
 .empCalendar .calA,.empCalendar .calN,.empCalendar .calM,.empCalendar .calV{background:#f3ead7!important}
 .shiftA{display:none!important}
-</style><!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><title>منظم المناوبات</title><style>body{font-family:Arial;margin:0;background:#f5f7fb;color:#222}header{background:#1f4e78;color:#fff;padding:14px}main{padding:12px}.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px;margin-bottom:12px}input,select,button{padding:8px;margin:3px;border:1px solid #ccc;border-radius:8px}button{background:#1f4e78;color:#fff}.grid{display:grid;grid-template-columns:340px 1fr;gap:12px}@media(max-width:800px){.grid{grid-template-columns:1fr}}table{border-collapse:collapse;min-width:1050px;width:100%}td,th{border:1px solid #ddd;padding:4px;text-align:center;font-size:12px}.wrap{overflow:auto}.wk{color:#d40000!important;font-weight:700}.name{position:sticky;right:0;background:white}.emp{border:1px solid #ddd;padding:7px;border-radius:8px;margin:5px 0}.sm{font-size:12px;color:#666}
+</style>
+<style id="hours-target-box">
+.hoursTargetBox{margin-top:8px;padding:10px 12px;border-radius:9px;background:#eef6ff;border:1px solid #c9dff5;display:flex;flex-direction:column;gap:4px;font-size:13px}.hoursTargetBox b{font-size:14px}.hoursTargetBox span{color:#334155}
+</style>
+<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><title>منظم المناوبات</title><style>body{font-family:Arial;margin:0;background:#f5f7fb;color:#222}header{background:#1f4e78;color:#fff;padding:14px}main{padding:12px}.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px;margin-bottom:12px}input,select,button{padding:8px;margin:3px;border:1px solid #ccc;border-radius:8px}button{background:#1f4e78;color:#fff}.grid{display:grid;grid-template-columns:340px 1fr;gap:12px}@media(max-width:800px){.grid{grid-template-columns:1fr}}table{border-collapse:collapse;min-width:1050px;width:100%}td,th{border:1px solid #ddd;padding:4px;text-align:center;font-size:12px}.wrap{overflow:auto}.wk{color:#d40000!important;font-weight:700}.name{position:sticky;right:0;background:white}.emp{border:1px solid #ddd;padding:7px;border-radius:8px;margin:5px 0}.sm{font-size:12px;color:#666}
 .shiftA{background:#d9ecff!important;color:#134f8c}
 .shiftN{background:#fff2a8!important;color:#664d00}
 .shiftM{background:#eef8ee}
@@ -1625,7 +1629,17 @@ function employeeHoursBreakdown(i){
   const m12=row.filter(x=>x==='M').length, n12=row.filter(x=>x==='N').length, o=row.filter(x=>x==='O').length, v=row.filter(x=>x==='V').length;
   const day8=E[i]&&(E[i][1]||E[i][0]==='رحاب العلي')?m12:0;
   const m12h=m12-day8;
-  return {m12h,n12h:n12,day8,o,v,hours:employeeHours(i)};
+  const hours=employeeHours(i);
+  const target=192;
+  const diff=hours-target;
+  return {m12h,n12h:n12,day8,o,v,hours,target,diff};
+}
+function monthlyHoursTargetHtml(i){
+  const b=employeeHoursBreakdown(i);
+  const d=b.diff;
+  const sign=d>0?'+':'';
+  const status=d===0?'مكتمل ✓':(d<0?`ناقص ${Math.abs(d)} ساعة`:`زائد ${d} ساعة`);
+  return `<div class="hoursTargetBox"><b>المستهدف الشهري: 192 ساعة</b><span>الفعلي: ${b.hours} ساعة • الفرق: ${sign}${d} ساعة • ${status}</span></div>`;
 }
 function openEmployeePage(forceIndex){
   ensurePortalMonth();
@@ -1685,6 +1699,7 @@ function openEmployeePage(forceIndex){
         <b>تقويم ${emp[0]}</b>
         <div class="empcal">${cells}</div>
         <div class="hoursBox"><b>ساعات العمل: ${employeeHours(i)} ساعة</b><span>صباح 12س: ${employeeHoursBreakdown(i).m12h} • مساء 12س: ${employeeHoursBreakdown(i).n12h} • صباح 8س: ${employeeHoursBreakdown(i).day8} • أوف: ${employeeHoursBreakdown(i).o} • إجازة: ${employeeHoursBreakdown(i).v}</span></div>
+        ${monthlyHoursTargetHtml(i)}
         ${compensationStatNote(emp[0])}
         ${annualVStatsHtml(i,portalViewYear)}
       </div>
