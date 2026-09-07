@@ -445,7 +445,7 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
   body.employeesToolsActive .employeeListHint{flex:0 0 auto}
   body.employeesToolsActive .employeeListScroll{flex:1 1 auto;height:auto;min-height:0}
 }
-</style><header><b>منظّم جدول المناوبات v0.9.9 — 7 أيام عمل / 7 أيام راحة</b><div class="sm" style="color:white">M صباح • N مسائية • O أوف • V إجازة</div></header><div id="quickNav" style="display:none!important">
+</style><header><b>منظّم جدول المناوبات v1.0.0 — 7 أيام عمل / 7 أيام راحة</b><div class="sm" style="color:white">M صباح • N مسائية • O أوف • V إجازة</div></header><div id="quickNav" style="display:none!important">
 <div class="employeeAddTool" aria-label="إضافة موظف">
   <input id="newEmpName" placeholder="اسم الموظف" autocomplete="off" onkeydown="if(event.key==='Enter')addEmployeeSimple()">
   <button onclick="addEmployeeSimple()"><span>＋</span> إضافة</button>
@@ -457,7 +457,7 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
 <button class="scheduleTool approveTool" aria-label="اعتماد" title="اعتماد" onclick="approveAndLeaveSchedule()"><span>✅</span><small>اعتماد</small></button>
 <button class="scheduleTool pdfTool" aria-label="مشاركة PDF أفقي" title="مشاركة PDF أفقي" onclick="shareRosterPdfLandscape()"><span>⬆️</span><small>PDF</small></button>
 <button class="scheduleTool deleteTool" aria-label="حذف الجدول" title="حذف الجدول" onclick="deleteCurrentSchedule()"><span>🗑️</span><small>حذف</small></button>
-</div><main><div id="homePortal"></div><div id="adminArea" style="display:none"><div class="grid"><section class="card"><b>الإعدادات</b><div><select id=m></select><input id=y type=number value=2026 style="width:90px"></div><div>العادي: M <input id=wm value=4 size=2> N <input id=wn value=2 size=2></div><div>الويكند: M <input id=em value=1 size=2> N <input id=en value=1 size=2></div><div>أيام العمل <span id=t class=targetBox>تلقائي</span> بلوك الليل <input id=b value=7 size=2></div><div class=sm>المستهدف للساعات: 192 ساعة، والحد الأدنى المقبول 180 ساعة؛ نظام 12 ساعة يبقى 7 أيام عمل + 7 أيام OFF ولا يُكسر للوصول للهدف. الموازنة تطبق على الموظفين المرنين فقط؛ المثبت M أو N مستثنى من التدوير. عقيلة وعبدالمنعم يتناوبان على M للجمعة والسبت، ومن يغطي الويكند يأخذ أوف بديل خلال الأسبوع. الحد الأقصى للدوام المتواصل 7 أيام فقط. إذا كان الموظف ناقص أيام، المحرك يعوضه أولًا من بلوكات الأوف الطويلة ثم يعمل تبديلات مع الموظفين الزائدين. شفت N للموظف المرن يُجمع في بلوك 7 أيام متواصلة قدر الإمكان، وبعده تكون أيام التعويض M بدل تشتيت N خلال الشهر. الإجازة V تخصم فقط إذا وقعت في يوم عمل.</div><div class="actions"></div><hr><b>الموظفون</b><div id=emps></div><button onclick=add()>+ موظف</button><button onclick=gen()>توليد ذكي</button><button onclick=check()>✓ فحص الجدول</button><button id=fixBtn style="display:none;background:#b45309" onclick=autoFix()>🔧 إصلاح تلقائي</button><button onclick=csv()></button><button class=secondary onclick=printRoster()>📄 PDF الجدول</button><div id=msg class=sm></div></section><section class="card"><div class=wrap><table id=tab></table></div><h3>الإحصائيات</h3><div class=wrap><table id=sum></table></div></section></div></div></main><div id="adminHubRoot" style="display:none"></div><script>const M=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];let E=[['طاهر المحيميد',1,0,0,[]],['عبدالمنعم البلادي',1,0,0,[]],['مصطفى الزقعان',0,0,0,[]],['عقيله الحبابي',1,0,0,[]],['صالح الهاشم',1,0,0,[]],['جعفر الشهيب',0,0,0,[]],['مختار الخلف',0,0,0,[]],['عبدالخالق التريكي',0,0,0,[]],['حسين الحسن',0,0,0,[]],['محمد العيثان',1,0,0,[]],['حيدر الحسن',0,0,0,[]],['ساره الخليفة',0,0,0,[]],['ندى العلي',0,0,0,[]],['رحاب العلي',0,0,0,[]],['زهرة بو حسن',1,0,0,[]]],S=[];function loadAgreedSeptember2026(){
+</div><main><div id="homePortal"></div><div id="adminArea" style="display:none"><div class="grid"><section class="card"><b>الإعدادات</b><div><select id=m></select><input id=y type=number value=2026 style="width:90px"></div><div>الحد الأدنى للتغطية: M <input id=wm value=2 size=2> N <input id=wn value=2 size=2></div><div>الويكند: M <input id=em value=2 size=2> N <input id=en value=2 size=2></div><div>أيام العمل <span id=t class=targetBox>تلقائي</span> بلوك الليل <input id=b value=7 size=2></div><div class=sm>ساعات موظفي 12 ساعة: حد أدنى 180 وحد أعلى 192 ساعة، والمستهدف 192؛ نظام 12 ساعة يبقى 7 أيام عمل + 7 أيام OFF ولا يُكسر للوصول للهدف. الموازنة تطبق على الموظفين المرنين فقط؛ المثبت M أو N مستثنى من التدوير. عقيلة وعبدالمنعم يتناوبان على M للجمعة والسبت، ومن يغطي الويكند يأخذ أوف بديل خلال الأسبوع. الحد الأقصى للدوام المتواصل 7 أيام فقط. إذا كان الموظف ناقص أيام، المحرك يعوضه أولًا من بلوكات الأوف الطويلة ثم يعمل تبديلات مع الموظفين الزائدين. شفت N للموظف المرن يُجمع في بلوك 7 أيام متواصلة قدر الإمكان، وبعده تكون أيام التعويض M بدل تشتيت N خلال الشهر. الإجازة V تخصم فقط إذا وقعت في يوم عمل.</div><div class="actions"></div><hr><b>الموظفون</b><div id=emps></div><button onclick=add()>+ موظف</button><button onclick=gen()>توليد ذكي</button><button onclick=check()>✓ فحص الجدول</button><button id=fixBtn style="display:none;background:#b45309" onclick=autoFix()>🔧 إصلاح تلقائي</button><button onclick=csv()></button><button class=secondary onclick=printRoster()>📄 PDF الجدول</button><div id=msg class=sm></div></section><section class="card"><div class=wrap><table id=tab></table></div><h3>الإحصائيات</h3><div class=wrap><table id=sum></table></div></section></div></div></main><div id="adminHubRoot" style="display:none"></div><script>const M=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];let E=[['طاهر المحيميد',1,0,0,[]],['عبدالمنعم البلادي',1,0,0,[]],['مصطفى الزقعان',0,0,0,[]],['عقيله الحبابي',1,0,0,[]],['صالح الهاشم',1,0,0,[]],['جعفر الشهيب',0,0,0,[]],['مختار الخلف',0,0,0,[]],['عبدالخالق التريكي',0,0,0,[]],['حسين الحسن',0,0,0,[]],['محمد العيثان',1,0,0,[]],['حيدر الحسن',0,0,0,[]],['ساره الخليفة',0,0,0,[]],['ندى العلي',0,0,0,[]],['رحاب العلي',0,0,0,[]],['زهرة بو حسن',1,0,0,[]]],S=[];function loadAgreedSeptember2026(){
   if(+y.value!==2026 || +m.value!==8) return false;
   return loadAgreed12h2026();
 }
@@ -478,26 +478,25 @@ function loadAgreed12h2026(){
   // أربع أنماط تغطي الشهر كاملًا مع 2 M + 2 N يوميًا، وكل موظف = 15 مناوبة = 180 ساعة.
   // الأيام 1–8 محسوبة ضمن الشهر لأنها دوام سابق؛ من 8 سبتمبر يستمر نفس البلوك بدون إعادة ضبط.
   const groups=[
-    {ids:[2],phase:1,firstShift:'M'}, // مصطفى: M ثم N
-    {ids:[5],phase:1,firstShift:'N'}, // جعفر: N ثم M
-    {ids:[6],phase:8,firstShift:'M'}, // مختار: N ثم M (من 1 سبتمبر N)
-    {ids:[7],phase:8,firstShift:'N'}, // عبدالخالق: M ثم N (من 1 سبتمبر M)
-    {ids:[8],phase:1,firstShift:'M'}, // حسين: M ثم N
-    {ids:[10],phase:1,firstShift:'N'}, // حيدر: N ثم M
-    {ids:[11],phase:8,firstShift:'M'}, // ساره: N ثم M
-    {ids:[12],phase:8,firstShift:'N'}  // ندى: M ثم N
+    {i:2,phase:1,firstShift:'M'},   // مصطفى: 2–8 M ثم 16–22 N ثم 30–...
+    {i:5,phase:1,firstShift:'N'},   // جعفر: 2–8 N ثم 16–22 M ثم 30–...
+    {i:8,phase:1,firstShift:'M'},   // حسين: 2–8 M ثم 16–22 N ثم 30–...
+    {i:10,phase:1,firstShift:'N'},  // حيدر: 2–8 N ثم 16–22 M ثم 30–...
+    {i:6,phase:8,firstShift:'M'},   // مختار: 1–7 M ثم 15–21 N ثم 29–...
+    {i:7,phase:8,firstShift:'N'},   // عبدالخالق: 1–7 N ثم 15–21 M ثم 29–...
+    {i:11,phase:8,firstShift:'M'},  // ساره: 1–7 M ثم 15–21 N ثم 29–...
+    {i:12,phase:8,firstShift:'N'}   // ندى: 1–7 N ثم 15–21 M ثم 29–...
   ];
   const shiftFlip={M:'N',N:'M'};
   groups.forEach(g=>{
-    const i=g.ids[0]; if(i==null||!S[i]) return;
+    const i=g.i; if(!S[i]) return;
     for(let d=1;d<=n;d++){
       const rel=d-1-g.phase, pos=((rel%14)+14)%14, cycle=Math.floor(rel/14);
-      if(pos<7){
-        const sh=(cycle%2===0)?g.firstShift:shiftFlip[g.firstShift];
-        S[i][d-1]=sh;
-      } else S[i][d-1]='O';
+      S[i][d-1]=pos<7 ? ((cycle%2===0)?g.firstShift:shiftFlip[g.firstShift]) : 'O';
     }
   });
+  // تغطية المناوبتين: كل يوم يوجد على الأقل موظفان M وموظفان N.
+  // لا توجد مناوبة A إطلاقًا، ولا نضيف يومًا منفردًا يكسر 7 عمل / 7 OFF.
   purgeLegacyA();
   save();
   return true;
@@ -505,7 +504,7 @@ function loadAgreed12h2026(){
 
 function normalizeLegacyA(){S=(S||[]).map(r=>(r||[]).map(x=>x==='A'?'N':x));E=(E||[]).map(e=>{if(e[5]){e[5]=0;e[2]=1}return e});}
 function purgeLegacyA(){normalizeLegacyA(); if(Array.isArray(S)) S=S.map(r=>(r||[]).map(x=>x==='A'?'N':x));}
-onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v049');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};loadAgreed12h2026();normalizeLegacyA();save();rend();summary()};function save(){normalizeLegacyA();localStorage.setItem('lab-roster-v049',JSON.stringify({E,m:m.value,y:y.value}))}
+onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v100');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};loadAgreed12h2026();normalizeLegacyA();save();rend();summary()};function save(){normalizeLegacyA();localStorage.setItem('lab-roster-v100',JSON.stringify({E,m:m.value,y:y.value}))}
 function vacDateParts(v){
   if(!Array.isArray(v)||v.length<2)return null;
   if(typeof v[0]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[0])&&typeof v[1]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[1]))
