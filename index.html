@@ -442,7 +442,7 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
   body.employeesToolsActive .employeeListHint{flex:0 0 auto}
   body.employeesToolsActive .employeeListScroll{flex:1 1 auto;height:auto;min-height:0}
 }
-</style><header><b>منظّم جدول المناوبات v0.9.84 PWA</b><div class="sm" style="color:white">M صباح • A أول ليل • N آخر ليل • O أوف • V إجازة</div></header><div id="quickNav" style="display:none!important">
+</style><header><b>منظّم جدول المناوبات v0.9.9 — 7 أيام عمل / 7 أيام راحة</b><div class="sm" style="color:white">M صباح • A أول ليل • N آخر ليل • O أوف • V إجازة</div></header><div id="quickNav" style="display:none!important">
 <div class="employeeAddTool" aria-label="إضافة موظف">
   <input id="newEmpName" placeholder="اسم الموظف" autocomplete="off" onkeydown="if(event.key==='Enter')addEmployeeSimple()">
   <button onclick="addEmployeeSimple()"><span>＋</span> إضافة</button>
@@ -458,9 +458,12 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
   if(+y.value!==2026 || +m.value!==8) return false;
   const n=30;
   S=E.map(()=>Array(n).fill('O'));
+  // September 2026 is a partial month: the new roster STARTS on Tuesday 8 Sep.
+  // Days 1-7 are intentionally left OFF/unassigned because they are already completed.
+  const startDay=8;
   // 8-hour fixed day staff: Sunday-Thursday 07:00-16:00, Friday-Saturday OFF. Rendered as M (day) in the table.
   const fixedNames=['طاهر المحيميد','عبدالمنعم البلادي','عقيله الحبابي','صالح الهاشم','محمد العيثان','زهرة بو حسن'];
-  E.forEach((e,i)=>{ if(fixedNames.includes(e[0])) for(let d=1;d<=n;d++) S[i][d-1]=wk(d)?'O':'M'; });
+  E.forEach((e,i)=>{ if(fixedNames.includes(e[0])) for(let d=startDay;d<=n;d++) S[i][d-1]=wk(d)?'O':'M'; });
   // 8 staff: 7 days work / 7 days off. Each gets one 7-day N block in this 4-week cycle.
   const pairs=[
     [2,5,6,7], // Week 1: Mustafa/Jafar N; Mukhtar/Abdulkhaleq M
@@ -479,7 +482,7 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
   });
   // Rehab is not in the new 12-hour group this month; keep her regular day schedule.
   const ri=E.findIndex(e=>e[0]==='رحاب العلي');
-  if(ri>=0) for(let d=1;d<=n;d++) S[ri][d-1]=wk(d)?'O':'M';
+  if(ri>=0) for(let d=startDay;d<=n;d++) S[ri][d-1]=wk(d)?'O':'M';
   save(); return true;
 }
 onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v046');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};loadAgreedSeptember2026();rend();summary()};function save(){localStorage.setItem('lab-roster-v046',JSON.stringify({E,m:m.value,y:y.value}))}
