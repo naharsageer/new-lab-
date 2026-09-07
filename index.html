@@ -466,38 +466,13 @@ function loadAgreed12h2026(){
   const n=days();
   S=E.map(()=>Array(n).fill('O'));
   const idx=name=>E.findIndex(e=>e[0]===name);
-  const fixed=[idx('طاهر المحيميد'),idx('عبدالمنعم البلادي'),idx('مصطفى الزقعان'),idx('عقيله الحبابي'),idx('صالح الهاشم')].filter(i=>i>=0);
-  // طاهر وعبدالمنعم: 4 أيام عمل / 4 أيام OFF متعاكسين، مع وجود أحدهما يوميًا.
-  const t=idx('طاهر المحيميد'), a=idx('عبدالمنعم البلادي');
-  if(t>=0) for(let d=1;d<=n;d++) if(((d-1-3)%8+8)%8<4) S[t][d-1]='M';
-  if(a>=0) for(let d=1;d<=n;d++) if(((d-1-7)%8+8)%8<4) S[a][d-1]='M';
-  // مصطفى وعقيله وصالح: 4×4 صباحي بمراحل مختلفة، بحيث يحصل كل واحد على 15–16 مناوبة تقريبًا ولا تقل راحته عن المعقول.
-  [['مصطفى الزقعان',0],['عقيله الحبابي',3],['صالح الهاشم',7]].forEach(([name,phase])=>{
+  const patterns="{'Taher': 'MOOMOMOMOMOMOMOOMOOMMOMOMMMMOO', 'Abdulmunim': 'OMMOMOMOMOMOMMOMMOOMOMOOOOMM', 'Mustafa': 'MMOOOOMMMMOOMMMOOOOMMMOMOOOOMM', 'Aqila': 'MOOOMOMMOMMOMOOMMOOMMOMMOOOOMM', 'Saleh': 'OOOOMOOMOMMOOMOMOMMMMMMMOMOOMOO', 'Jafar': 'NNOOONNOMMOOOOMMMONNOOMONOMOOM', 'Mukhtar': 'OMMOOMONNOOONNNOONOMOMONOOMMMO', 'Abdulkhaleq': 'MMOONOONOOONONOOMOOMMMMMONOONN', 'Hussain': 'NNNNOMOOONOOMOOMMOOMMONNOMOMOO', 'Mohammed': 'MOONOMOMMONOMOMONNOOMMOONONNOO', 'Haider': 'MMMOONOOOMONOMONNOOONNNOOOOMMM', 'Sarah': 'MONOOOOONOOOMMOOMONNNNOMONOMMM', 'Nada': 'MMOONOMMOOOMMONNOOOOMOMOOONNNN', 'Rehab': 'MOMOOONOONNONOMMMOOMMOMOOOMOMM', 'Zahrah': 'OOMOOOMMOMOOMOMMMOOMOMOMOOMMMM'}";
+  Object.entries(patterns).forEach(([name,p])=>{
     const i=idx(name); if(i<0)return;
-    for(let d=1;d<=n;d++) if(((d-1-phase)%8+8)%8<4) S[i][d-1]='M';
-  });
-  // عشرة موظفين مرنين: لكل موظف 6 ليالٍ + 9 صباح = 15 مناوبة = 180 ساعة.
-  // كل يوم يغطيه موظفان N بالضبط، ولا يوجد N→M أو M→N مباشرة.
-  const flexNames=['جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];
-  const nBlocks=[1,1,7,7,13,13,19,19,25,25];
-  const mPatterns=[
-    'NNNNNNOMMMOOOOOOOOOOMOMMMOOMOM',
-    'NNNNNNOOOOMOMMMOOOOOOMMOMMMOOO',
-    'MOOMOONNNNNNOMOMMOMOOMOMOOMOOO',
-    'MOOOOONNNNNNOOMMMOOOMOMOMOMOOM',
-    'MOOMMMOMOOOONNNNNNOMOOOMMOOOMO',
-    'OOOOMOOMOMMOONNNNNNOOOMMMOOOMOM',
-    'OOOOOOMOMMMOOMOMOONNNNNNOOMOMM',
-    'MMOMOOOOOMMOMMMOMONNNNNNOOOOOO',
-    'OMMMOMMMOOOOOOOMOMOOOMOONNNNNN',
-    'MOMOMOOMOOMOMMOOMOOOOOMONNNNNN'
-  ];
-  flexNames.forEach((name,k)=>{
-    const i=idx(name); if(i<0)return;
-    const p=mPatterns[k];
     for(let d=0;d<n;d++) S[i][d]=p[d]||'O';
   });
-  // أي موظف إضافي غير المذكور يبقى O؛ الإجازات V تُطبق أخيرًا.
+  // القواعد: الجمعة والسبت بالضبط 2 M + 2 N، وباقي الأيام تغطية لا تقل عن 4 M و2 N.
+  // كل موظف 15 مناوبة = 180 ساعة، وN لا يتجاوز 7 مناوبات، ولا يوجد N→M أو M→N مباشرة، ولا أكثر من 7 أيام عمل متواصلة.
   E.forEach((e,i)=>(e[4]||[]).forEach(v=>{
     for(let d=1;d<=n;d++) if(vacationCoversDay(v,d)) S[i][d-1]='V';
   }));
@@ -507,7 +482,7 @@ function loadAgreed12h2026(){
 
 function normalizeLegacyA(){S=(S||[]).map(r=>(r||[]).map(x=>x==='A'?'N':x));E=(E||[]).map(e=>{if(e[5]){e[5]=0;e[2]=1}return e});}
 function purgeLegacyA(){normalizeLegacyA(); if(Array.isArray(S)) S=S.map(r=>(r||[]).map(x=>x==='A'?'N':x));}
-onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v103');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};normalizeLegacyA();save();if(!S||!S.length||S.length!==E.length){S=E.map(()=>Array(days()).fill('O'));} if(+y.value===2026&&+m.value===8){loadAgreed12h2026();} rend();summary()};function save(){normalizeLegacyA();localStorage.setItem('lab-roster-v103',JSON.stringify({E,m:m.value,y:y.value}))}
+onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v104');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};normalizeLegacyA();save();if(!S||!S.length||S.length!==E.length){S=E.map(()=>Array(days()).fill('O'));} if(+y.value===2026&&+m.value===8){loadAgreed12h2026();} rend();summary()};function save(){normalizeLegacyA();localStorage.setItem('lab-roster-v104',JSON.stringify({E,m:m.value,y:y.value}))}
 function vacDateParts(v){
   if(!Array.isArray(v)||v.length<2)return null;
   if(typeof v[0]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[0])&&typeof v[1]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[1]))
