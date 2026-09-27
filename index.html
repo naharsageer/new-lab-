@@ -457,7 +457,7 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
 <button class="scheduleTool approveTool" aria-label="اعتماد" title="اعتماد" onclick="approveAndLeaveSchedule()"><span>✅</span><small>اعتماد</small></button>
 <button class="scheduleTool pdfTool" aria-label="مشاركة PDF أفقي" title="مشاركة PDF أفقي" onclick="shareRosterPdfLandscape()"><span>⬆️</span><small>PDF</small></button>
 <button class="scheduleTool deleteTool" aria-label="حذف الجدول" title="حذف الجدول" onclick="deleteCurrentSchedule()"><span>🗑️</span><small>حذف</small></button>
-</div><main><div id="homePortal"></div><div id="adminArea" style="display:none"><div class="grid"><section class="card"><b>الإعدادات</b><div><select id=m></select><input id=y type=number value=2026 style="width:90px"></div><div>الحد الأدنى للتغطية: M <input id=wm value=4 size=2> N <input id=wn value=2 size=2></div><div>الويكند: M <input id=em value=2 size=2> N <input id=en value=2 size=2></div><div>أيام العمل <span id=t class=targetBox>تلقائي</span> بلوك الليل <input id=b value=7 size=2></div><div class=sm>ساعات موظفي 12 ساعة: حد أدنى 180 وحد أعلى 192 ساعة، والمستهدف 192؛ نظام 12 ساعة أساسه 7 أيام عمل + 7 أيام OFF؛ وإذا كان الموظف على 180 ساعة، تكون الزيادة للوصول إلى 192 صباح M فقط ليصبح بلوك الصباح 8 أيام. الموازنة تطبق على الموظفين المرنين فقط؛ المثبت M أو N مستثنى من التدوير. الحد الأدنى للصباح الأحد–الخميس 4، والجمعة والسبت 2؛ والمساء 2 ويمكن أن يزيد حسب الحاجة. الحد الأقصى المعتاد للدوام المتواصل 7 أيام، والاستثناء الوحيد بلوك صباح M واحد من 8 أيام للوصول إلى 192 ساعة. إذا كان الموظف ناقص أيام، المحرك يعوضه أولًا من بلوكات الأوف الطويلة ثم يعمل تبديلات مع الموظفين الزائدين. شفت N للموظف المرن يُجمع في بلوك 7 أيام متواصلة قدر الإمكان، وبعده تكون أيام التعويض M بدل تشتيت N خلال الشهر. الإجازة V تخصم فقط إذا وقعت في يوم عمل.</div><div class="actions"></div><hr><b>الموظفون</b><div id=emps></div><button onclick=add()>+ موظف</button><button onclick=gen()>توليد ذكي</button><button onclick=check()>✓ فحص الجدول</button><button id=fixBtn style="display:none;background:#b45309" onclick=autoFix()>🔧 إصلاح تلقائي</button><button onclick=csv()></button><button class=secondary onclick=printRoster()>📄 PDF الجدول</button><div id=msg class=sm></div></section><section class="card"><div class=wrap><table id=tab></table></div><h3>الإحصائيات</h3><div class=wrap><table id=sum></table></div></section></div></div></main><div id="adminHubRoot" style="display:none"></div><script>const M=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];let E=[['طاهر المحيميد',1,0,0,[]],['عبدالمنعم البلادي',1,0,0,[]],['مصطفى الزقعان',0,0,0,[]],['عقيله الحبابي',1,0,0,[]],['صالح الهاشم',1,0,0,[]],['جعفر الشهيب',0,0,0,[]],['مختار الخلف',0,0,0,[]],['عبدالخالق التريكي',0,0,0,[]],['حسين الحسن',0,0,0,[]],['محمد العيثان',1,0,0,[]],['حيدر الحسن',0,0,0,[]],['ساره الخليفة',0,0,0,[]],['ندى العلي',0,0,0,[]],['رحاب العلي',0,0,0,[]],['زهرة بو حسن',1,0,0,[]]],S=[];function loadAgreedSeptember2026(){
+</div><main><div id="homePortal"></div><div id="adminArea" style="display:none"><div class="grid"><section class="card"><b>الإعدادات</b><div><select id=m></select><input id=y type=number value=2026 style="width:90px"></div><div>الحد الأدنى للتغطية: M <input id=wm value=4 size=2> N <input id=wn value=2 size=2></div><div>الويكند: M <input id=em value=2 size=2> N <input id=en value=2 size=2></div><div>أيام العمل <span id=t class=targetBox>تلقائي</span> بلوك الدوام <input id=b value=4 size=2 readonly></div><div class=sm>النظام: ٤ أيام دوام × ١٢ ساعة ثم ٣ أيام أوف. عبدالمنعم وصالح: الأحد–الخميس ٧ص–٤م (٤٥ ساعة أسبوعيًا). عقيلة صباح فقط. M من ٧ص–٧م، N من ٧م–٧ص، D من ٧ص–٤م. المساء يوميًا ٢ على الأقل، والجمعة والسبت ٢ M و٢ N. أيام الأسبوع تتطلب ٤ M كاملة لتغطية ٤–٧ مساء أيضًا. الساعات الشهرية تتغير حسب التقويم.</div><div class="actions"></div><hr><b>الموظفون</b><div id=emps></div><button onclick=add()>+ موظف</button><button onclick=gen()>توليد ذكي</button><button onclick=check()>✓ فحص الجدول</button><button id=fixBtn style="display:none;background:#b45309" onclick=autoFix()>🔧 إصلاح تلقائي</button><button onclick=csv()></button><button class=secondary onclick=printRoster()>📄 PDF الجدول</button><div id=msg class=sm></div></section><section class="card"><div class=wrap><table id=tab></table></div><h3>الإحصائيات</h3><div class=wrap><table id=sum></table></div></section></div></div></main><div id="adminHubRoot" style="display:none"></div><script>const M=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];let E=[['طاهر المحيميد',1,0,0,[]],['عبدالمنعم البلادي',1,0,0,[]],['مصطفى الزقعان',0,0,0,[]],['عقيله الحبابي',1,0,0,[]],['صالح الهاشم',1,0,0,[]],['جعفر الشهيب',0,0,0,[]],['مختار الخلف',0,0,0,[]],['عبدالخالق التريكي',0,0,0,[]],['حسين الحسن',0,0,0,[]],['محمد العيثان',1,0,0,[]],['حيدر الحسن',0,0,0,[]],['ساره الخليفة',0,0,0,[]],['ندى العلي',0,0,0,[]],['رحاب العلي',0,0,0,[]],['زهرة بو حسن',1,0,0,[]]],S=[];function loadAgreedSeptember2026(){
   if(+y.value!==2026 || +m.value!==8) return false;
   return loadAgreed12h2026();
 }
@@ -491,7 +491,7 @@ function loadAgreed12h2026(){
 }
 function normalizeLegacyA(){S=(S||[]).map(r=>(r||[]).map(x=>x==='A'?'N':x));E=(E||[]).map(e=>{if(e[5]){e[5]=0;e[2]=1}return e});}
 function purgeLegacyA(){normalizeLegacyA(); if(Array.isArray(S)) S=S.map(r=>(r||[]).map(x=>x==='A'?'N':x));}
-onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-v101');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};loadAgreed12h2026();finalRepairHours();normalizeLegacyA();enforceFixedMorningFive();save();rend();summary()};function save(){normalizeLegacyA();localStorage.setItem('lab-roster-v101',JSON.stringify({E,m:m.value,y:y.value}))}
+onload=()=>{M.forEach((x,i)=>m.add(new Option(x,i)));m.value=8;let s=localStorage.getItem('lab-roster-4x3-v101');if(s){try{let o=JSON.parse(s);if(o.E){E=o.E;const dn=['طاهر المحيميد','عبدالمنعم البلادي','مصطفى الزقعان','عقيله الحبابي','صالح الهاشم','جعفر الشهيب','مختار الخلف','عبدالخالق التريكي','حسين الحسن','محمد العيثان','حيدر الحسن','ساره الخليفة','ندى العلي','رحاب العلي','زهرة بو حسن'];E.forEach((e,i)=>{if(i<dn.length&&(/^موظف \d+$/.test(e[0])||['طاهر','عبدالمنعم','مصطفى','عقيلة'].includes(e[0])))e[0]=dn[i]})};if(o.m!=null)m.value=o.m;if(o.y)y.value=o.y}catch(e){}}rendE();updateTarget();m.onchange=()=>{updateTarget();save()};y.onchange=()=>{updateTarget();save()};loadAgreed12h2026();finalRepairHours();normalizeLegacyA();enforceFixedMorningFive();save();rend();summary()};function save(){normalizeLegacyA();localStorage.setItem('lab-roster-4x3-v101',JSON.stringify({E,m:m.value,y:y.value}))}
 function vacDateParts(v){
   if(!Array.isArray(v)||v.length<2)return null;
   if(typeof v[0]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[0])&&typeof v[1]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v[1]))
@@ -538,14 +538,14 @@ function work(i){return S[i].filter(x=>x!='O'&&x!='V').length}
 /* v0.9.9 — ربط نهاية الشهر السابق ببداية الشهر الحالي */
 function rosterMonthKey(yy,mm){return String(yy)+'-'+String(mm+1).padStart(2,'0')}
 function rosterArchive(){
-  try{return JSON.parse(localStorage.getItem('lab-roster-month-archive')||'{}')}catch(e){return {}}
+  try{return JSON.parse(localStorage.getItem('lab-roster-4x3-month-archive')||'{}')}catch(e){return {}}
 }
 function archiveCurrentSchedule(){
   if(!S||!S.length)return;
   try{
     let a=rosterArchive(),key=rosterMonthKey(+y.value,+m.value);
     a[key]={year:+y.value,month:+m.value,employees:E.map(e=>e[0]),schedule:S.map(r=>r.slice())};
-    localStorage.setItem('lab-roster-month-archive',JSON.stringify(a));
+    localStorage.setItem('lab-roster-4x3-month-archive',JSON.stringify(a));
   }catch(e){}
 }
 function annualVStats(employeeIndex,year){
@@ -1716,7 +1716,7 @@ function openEmployeePage(forceIndex){
         <div class="monthNav"><button onclick="changePortalMonth(-1,'employee')">‹</button><span class="monthLabel">${portalMonthLabel()}</span><button onclick="changePortalMonth(1,'employee')">›</button></div>
         <b>تقويم ${emp[0]}</b>
         <div class="empcal">${cells}</div>
-        <div class="hoursBox"><b>ساعات العمل: ${employeeHours(i)} ساعة</b><span>صباح 12س: ${employeeHoursBreakdown(i).m12h} • مساء 12س: ${employeeHoursBreakdown(i).n12h} • صباح 8س: ${employeeHoursBreakdown(i).day8} • أوف: ${employeeHoursBreakdown(i).o} • إجازة: ${employeeHoursBreakdown(i).v}</span></div>
+        <div class="hoursBox"><b>ساعات العمل: ${employeeHours(i)} ساعة</b><span>صباح 12س: ${employeeHoursBreakdown(i).m12h} • مساء 12س: ${employeeHoursBreakdown(i).n12h} • صباح 9س: ${employeeHoursBreakdown(i).day9} • أوف: ${employeeHoursBreakdown(i).o} • إجازة: ${employeeHoursBreakdown(i).v}</span></div>
         ${monthlyHoursTargetHtml(i)}
         ${compensationStatNote(emp[0])}
         ${annualVStatsHtml(i,portalViewYear)}
@@ -1809,7 +1809,7 @@ function renderMyCalendar(open){
       <div class="readonly-note">تقويم الموظف</div>
       <div class="monthNav"><button aria-label="الشهر السابق" onclick="changePortalMonth(-1,'mine')">‹</button><span class="monthLabel">${portalMonthLabel()}</span><button aria-label="الشهر التالي" onclick="changePortalMonth(1,'mine')">›</button></div>
       <div class="empcal">${cells}</div>
-      <div class="hoursBox"><b>ساعات العمل: ${employeeHours(i)} ساعة</b><span>صباح 12س: ${employeeHoursBreakdown(i).m12h} • مساء 12س: ${employeeHoursBreakdown(i).n12h} • صباح 8س: ${employeeHoursBreakdown(i).day8} • أوف: ${employeeHoursBreakdown(i).o} • إجازة: ${employeeHoursBreakdown(i).v}</span></div>
+      <div class="hoursBox"><b>ساعات العمل: ${employeeHours(i)} ساعة</b><span>صباح 12س: ${employeeHoursBreakdown(i).m12h} • مساء 12س: ${employeeHoursBreakdown(i).n12h} • صباح 9س: ${employeeHoursBreakdown(i).day9} • أوف: ${employeeHoursBreakdown(i).o} • إجازة: ${employeeHoursBreakdown(i).v}</span></div>
       ${compensationStatNote(emp[0])}
       ${annualVStatsHtml(i,portalViewYear)}
     </div>
@@ -1851,7 +1851,7 @@ function saveScheduleNow(silent){
       month:+m.value,
       year:+y.value
     };
-    localStorage.setItem('lab-roster-saved-schedule',JSON.stringify(payload));
+    localStorage.setItem('lab-roster-4x3-saved-schedule',JSON.stringify(payload));
     archiveCurrentSchedule();
     if(typeof save==='function') save();
     if(typeof msg!=='undefined') msg.innerHTML='تم حفظ الجدول بنجاح';
@@ -1862,14 +1862,14 @@ function saveScheduleNow(silent){
 }
 function loadSavedSchedule(){
   try{
-    const raw=localStorage.getItem('lab-roster-saved-schedule');
+    const raw=localStorage.getItem('lab-roster-4x3-saved-schedule');
     if(!raw)return;
     const p=JSON.parse(raw);
     try{
       let a=rosterArchive(),k=rosterMonthKey(+p.year,+p.month);
       if(!a[k]&&p.schedule){
         a[k]={year:+p.year,month:+p.month,employees:(p.employees||[]).map(e=>Array.isArray(e)?e[0]:e),schedule:p.schedule};
-        localStorage.setItem('lab-roster-month-archive',JSON.stringify(a));
+        localStorage.setItem('lab-roster-4x3-month-archive',JSON.stringify(a));
       }
     }catch(_e){}
     if(p.month!=null)m.value=p.month;
@@ -1881,7 +1881,7 @@ function loadSavedSchedule(){
       const repaired=enforceRosterRestRules(days());
       if(repaired){
         p.employees=E;p.schedule=S;p.month=+m.value;p.year=+y.value;
-        localStorage.setItem('lab-roster-saved-schedule',JSON.stringify(p));
+        localStorage.setItem('lab-roster-4x3-saved-schedule',JSON.stringify(p));
         archiveCurrentSchedule();
       }
     }
@@ -1921,7 +1921,7 @@ function resetPortalMonth(){
 
 // FINAL AGREED RULESET — 7 work / 7 OFF, all shifts 12h, 180–192h.
 // A is permanently disabled. Supervisor/deputy: at least one present daily; overlap allowed.
-const FINAL_STORAGE_KEY='lab-roster-final-7x7-v4-192-morning8';
+const FINAL_STORAGE_KEY='lab-roster-4x3-final-7x7-v4-192-morning8';
 function finalNormalize(){ if(Array.isArray(S)) S=S.map(r=>(r||[]).map(x=>x==='A'?'O':x)); }
 function finalHours(i){ return (S[i]||[]).filter(x=>x==='M'||x==='N').length*12; }
 function finalRepairHours(){
@@ -1957,7 +1957,7 @@ function finalRepairHours(){
 
 function finalSave(silent){
   try{finalNormalize(); localStorage.setItem(FINAL_STORAGE_KEY,JSON.stringify({E,S,m:+m.value,y:+y.value}));
-    localStorage.setItem('lab-roster-saved-schedule',JSON.stringify({employees:E,schedule:S,month:+m.value,year:+y.value}));
+    localStorage.setItem('lab-roster-4x3-saved-schedule',JSON.stringify({employees:E,schedule:S,month:+m.value,year:+y.value}));
     if(typeof save==='function')save(); if(typeof msg!=='undefined')msg.innerHTML='تم حفظ الجدول بنجاح'; if(!silent)alert('تم حفظ الجدول بنجاح');
   }catch(e){if(!silent)alert('تعذر حفظ الجدول');}
 }
@@ -2106,9 +2106,9 @@ function deleteCurrentSchedule(){
   if(!confirm('سيتم حذف جدول '+M[+m.value]+' '+y.value+' الجاري من هذا الجهاز. الجداول المعتمدة في الأرشيف لن تُحذف. هل تريد المتابعة؟'))return;
   try{
     const key=rosterMonthKey(+y.value,+m.value),archive=rosterArchive();
-    if(archive[key]){delete archive[key];localStorage.setItem('lab-roster-month-archive',JSON.stringify(archive))}
-    const saved=JSON.parse(localStorage.getItem('lab-roster-saved-schedule')||'null');
-    if(saved&&+saved.month===+m.value&&+saved.year===+y.value)localStorage.removeItem('lab-roster-saved-schedule');
+    if(archive[key]){delete archive[key];localStorage.setItem('lab-roster-4x3-month-archive',JSON.stringify(archive))}
+    const saved=JSON.parse(localStorage.getItem('lab-roster-4x3-saved-schedule')||'null');
+    if(saved&&+saved.month===+m.value&&+saved.year===+y.value)localStorage.removeItem('lab-roster-4x3-saved-schedule');
     S=[];save();renderGeneratedScheduleTablePage();
     alert('تم حذف الجدول الجاري. الأرشيف المعتمد لم يتغير.');
   }catch(e){alert('تعذر حذف الجدول على هذا الجهاز')}
@@ -2429,12 +2429,13 @@ function rosterLandscapeCanvas(){
   const canvas=document.createElement('canvas');canvas.width=2246;canvas.height=1588;
   const c=canvas.getContext('2d'),n=days(),margin=42,nameW=270;
   const usableW=canvas.width-margin*2,dayW=(usableW-nameW)/n;
-  const titleH=105,headH=78,rowH=Math.min(82,(canvas.height-margin*2-titleH-headH)/E.length);
+  const titleH=155,headH=78,rowH=Math.min(82,(canvas.height-margin*2-titleH-headH)/E.length);
   const tableH=headH+rowH*E.length,top=margin+titleH+(canvas.height-margin*2-titleH-tableH)/2;
   c.fillStyle='#fff';c.fillRect(0,0,canvas.width,canvas.height);
   c.direction='rtl';c.textAlign='center';c.textBaseline='middle';
   c.fillStyle='#0b3156';c.font='900 42px Arial';
   c.fillText('جدول مختبر مستشفى العمران العام — '+M[+m.value]+' '+y.value,canvas.width/2,margin+45);
+  c.font='700 25px Arial';c.fillText(R43_LEGEND,canvas.width/2,margin+100);
   const right=canvas.width-margin,nameX=right-nameW;
   c.lineWidth=2;c.strokeStyle='#8795a5';
   c.fillStyle='#eef3f8';c.fillRect(nameX,top,nameW,headH);
@@ -2447,8 +2448,8 @@ function rosterLandscapeCanvas(){
     c.fillStyle=weekend?'#d40000':'#172b3d';c.font='900 21px Arial';
     c.fillText(dn,x+dayW/2,top+27);c.font='900 24px Arial';c.fillText(String(d),x+dayW/2,top+56);
   }
-  const bg={M:'#ffffff',N:'#ffffff',O:'#f3f4f6',V:'#f3ddff'};
-  const fg={M:'#2e7d32',N:'#b77900',O:'#333333',V:'#6b21a8'};
+  const bg={D:'#e1efff',M:'#ffffff',N:'#ffffff',O:'#f3f4f6',V:'#f3ddff'};
+  const fg={D:'#195080',M:'#2e7d32',N:'#b77900',O:'#333333',V:'#6b21a8'};
   E.forEach((e,i)=>{
     const y0=top+headH+i*rowH;
     c.fillStyle='#fff';c.fillRect(nameX,y0,nameW,rowH);c.strokeRect(nameX,y0,nameW,rowH);
@@ -2583,47 +2584,8 @@ function showFullReadOnly(){ return showFullReadOnlyLegacy(); }
 </script>
 
 
-<script>
-/* v0.8.9.4 — one-time hard cache/service-worker reset */
-(function(){
-  const RESET_KEY='lab-roster-hard-reset-0984-final';
-  window.addEventListener('load', async ()=>{
-    try{
-      if(localStorage.getItem(RESET_KEY)==='done') return;
-      localStorage.setItem(RESET_KEY,'done');
-      if('serviceWorker' in navigator){
-        const regs=await navigator.serviceWorker.getRegistrations();
-        await Promise.all(regs.map(r=>r.unregister()));
-      }
-      if('caches' in window){
-        const keys=await caches.keys();
-        await Promise.all(keys.map(k=>caches.delete(k)));
-      }
-      const u=new URL(location.href);
-      u.searchParams.set('v','0984-final');
-      location.replace(u.toString());
-    }catch(e){ console.warn('Hard reset failed',e); }
-  }, {once:true});
-})();
-</script>
-<script>
-/* v0.8.9.4 — fixed N option, employee highlight, logo-safe home, hard cache reset */
-(function(){
-  if(!('serviceWorker' in navigator)) return;
-  let reloaded=false;
-  navigator.serviceWorker.addEventListener('controllerchange',()=>{
-    if(reloaded) return;
-    reloaded=true;
-    location.reload();
-  });
-  window.addEventListener('load',async()=>{
-    try{
-      const reg=await navigator.serviceWorker.register('./sw.js?v=0984-final',{updateViaCache:'none'});
-      await reg.update();
-    }catch(e){console.warn('SW update failed',e);}
-  });
-})();
-</script>
+
+
 
 <style id="v0910-final-generate-layout">
 .scheduleMonthCard{
@@ -2796,7 +2758,7 @@ function showFullReadOnly(){ return showFullReadOnlyLegacy(); }
 .archiveRosterTable{border-collapse:collapse;min-width:900px;width:100%;direction:rtl}.archiveRosterTable th,.archiveRosterTable td{border:1px solid #d7dee7;padding:5px;text-align:center;font-weight:800;white-space:nowrap}.archiveRosterTable th:first-child,.archiveRosterTable td:first-child{position:sticky;right:0;background:#fff;min-width:145px;text-align:right;z-index:1}.archiveRosterTable .wkcol{color:#c91d1d}.archiveRosterTable .N{background:#fff2a8}.archiveRosterTable .M{background:#eef8ee}.archiveRosterTable .O{background:#f3f4f6}.archiveRosterTable .V{background:#f3ddff}
 </style>
 <script>
-const APPROVED_ARCHIVE_KEY='lab-roster-approved-archive-v1';
+const APPROVED_ARCHIVE_KEY='lab-roster-4x3-approved-archive-v1';
 function approvedArchive(){try{const a=JSON.parse(localStorage.getItem(APPROVED_ARCHIVE_KEY)||'{}');return a&&typeof a==='object'?a:{}}catch(e){return {}}}
 function archiveSafe(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function approveCurrentSchedule(){
@@ -2923,7 +2885,7 @@ body.scheduleToolsActive #quickNav .scheduleTool{display:flex!important}
     let body=`<div class="todayDutyHeadingRow"><div class="todayDutyHeading">مناوبات اليوم المحدد</div><button class="dutySearchButton" onclick="toggleDutyDateSearch()" aria-label="البحث بالتاريخ" title="البحث بالتاريخ">🔍</button></div><div id="dutySearchPanel" class="dutySearchPanel"><div class="dutyDateFields"><label>اليوم<select id="dutySearchDay" onchange="applyDutyDateParts()">${dayOptions}</select></label><label>الشهر<select id="dutySearchMonth" onchange="applyDutyDateParts()">${monthOptions}</select></label><label>السنة<select id="dutySearchYear" onchange="applyDutyDateParts()">${yearOptions}</select></label></div></div>`;
     if(!snap||!Array.isArray(snap.schedule))body+=`<div class="readonly-note">لا يوجد جدول محفوظ أو معتمد لشهر ${esc(M[mm])} ${yy}.</div>`;
     else{
-      const groups={M:[],N:[],O:[],V:[]},names=snap.employees||[];
+      const groups={M:[],N:[],D:[],O:[],V:[]},names=snap.employees||[];
       snap.schedule.forEach((row,i)=>{const sh=row&&row[dd-1]||'O';if(groups[sh])groups[sh].push(Array.isArray(names[i])?names[i][0]:names[i])});
       const card=(code,title,cls)=>{const list=groups[code];return `<section class="todayDutyCard ${cls}"><h3><span>${title}</span><b>${list.length}</b></h3>${list.length?`<ul>${list.map(n=>`<li>${esc(n)}</li>`).join('')}</ul>`:'<div class="readonly-note">لا يوجد</div>'}</section>`};
       body+=`<div class="todayDutyGrid">${card('M','المناوبة الصباحية','shiftM')}${card('N','المناوبة المسائية','shiftN')}${card('O','أوف','shiftO')}${card('V','إجازة','shiftV')}</div>`;
@@ -2944,7 +2906,7 @@ body.scheduleToolsActive #quickNav .scheduleTool{display:flex!important}
 .vacationFilters{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end}.vacationFilters .vacationMonthLabel select{margin-bottom:8px!important}@media(max-width:390px){.vacationFilters{gap:8px}.vacationFilters .vacationMonthLabel select{font-size:16px!important;padding:0 10px!important}}
 </style>
 <script>
-const COMPENSATION_LEDGER_KEY='lab-roster-compensation-ledger-v1';
+const COMPENSATION_LEDGER_KEY='lab-roster-4x3-compensation-ledger-v1';
 function compensationLedger(){try{const x=JSON.parse(localStorage.getItem(COMPENSATION_LEDGER_KEY)||'[]');return Array.isArray(x)?x:[]}catch(e){return []}}
 function saveCompensationLedger(rows){localStorage.setItem(COMPENSATION_LEDGER_KEY,JSON.stringify(rows))}
 function applyAutomaticMonthlyCarryover(monthKey){
@@ -2984,7 +2946,7 @@ function openCompensationLedger(){
   const balances=E.map(e=>[e[0],compensationBalanceForEmployee(e[0])]).filter(x=>x[1]!==0);
   const summary=balances.length?balances.map(x=>`<div class="compBalanceCard ${x[1]>0?'positive':'negative'}"><span>${compEsc(x[0])}</span><b>${x[1]>0?'+':''}${x[1]}</b></div>`).join(''):'<div class="readonly-note">لا توجد أرصدة معلّقة حاليًا.</div>';
   const entries=rows.slice().reverse().map(x=>`<div class="compEntry"><div class="compEntryHead"><span>${compEsc(x.employee)}</span><b class="compDelta ${x.delta>0?'plus':'minus'}">${x.delta>0?'+':''}${x.delta}</b></div><div class="compMeta">${compEsc(x.date||'بدون تاريخ')} • ${compEsc(x.reason||'بدون سبب')}${x.covered?'<br>تغطية عن: '+compEsc(x.covered):''}</div><span class="compStatus ${x.settled?'settled':x.approved?'approved':''}">${x.settled?'تمت التسوية':x.approved?'معتمد':'بانتظار الاعتماد'}</span><div class="compActions">${!x.approved?`<button onclick="approveCompEntry('${compEsc(x.id)}')">✅ اعتماد</button>`:''}${x.approved&&!x.settled?`<button onclick="settleCompEntry('${compEsc(x.id)}')">☑️ تمت التسوية</button>`:''}<button style="background:#a61b1b" onclick="deleteCompEntry('${compEsc(x.id)}')">🗑️ حذف</button></div></div>`).join('')||'<div class="readonly-note">لا توجد حركات مسجلة.</div>';
-  renderSubPage('رصيد التعويض',`<div class="compNote">الرصيد + يعني أن الموظف يستحق يوم أوف تعويضي، والرصيد − يعني أنه يحتاج يوم عمل إضافيًا. الإجازة الرسمية V لا تُسجّل كنقص. يطبق المحرك الرصيد المعتمد تلقائيًا على الموظفين المرنين فقط.</div><div class="compSummary">${summary}</div><div class="compForm"><label>الموظف<select id="compEmployee">${options}</select></label><label>نوع الحركة<select id="compType"><option value="1">+1 داوم إضافي / غطّى زميلًا</option><option value="-1">−1 داوم أقل من المستهدف</option></select></label><label>التاريخ<input id="compDate" type="date" value="${new Date().toISOString().slice(0,10)}"></label><label>غطّى عن<select id="compCovered"><option value="">لا يوجد</option>${options}</select></label><label class="wide">السبب<input id="compReason" placeholder="مثال: تغطية مناوبة مسائية"></label><button onclick="addCompEntry()">➕ إضافة الحركة</button></div><h3>سجل الحركات</h3>${entries}`,false);
+  renderSubPage('رصيد التعويض',`<div class="compNote">الرصيد + يعني أن الموظف يستحق يوم أوف تعويضي، والرصيد − يعني أنه يحتاج يوم عمل إضافيًا. الإجازة الرسمية V لا تُسجّل كنقص. الأرصدة للمتابعة اليدوية؛ لا تغيّر دورة ٤ أيام دوام و٣ أوف تلقائيًا.</div><div class="compSummary">${summary}</div><div class="compForm"><label>الموظف<select id="compEmployee">${options}</select></label><label>نوع الحركة<select id="compType"><option value="1">+1 داوم إضافي / غطّى زميلًا</option><option value="-1">−1 داوم أقل من المستهدف</option></select></label><label>التاريخ<input id="compDate" type="date" value="${new Date().toISOString().slice(0,10)}"></label><label>غطّى عن<select id="compCovered"><option value="">لا يوجد</option>${options}</select></label><label class="wide">السبب<input id="compReason" placeholder="مثال: تغطية مناوبة مسائية"></label><button onclick="addCompEntry()">➕ إضافة الحركة</button></div><h3>سجل الحركات</h3>${entries}`,false);
 }
 function addCompEntry(){const employee=document.getElementById('compEmployee')?.value;if(!employee)return;const rows=compensationLedger();rows.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),employee,delta:+document.getElementById('compType').value,date:document.getElementById('compDate').value,covered:document.getElementById('compCovered').value,reason:(document.getElementById('compReason').value||'').trim(),approved:false,settled:false});saveCompensationLedger(rows);openCompensationLedger()}
 function approveCompEntry(id){const rows=compensationLedger(),x=rows.find(v=>v.id===id);if(x)x.approved=true;saveCompensationLedger(rows);openCompensationLedger()}
@@ -3097,4 +3059,157 @@ body.homeActionsInPage #quickNav{display:none!important}
   background:#0b3156!important;color:#fff!important;-webkit-text-fill-color:#fff!important
 }
 </style>
+<style>.D{background:#e1efff!important;color:#195080!important}.r43Notice{background:#edf5fb;padding:12px;border-radius:12px;line-height:1.9}.r43Notice select{display:block;min-width:160px}</style><script>
+// Agreed weekly rules: 4 x 12h + 3 OFF; two named employees 5 x 9h.
+const R43_KEY = 'lab-roster-4x3-settings-v1';
+const R43_D9 = new Set(['عبدالمنعم البلادي','صالح الهاشم']);
+const R43_M = new Set(['طاهر المحيميد','مصطفى الزقعان','عقيله الحبابي','محمد العيثان','زهرة بو حسن']);
+const R43_PHASE = {'طاهر المحيميد':3,'عبدالمنعم البلادي':0,'مصطفى الزقعان':0,'عقيله الحبابي':1,'صالح الهاشم':0,'جعفر الشهيب':0,'مختار الخلف':0,'عبدالخالق التريكي':0,'حسين الحسن':1,'محمد العيثان':0,'حيدر الحسن':1,'ساره الخليفة':3,'ندى العلي':4,'رحاب العلي':4,'زهرة بو حسن':1};
+const R43_DAY = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const R43_LEGEND='M: ٧ص–٧م (١٢س) • N: ٧م–٧ص (١٢س) • D: ٧ص–٤م (٩س) • O: أوف • V: إجازة';
+let r43Plan = null;
+const r43mod=(a,b)=>((a%b)+b)%b;
+function r43Nine(i){return R43_D9.has(String(E[i]?.[0]||'').trim())}
+function r43Phase(i){return Number.isInteger(E[i]?.[6])?r43mod(E[i][6],7):(R43_PHASE[E[i]?.[0]]??0)}
+function r43Working(i,date){return r43Nine(i)?date.getUTCDay()<5:r43mod(date.getUTCDay()-r43Phase(i),7)<4}
+function r43Date(d){return new Date(Date.UTC(+y.value,+m.value,d))}
+function r43Vacation(i,d){return (E[i][4]||[]).some(v=>vacationCoversDay(v,d))}
+function r43Escape(s){return String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]))}
+function r43InitPeople(fresh){
+  E.forEach((e,i)=>{
+    if(fresh&&R43_M.has(e[0])){e[1]=1;e[2]=0;e[5]=0}
+    if(r43Nine(i)||e[0]==='عقيله الحبابي'){e[1]=1;e[2]=0;e[5]=0}
+    if(!Number.isInteger(e[6]))e[6]=R43_PHASE[e[0]]??0;
+  });
+}
+// Select recurring night quotas by phase. Candidate pairs must also work across
+// a Sunday boundary, when a Thursday-start block belongs to the previous week.
+function r43BuildPlan(){
+  const groups=Array.from({length:7},()=>({all:[],flex:[],night:[]}));
+  E.forEach((e,i)=>{if(r43Nine(i))return;let g=groups[r43Phase(i)];g.all.push(i);if(e[2]||e[5])g.night.push(i);else if(!e[1])g.flex.push(i)});
+  const count=(prev,cur,d,night)=>groups.reduce((s,g,p)=>s+(r43mod(d-p,7)<4?(night?(d<p?prev[p]:cur[p]):g.all.length):0),0);
+  function compatible(prev,cur){
+    for(let d=0;d<7;d++){
+      const total=count(prev,cur,d,false),n=count(prev,cur,d,true),m=total-n;
+      if(d>=5){if(n!==2||m!==2)return false}
+      else if(n<Math.max(2,+wn.value||2)||m<Math.max(4,+wm.value||4))return false;
+    }return true;
+  }
+  const vectors=[];
+  function enumerate(p,v){if(p===7){if(compatible(v,v))vectors.push(v.slice());return}const g=groups[p];for(let n=g.night.length;n<=g.night.length+g.flex.length;n++){v[p]=n;enumerate(p+1,v)}}
+  enumerate(0,[]);
+  let pair=null,best=Infinity;
+  if(vectors.length){
+    const minN=Math.min(...vectors.map(v=>v.reduce((a,b)=>a+b,0)));
+    const candidates=vectors.filter(v=>v.reduce((a,b)=>a+b,0)===minN);
+    for(const a of candidates)for(const b of candidates){
+      if(!compatible(a,b)||!compatible(b,a))continue;
+      const cost=groups.reduce((s,g,p)=>s+(g.flex.length?Math.pow((a[p]+b[p])/2-g.night.length,2)/g.flex.length:0),0)+(a.every((v,p)=>v===b[p])?.001:0);
+      if(cost<best){best=cost;pair=[a,b]}
+    }
+  }
+  return {groups,pair,compatible};
+}
+function r43Shift(i,date,plan=r43Plan){
+  if(!r43Working(i,date))return 'O';
+  if(r43Nine(i))return 'D';
+  if(E[i][1])return 'M';
+  if(E[i][2]||E[i][5])return 'N';
+  if(!plan?.pair)return 'M';
+  const p=r43Phase(i),offset=r43mod(date.getUTCDay()-p,7),start=date.getTime()-offset*86400000;
+  const w=Math.floor((start-Date.UTC(2026,0,4))/604800000),g=plan.groups[p];
+  const need=plan.pair[r43mod(w,2)][p]-g.night.length;
+  const pos=g.flex.indexOf(i),rotation=r43mod(Math.floor(w/2)+r43mod(w,2),g.flex.length||1);
+  return r43mod(pos-rotation,g.flex.length||1)<need?'N':'M';
+}
+function r43Generate(){
+  r43InitPeople(false);r43Plan=r43BuildPlan();
+  S=E.map((e,i)=>Array.from({length:days()},(_,k)=>{const sh=r43Shift(i,r43Date(k+1));return sh!=='O'&&r43Vacation(i,k+1)?'V':sh}));
+  resetPortalMonth();rend();summary();saveScheduleNow(true);check();
+}
+gen=r43Generate;
+autoFix=r43Generate;
+finalRepairHours=()=>{};
+finalNormalize=()=>{};
+normalizeLegacyA=()=>{};
+enforceRosterRestRules=()=>false;
+loadSavedSchedule=()=>{};
+function r43Target(i){let h=0;for(let d=1;d<=days();d++)if(r43Working(i,r43Date(d))&&!r43Vacation(i,d))h+=r43Nine(i)?9:12;return h}
+shiftHours=(i,sh)=>sh==='D'?9:(sh==='M'||sh==='N'?12:0);
+employeeShiftHours=shiftHours;
+employeeHours=workHours;
+finalHours=workHours;
+req=i=>r43Target(i)/(r43Nine(i)?9:12);
+updateTarget=()=>{t.textContent='٤٨ ساعة أسبوعيًا؛ المستثنيان ٤٥ ساعة'};
+employeeHoursBreakdown=i=>{const r=S[i]||[],c=x=>r.filter(z=>z===x).length;return {m12h:c('M'),n12h:c('N'),day9:c('D'),day8:0,o:c('O'),v:c('V'),hours:workHours(i),target:r43Target(i),diff:workHours(i)-r43Target(i)}};
+monthlyHoursTargetHtml=i=>`<div class="hoursTargetBox"><b>${r43Nine(i)?'الأحد–الخميس، ٩ ساعات يوميًا = ٤٥ ساعة أسبوعيًا':'٤ أيام دوام متتالية + ٣ أوف = ٤٨ ساعة أسبوعيًا'}</b><span>${R43_LEGEND}</span><span>الساعات المقررة لهذا الشهر بعد الإجازات: ${r43Target(i)} • الفعلي: ${workHours(i)} • الفرق: ${workHours(i)-r43Target(i)} ساعة. المجموع الشهري يتغير حسب التقويم.</span></div>`;
+function r43CoverageHtml(){
+  let h='<div class="generatedTableWrap"><table class="statsTable"><tr><th>اليوم</th><th>٧ص–٤م</th><th>٤م–٧م</th><th>٧م–٧ص</th></tr>';
+  for(let d=1;d<=days();d++){const mm=cnt(d,'M'),nn=cnt(d,'N'),dd=cnt(d,'D'),ok=wk(d)?mm===2&&nn===2&&dd===0:mm>=4&&nn>=2;h+=`<tr style="color:${ok?'#174f30':'#b91c1c'}"><td>${R43_DAY[r43Date(d).getUTCDay()]} ${d}</td><td>${mm+dd}</td><td>${mm}</td><td>${nn}</td></tr>`}
+  return h+'</table></div>';
+}
+summary=()=>{sum.innerHTML='<tr><th>الموظف</th><th>M ١٢س</th><th>N ١٢س</th><th>D ٩س</th><th>أوف</th><th>إجازة</th><th>الساعات</th><th>المقرر بعد الإجازات</th><th>الفرق</th></tr>'+E.map((e,i)=>{const b=employeeHoursBreakdown(i);return `<tr><td>${r43Escape(e[0])}</td><td>${b.m12h}</td><td>${b.n12h}</td><td>${b.day9}</td><td>${b.o}</td><td>${b.v}</td><td>${b.hours}</td><td>${b.target}</td><td>${b.diff}</td></tr>`}).join('')};
+renderStatsOnly=()=>{summary();renderSubPage('الساعات والتغطية',`<p>${R43_LEGEND}</p><div class="generatedTableWrap"><table class="statsTable">${sum.innerHTML}</table></div><h3>تغطية الفترات اليومية</h3>${r43CoverageHtml()}`,true)};
+collectIssues=()=>{
+  const q=[];if(!S.length)return ['لا يوجد جدول'];
+  if(!r43Plan?.pair)q.push('توزيع بدايات الدوام أو أنواع الموظفين لا يسمح بالتغطية المطلوبة؛ عدّل إعدادات الموظفين وأعد الإنشاء.');
+  for(let d=1;d<=days();d++){
+    const mm=cnt(d,'M'),nn=cnt(d,'N'),dd=cnt(d,'D');
+    if(wk(d)){if(mm!==2||nn!==2||dd!==0)q.push(`يوم ${d}: الويكند يحتاج ٢ M و٢ N، والفعلي ${mm} M و${nn} N و${dd} D`)}
+    else {if(mm<4)q.push(`يوم ${d}: تغطية ٤م–٧م ${mm}؛ المطلوب ٤ على الأقل`);if(nn<2)q.push(`يوم ${d}: المساء ${nn}؛ المطلوب ٢ على الأقل`)}
+  }
+  E.forEach((e,i)=>{
+    const row=S[i]||[];if(row.length!==days()){q.push(`${e[0]}: عدد أيام الصف لا يطابق الشهر`);return}
+    let pattern=false,role=false,rest=false;
+    for(let k=0;k<row.length;k++){
+      const x=row[k],on=r43Working(i,r43Date(k+1));
+      if(on===['O'].includes(x)||(!on&&x==='V')||!['M','N','D','O','V'].includes(x))pattern=true;
+      if(r43Nine(i)&&!['D','O','V'].includes(x))role=true;
+      if(!r43Nine(i)&&x==='D')role=true;
+      if(e[1]&&x==='N')role=true;
+      if((e[2]||e[5])&&x==='M')role=true;
+      if(k&&row[k-1]==='N'&&['M','D'].includes(x))rest=true;
+    }
+    if(pattern)q.push(`${e[0]}: أيام العمل والأوف تخالف الدورة المحددة`);
+    if(role)q.push(`${e[0]}: مناوبة تخالف نوع الدوام`);
+    if(rest)q.push(`${e[0]}: انتقال N إلى صباح دون راحة`);
+    // Full weeks only. Partial weeks are checked against the uninterrupted cycle.
+    for(let d=1;d+6<=days();d++)if(r43Date(d).getUTCDay()===0){const n=row.slice(d-1,d+6).filter(x=>x!=='O').length;if(n!==(r43Nine(i)?5:4))q.push(`${e[0]}: أسبوع ${d}–${d+6} فيه ${n} أيام بدل ${r43Nine(i)?5:4}`)}
+  });return q;
+};
+check=()=>{const q=collectIssues();msg.textContent=q.length?'ملاحظات: '+q.slice(0,12).join(' • '):'✓ الفحص سليم: ٤/٣، والاستثناءات، والمساء، وتغطية الويكند والفترة ٤–٧.';const b=document.getElementById('fixBtn');if(b)b.style.display=q.length?'inline-block':'none';return q};
+manualCycle=(i,d)=>{const allowed=r43Nine(i)?(wk(d+1)?['O']:['D','V']):E[i][1]?['M','O','V']:(E[i][2]||E[i][5])?['N','O','V']:['M','N','O','V'];S[i][d]=allowed[(allowed.indexOf(S[i][d])+1)%allowed.length];saveScheduleNow(true);renderManualEditor();check()};
+cy=(i,d)=>{manualCycle(i,d);rend();summary()};
+const r43OldTable=generatedScheduleTableHtml;
+generatedScheduleTableHtml=()=>`<p class="r43Notice"><b>مسودة — نظام ٤ أيام / ٣ أوف</b><br>${R43_LEGEND}<br>الويكند: ٢ صباح و٢ مساء. نظام D خاص بعبدالمنعم وصالح. <button onclick="checkScheduleAndOpen()">فحص</button><button onclick="renderStatsOnly()">الساعات والتغطية</button></p>`+r43OldTable();
+const r43OldEmployeeEditor=openEmployeeEditor;
+openEmployeeEditor=i=>{r43OldEmployeeEditor(i);const body=document.querySelector('.adminSubBody');if(body){const box=document.createElement('div');box.className='r43Notice';box.innerHTML=r43Nine(i)?'<b>ثابت ٧ص–٤م، الأحد–الخميس. الجمعة والسبت أوف.</b>':`<b>بداية دورة ٤ أيام دوام ثم ٣ أوف</b><select onchange="E[${i}][6]=+this.value;save()">${R43_DAY.map((d,p)=>`<option value="${p}" ${r43Phase(i)===p?'selected':''}>${d}</option>`).join('')}</select><small>أعد الإنشاء بعد التغيير، ثم افحص التغطية.</small>`;body.prepend(box)}};
+const r43OldLandscape=buildLandscapeRoster;
+buildLandscapeRoster=()=>{const ok=r43OldLandscape();if(ok){document.getElementById('landscapeRosterTitle').innerHTML+=`<div style="font-size:11px;margin-top:6px">${R43_LEGEND}</div>`}return ok};
+save=()=>{localStorage.setItem(R43_KEY,JSON.stringify({E,m:+m.value,y:+y.value}));updateTarget()};
+const r43SaveNow=saveScheduleNow;
+saveScheduleNow=silent=>{r43SaveNow(silent);save()};
+finalSave=saveScheduleNow;
+approveCurrentSchedule=()=>{
+  if(!S.length){alert('أنشئ الجدول أولًا');return}
+  const issues=check();if(issues.length){alert('لا يمكن الاعتماد قبل معالجة الملاحظات:\n'+issues.join('\n'));return}
+  const picker=document.getElementById('scheduleMonthPicker');if(picker&&picker.value!==schedulePickerValue()){alert('أنشئ جدول الشهر المحدد قبل اعتماده');return}
+  if(!confirm('اعتماد جدول '+M[+m.value]+' '+y.value+'؟'))return;
+  const a=approvedArchive(),key=rosterMonthKey(+y.value,+m.value);a[key]={year:+y.value,month:+m.value,employees:E.map(e=>e[0]),schedule:S.map(r=>r.slice()),approvedAt:new Date().toISOString(),rules:'4x3'};localStorage.setItem(APPROVED_ARCHIVE_KEY,JSON.stringify(a));saveScheduleNow(true);openApprovedArchive();
+};
+onload=()=>{
+  m.innerHTML='';M.forEach((x,i)=>m.add(new Option(x,i)));m.value=9;y.value=2026;
+  let fresh=true;try{const p=JSON.parse(localStorage.getItem(R43_KEY)||'null');if(p){E=p.E;m.value=p.m;y.value=p.y;fresh=false}}catch(e){}
+  r43InitPeople(fresh);r43Plan=r43BuildPlan();
+  let restored=false;try{const p=JSON.parse(localStorage.getItem('lab-roster-4x3-saved-schedule')||'null');if(p&&p.month===+m.value&&p.year===+y.value&&p.schedule?.length===E.length){S=p.schedule;restored=true}}catch(e){}
+  if(!restored)r43Generate();else{rend();summary();check()}
+  rendE();updateTarget();save();resetPortalMonth();
+  m.onchange=y.onchange=()=>{S=[];resetPortalMonth();save();rendE();tab.innerHTML='';sum.innerHTML=''};
+  const title=document.querySelector('header b');if(title)title.textContent='جدول المختبر — ٤ أيام دوام / ٣ أوف';
+  showHome();
+};
+
+compensationStatNote=()=>'';
+
+</script>
 </html>
