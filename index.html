@@ -457,7 +457,7 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
 <button class="scheduleTool approveTool" aria-label="اعتماد" title="اعتماد" onclick="approveAndLeaveSchedule()"><span>✅</span><small>اعتماد</small></button>
 <button class="scheduleTool pdfTool" aria-label="مشاركة PDF أفقي" title="مشاركة PDF أفقي" onclick="shareRosterPdfLandscape()"><span>⬆️</span><small>PDF</small></button>
 <button class="scheduleTool deleteTool" aria-label="حذف الجدول" title="حذف الجدول" onclick="deleteCurrentSchedule()"><span>🗑️</span><small>حذف</small></button>
-</div><main><div id="homePortal"></div><div id="adminArea" style="display:none"><div class="grid"><section class="card"><b>الإعدادات</b><div><select id=m></select><input id=y type=number value=2026 style="width:90px"></div><div>الحد الأدنى للتغطية: M <input id=wm value=4 size=2> N <input id=wn value=2 size=2></div><div>الويكند: M <input id=em value=2 size=2> N <input id=en value=2 size=2></div><div>أيام العمل <span id=t class=targetBox>تلقائي</span> بلوك الدوام <input id=b value=4 size=2 readonly></div><div class=sm>النظام: ٤ أيام دوام × ١٢ ساعة أسبوعيًا و٣ أوف قد تتفرق؛ حد أقصى ويكندان شهريًا. عبدالمنعم وصالح: الأحد–الخميس ٧ص–٤م (٤٥ ساعة أسبوعيًا). عقيلة صباح فقط. M من ٧ص–٧م، N من ٧م–٧ص، D من ٧ص–٤م. المساء يوميًا ٢ على الأقل، والجمعة والسبت ٢ M و٢ N. أيام الأسبوع تتطلب ٤ M كاملة لتغطية ٤–٧ مساء أيضًا. الساعات الشهرية تتغير حسب التقويم.</div><div class="actions"></div><hr><b>الموظفون</b><div id=emps></div><button onclick=add()>+ موظف</button><button onclick=gen()>توليد ذكي</button><button onclick=check()>✓ فحص الجدول</button><button id=fixBtn style="display:none;background:#b45309" onclick=autoFix()>🔧 إصلاح تلقائي</button><button onclick=csv()></button><button class=secondary onclick=printRoster()>📄 PDF الجدول</button><div id=msg class=sm></div></section><section class="card"><div class=wrap><table id=tab></table></div><h3>الإحصائيات</h3><div class=wrap><table id=sum></table></div></section></div></div></main><div id="adminHubRoot" style="display:none"></div><script>const M=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];let E=[['طاهر المحيميد',1,0,0,[]],['عبدالمنعم البلادي',1,0,0,[]],['مصطفى الزقعان',0,0,0,[]],['عقيله الحبابي',1,0,0,[]],['صالح الهاشم',1,0,0,[]],['جعفر الشهيب',0,0,0,[]],['مختار الخلف',0,0,0,[]],['عبدالخالق التريكي',0,0,0,[]],['حسين الحسن',0,0,0,[]],['محمد العيثان',1,0,0,[]],['حيدر الحسن',0,0,0,[]],['ساره الخليفة',0,0,0,[]],['ندى العلي',0,0,0,[]],['رحاب العلي',0,0,0,[]],['زهرة بو حسن',1,0,0,[]]],S=[];function loadAgreedSeptember2026(){
+</div><main><div id="homePortal"></div><div id="adminArea" style="display:none"><div class="grid"><section class="card"><b>الإعدادات</b><div><select id=m></select><input id=y type=number value=2026 style="width:90px"></div><div>الحد الأدنى للتغطية: M <input id=wm value=4 size=2> N <input id=wn value=3 size=2></div><div>الويكند: M <input id=em value=2 size=2> N <input id=en value=3 size=2></div><div>أيام العمل <span id=t class=targetBox>تلقائي</span> بلوك الدوام <input id=b value=4 size=2 readonly></div><div class=sm>النظام: ٤ أيام دوام × ١٢ ساعة أسبوعيًا و٣ أوف قد تتفرق؛ حد أقصى ويكندان شهريًا. عبدالمنعم وصالح: الأحد–الخميس ٧ص–٤م (٤٥ ساعة أسبوعيًا). عقيلة صباح فقط. M من ٧ص–٧م، N من ٧م–٧ص، D من ٧ص–٤م. المساء يوميًا ٣ موظفين، والجمعة والسبت ٢ M و٣ N. أيام الأسبوع تتطلب ٤ M كاملة لتغطية ٤–٧ مساء أيضًا. الساعات الشهرية تتغير حسب التقويم.</div><div class="actions"></div><hr><b>الموظفون</b><div id=emps></div><button onclick=add()>+ موظف</button><button onclick=gen()>توليد ذكي</button><button onclick=check()>✓ فحص الجدول</button><button id=fixBtn style="display:none;background:#b45309" onclick=autoFix()>🔧 إصلاح تلقائي</button><button onclick=csv()></button><button class=secondary onclick=printRoster()>📄 PDF الجدول</button><div id=msg class=sm></div></section><section class="card"><div class=wrap><table id=tab></table></div><h3>الإحصائيات</h3><div class=wrap><table id=sum></table></div></section></div></div></main><div id="adminHubRoot" style="display:none"></div><script>const M=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];let E=[['طاهر المحيميد',1,0,0,[]],['عبدالمنعم البلادي',1,0,0,[]],['مصطفى الزقعان',0,0,0,[]],['عقيله الحبابي',1,0,0,[]],['صالح الهاشم',1,0,0,[]],['جعفر الشهيب',0,0,0,[]],['مختار الخلف',0,0,0,[]],['عبدالخالق التريكي',0,0,0,[]],['حسين الحسن',0,0,0,[]],['محمد العيثان',1,0,0,[]],['حيدر الحسن',0,0,0,[]],['ساره الخليفة',0,0,0,[]],['ندى العلي',0,0,0,[]],['رحاب العلي',0,0,0,[]],['زهرة بو حسن',1,0,0,[]]],S=[];function loadAgreedSeptember2026(){
   if(+y.value!==2026 || +m.value!==8) return false;
   return loadAgreed12h2026();
 }
@@ -3063,7 +3063,7 @@ body.homeActionsInPage #quickNav{display:none!important}
 // Agreed weekly rules: 4 x 12h + 3 OFF; two named employees 5 x 9h.
 const R43_KEY = 'lab-roster-4x3-settings-v1';
 const R43_D9 = new Set(['عبدالمنعم البلادي','صالح الهاشم']);
-const R43_M = new Set(['طاهر المحيميد','مصطفى الزقعان','عقيله الحبابي','محمد العيثان','زهرة بو حسن']);
+const R43_M = new Set(['عقيله الحبابي']);
 const R43_PHASE = {'طاهر المحيميد':3,'عبدالمنعم البلادي':0,'مصطفى الزقعان':0,'عقيله الحبابي':1,'صالح الهاشم':0,'جعفر الشهيب':0,'مختار الخلف':0,'عبدالخالق التريكي':0,'حسين الحسن':1,'محمد العيثان':0,'حيدر الحسن':1,'ساره الخليفة':3,'ندى العلي':4,'رحاب العلي':4,'زهرة بو حسن':1};
 const R43_DAY = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
 const R43_LEGEND='M: ٧ص–٧م (١٢س) • N: ٧م–٧ص (١٢س) • D: ٧ص–٤م (٩س) • O: أوف • V: إجازة';
@@ -3079,6 +3079,7 @@ function r43InitPeople(fresh){
   E.forEach((e,i)=>{
     if(fresh&&R43_M.has(e[0])){e[1]=1;e[2]=0;e[5]=0}
     if(r43Nine(i)||e[0]==='عقيله الحبابي'){e[1]=1;e[2]=0;e[5]=0}
+    if(['طاهر المحيميد','مصطفى الزقعان','محمد العيثان','زهرة بو حسن'].includes(e[0])){e[1]=0;e[2]=0;e[5]=0}
     if(!Number.isInteger(e[6]))e[6]=R43_PHASE[e[0]]??0;
   });
 }
@@ -3291,28 +3292,29 @@ function rwSolve(){
  }
  return null;
 }
-const RW_OCT_FAIR = {"names":["طاهر المحيميد","عبدالمنعم البلادي","مصطفى الزقعان","عقيله الحبابي","صالح الهاشم","جعفر الشهيب","مختار الخلف","عبدالخالق التريكي","حسين الحسن","محمد العيثان","حيدر الحسن","ساره الخليفة","ندى العلي","رحاب العلي","زهرة بو حسن"],"S":[["M","O","O","O","M","M","M","M","O","O","O","O","O","M","M","M","M","M","O","O","O","M","M","M","M","M","O","M","M","O","O"],["M","O","O","D","D","D","D","D","O","O","D","D","D","D","D","O","O","D","D","D","D","D","O","O","D","D","D","D","D","O","O"],["M","O","O","M","M","O","M","M","O","O","O","M","M","M","M","O","O","M","M","M","M","O","O","O","M","M","O","O","O","M","M"],["M","M","M","O","M","M","M","M","O","O","O","M","M","M","M","O","O","O","O","M","O","M","M","M","M","M","O","M","M","O","O"],["M","O","O","D","D","D","D","D","O","O","D","D","D","D","D","O","O","D","D","D","D","D","O","O","D","D","D","D","D","O","O"],["N","O","O","M","M","M","O","M","O","O","M","O","O","M","O","N","N","N","N","N","N","O","O","O","M","M","O","M","N","O","O"],["E","N","N","N","N","N","N","O","O","O","M","M","M","M","O","O","O","O","M","M","M","N","O","O","O","M","M","M","M","O","O"],["M","O","O","O","O","M","M","O","M","M","O","M","M","O","O","N","N","N","N","N","N","O","O","O","M","O","M","M","N","O","O"],["M","O","O","M","M","M","O","N","O","O","M","M","O","M","M","O","O","O","O","M","M","O","N","N","N","N","N","N","O","O","O"],["N","O","O","M","O","M","M","M","O","O","M","O","O","M","O","M","M","M","M","M","O","M","O","O","M","O","M","M","M","O","O"],["O","O","O","M","O","M","O","O","N","N","N","N","N","N","O","O","O","O","M","M","M","M","O","O","O","O","O","M","M","N","N"],["M","O","O","M","O","M","O","O","N","N","N","N","N","N","O","O","O","M","M","M","M","O","O","O","M","M","O","O","O","N","N"],["M","M","M","M","M","O","M","N","O","O","O","M","M","M","N","O","O","O","M","O","M","O","N","N","N","N","N","N","O","O","O"],["M","N","N","N","N","N","N","O","O","O","M","M","M","O","N","O","O","O","M","M","M","N","O","O","O","O","M","O","M","M","M"],["E","O","O","O","O","M","M","O","M","M","O","M","M","M","M","O","O","M","M","M","M","O","O","O","M","M","O","M","M","O","O"]]};
+const RW_OCT_FAIR = {"names":["طاهر المحيميد","عبدالمنعم البلادي","مصطفى الزقعان","عقيله الحبابي","صالح الهاشم","جعفر الشهيب","مختار الخلف","عبدالخالق التريكي","حسين الحسن","محمد العيثان","حيدر الحسن","ساره الخليفة","ندى العلي","رحاب العلي","زهرة بو حسن"],"S":[["M","O","O","M","M","M","M","O","O","O","M","M","O","O","O","N","N","O","O","O","M","M","N","N","N","O","N","N","N","O","O"],["D","O","O","D","D","D","D","D","O","O","D","D","D","D","D","O","O","D","D","D","D","D","O","O","D","D","D","D","D","O","O"],["N","N","N","N","N","N","O","N","O","O","O","N","O","O","M","M","M","M","M","O","M","M","O","O","O","M","M","M","M","O","O"],["O","M","M","M","M","O","M","M","O","O","M","M","O","M","M","O","O","M","M","M","O","M","O","O","M","M","M","M","O","O","O"],["D","O","O","D","D","D","D","D","O","O","D","D","D","D","D","O","O","D","D","D","D","D","O","O","D","D","D","D","D","O","O"],["O","N","N","O","O","M","M","O","N","N","N","N","N","N","O","O","O","M","M","M","O","M","O","O","M","M","O","M","M","O","O"],["N","O","O","N","N","O","O","O","M","M","N","O","O","O","M","M","M","M","M","O","M","N","O","O","M","M","O","N","N","O","O"],["O","O","O","N","N","O","N","N","O","O","M","M","O","M","M","O","O","M","O","N","O","O","M","M","O","N","O","O","M","N","N"],["O","O","O","M","M","N","O","N","O","O","M","O","M","M","M","O","O","O","M","M","O","O","N","N","O","N","N","O","O","N","N"],["M","N","N","O","O","M","O","M","M","M","M","M","O","M","M","O","O","M","M","N","N","O","O","O","N","N","O","N","N","O","O"],["N","O","O","M","M","N","N","O","O","O","M","M","M","O","N","O","O","O","N","O","O","M","M","M","O","M","M","O","O","N","N"],["M","O","O","O","M","O","M","O","N","N","O","O","M","O","M","N","N","N","N","O","N","N","O","O","M","M","M","O","M","O","O"],["M","O","O","M","O","O","O","M","N","N","O","O","M","O","M","N","N","N","N","N","O","N","O","O","M","M","M","M","O","O","O"],["O","O","O","M","M","M","O","M","O","O","N","O","N","N","N","O","O","N","O","O","M","O","N","N","N","O","O","M","O","M","M"],["O","M","M","M","M","M","N","O","O","O","O","N","N","N","N","O","O","M","M","M","N","O","O","O","M","O","N","O","O","M","M"]]};
 function rwPreset(){
  if(!rwTransition()||E.length!==RW_OCT_FAIR.names.length)return null;
  const rows=[];
  for(let i=0;i<E.length;i++){
   const j=RW_OCT_FAIR.names.indexOf(E[i][0]);if(j<0)return null;
   const row=RW_OCT_FAIR.S[j];
-  for(let d=2;d<=days();d++)if(r43Vacation(i,d)||E[i][1]&&row[d-1]==='N'||(E[i][2]||E[i][5])&&row[d-1]==='M')return null;
+  for(let d=1;d<=days();d++)if(r43Vacation(i,d)||E[i][1]&&row[d-1]==='N'||(E[i][2]||E[i][5])&&row[d-1]==='M')return null;
   rows.push(rwHistory(i).slice(0,4).split('').concat(row));
  }
- if(+wm.value>4||+wn.value>2)return null;
+ if(+wm.value>4||+wn.value>3)return null;
  return {data:rows,start:-3};
 }
 
+function rwNightLengths(row){const out=[];let n=0;for(const x of row.concat(['O'])){if(x==='N')n++;else if(n){out.push(n);n=0;}}return out;}
 function rwBalanceNights(plan){
  const ids=E.map((e,i)=>i).filter(i=>!r43Nine(i)&&!E[i][1]&&!E[i][2]&&!E[i][5]);
  if(!ids.length)return null;
- const start=1-plan.start,end=start+days(),first=start+(rwTransition()?1:0);
+ const start=1-plan.start,end=start+days(),first=start;
  const data=plan.data.map(r=>r.slice()),counts=E.map(()=>0);
  for(let k=start;k<first;k++)for(const i of ids)if(data[i][k]==='N')counts[i]++;
  let required=0;
- for(let k=start;k<end;k++)required+=2-E.reduce((n,e,i)=>n+(!ids.includes(i)&&data[i][k]==='N'?1:0),0);
+ for(let k=start;k<end;k++)required+=3-E.reduce((n,e,i)=>n+(!ids.includes(i)&&data[i][k]==='N'?1:0),0);
  const lo=Math.floor(required/ids.length),hi=Math.ceil(required/ids.length);
  for(let k=first;k<end;k++)for(const i of ids)if(['M','N'].includes(data[i][k]))data[i][k]='M';
  const remaining=E.map((e,i)=>Array(end+1).fill(0));
@@ -3322,13 +3324,14 @@ function rwBalanceNights(plan){
   if(++nodes>60000)return false;
   if(k===end){
    if(!ids.every(i=>counts[i]>=lo&&counts[i]<=hi))return false;
+   for(const i of ids){if(rwNightLengths(data[i].slice(start,end)).some(n=>n>6))return false;}
    for(const i of ids)for(let j=end;j<Math.min(data[i].length,end+2);j++)if(rwNightRestViolation(data[i],j))return false;
    return true;
   }
   if(ids.some(i=>counts[i]>hi||counts[i]+remaining[i][k]<lo))return false;
   const available=ids.filter(i=>data[i][k]==='M');
   const forced=available.filter(i=>rwNightRestViolation(data[i],k));
-  const need=2-E.reduce((n,e,i)=>n+(!ids.includes(i)&&data[i][k]==='N'?1:0),0);
+  const need=3-E.reduce((n,e,i)=>n+(!ids.includes(i)&&data[i][k]==='N'?1:0),0);
   if(need<0||forced.length>need)return false;
   const choices=[];
   function choose(pos,selected){if(selected.length===need){if(forced.every(i=>selected.includes(i)))choices.push(selected.slice());return;}for(let a=pos;a<available.length;a++)if(counts[available[a]]<hi){selected.push(available[a]);choose(a+1,selected);selected.pop();}}
@@ -3348,35 +3351,33 @@ r43BuildPlan=()=>null;
 r43Generate=()=>{
  r43InitPeople(false);let solved=rwPreset();for(let attempt=0;attempt<12&&!solved;attempt++){const candidate=rwSolve();if(candidate)solved=rwBalanceNights(candidate);}
  if(!solved){RW_ERROR='تعذر إيجاد توزيع يحقق كل الشروط مع الإعدادات والإجازات الحالية. لم يتم استبدال الجدول. راجع أنواع الدوام والإجازات والربط بالشهر السابق.';msg.textContent=RW_ERROR;alert(RW_ERROR);return false;}
- RW_ERROR='';RW_BASE=solved.data;RW_START=solved.start;RW_MONTH=rwKey();
+ const oldPlan={base:RW_BASE,start:RW_START,month:RW_MONTH,rows:S};RW_ERROR='';RW_BASE=solved.data;RW_START=solved.start;RW_MONTH=rwKey();
  S=RW_BASE.map(r=>r.slice(1-RW_START,1-RW_START+days()));
- resetPortalMonth();rend();summary();saveScheduleNow(true);check();return true;
+ const errors=collectIssues();if(errors.length){RW_BASE=oldPlan.base;RW_START=oldPlan.start;RW_MONTH=oldPlan.month;S=oldPlan.rows;alert('تعذر توليد جدول مطابق: '+errors.slice(0,3).join(' • '));return false;}resetPortalMonth();rend();summary();saveScheduleNow(true);check();return true;
 };
 gen=r43Generate;autoFix=r43Generate;
-r43Target=i=>{if(rwTransition()&&RW_BASE&&RW_MONTH===rwKey())return RW_BASE[i].slice(1-RW_START,1-RW_START+days()).reduce((a,x,k)=>a+(k===0?0:shiftHours(i,x)),0);if(r43Nine(i)){let n=0;for(let d=1;d<=days();d++)if(!wk(d)&&!r43Vacation(i,d))n++;return n*9;}if(RW_MONTH!==rwKey()||!RW_BASE)return 0;return RW_BASE[i].slice(1-RW_START,1-RW_START+days()).filter(x=>['M','N'].includes(x)).length*12;};
+r43Target=i=>{if(rwTransition()&&RW_BASE&&RW_MONTH===rwKey())return RW_BASE[i].slice(1-RW_START,1-RW_START+days()).reduce((a,x)=>a+shiftHours(i,x),0);if(r43Nine(i)){let n=0;for(let d=1;d<=days();d++)if(!wk(d)&&!r43Vacation(i,d))n++;return n*9;}if(RW_MONTH!==rwKey()||!RW_BASE)return 0;return RW_BASE[i].slice(1-RW_START,1-RW_START+days()).filter(x=>['M','N'].includes(x)).length*12;};
 collectIssues=()=>{
  const q=[];if(!S.length)return ['لا يوجد جدول'];
  const known=RW_MONTH===rwKey()&&RW_BASE&&RW_BASE.length===E.length;
  if(!known)q.push('أعد إنشاء الجدول لتطبيق تدوير الويكند وفحص الأسابيع المتقاطعة مع الشهر.');
  for(let d=1;d<=days();d++){
-  if(rwTransition()&&d===1)continue;
   const mm=cnt(d,'M'),nn=cnt(d,'N'),dd=cnt(d,'D');
-  if(wk(d)){if(mm!==2||nn!==2||dd)q.push(`يوم ${d}: المطلوب ٢ صباح و٢ مساء فقط`);}
-  else if(mm<Math.max(4,+wm.value||4)||nn<Math.max(2,+wn.value||2))q.push(`يوم ${d}: نقص التغطية؛ صباح ${mm}، مساء ${nn}`);
+  if(wk(d)){if(mm!==2||nn!==3||dd)q.push(`يوم ${d}: المطلوب ٢ صباح و٣ مساء فقط`);}
+  else if(mm<Math.max(4,+wm.value||4)||nn!==3)q.push(`يوم ${d}: نقص التغطية؛ صباح ${mm}، مساء ${nn}`);
  }
  E.forEach((e,i)=>{
   const row=S[i]||[];if(row.length!==days()){q.push(`${e[0]}: عدد الأيام غير صحيح`);return;}
   if(rwWeekends(i)>(r43Nine(i)?0:2))q.push(`${e[0]}: تجاوز حد الويكند (${rwWeekends(i)})`);
   for(let d=1;d<=days();d++){
    const x=row[d-1];
-   if(rwTransition()&&d===1){if(x!==rwHistory(i)?.at(-1))q.push(`${e[0]}: يوم ١ أكتوبر يجب أن يبقى مطابقًا للصورة`);continue;}
    if(!['M','N','D','O','V'].includes(x)||r43Nine(i)&&(wk(d)?x!=='O':!['D','V'].includes(x))||!r43Nine(i)&&x==='D'||e[1]&&x==='N'||(e[2]||e[5])&&x==='M')q.push(`${e[0]} يوم ${d}: مناوبة تخالف نوع الدوام`);
    if(r43Vacation(i,d)&&['M','N','D'].includes(x))q.push(`${e[0]} يوم ${d}: عمل أثناء الإجازة`);
   }
   let extended=known?RW_BASE[i].slice():row.slice(),offset=known?1-RW_START:0;
   extended.splice(offset,row.length,...row);
   if(known){for(let k=0;k<extended.length;k+=7){if(rwTransition()&&k===0)continue;const n=extended.slice(k,k+7).filter(rwWork).length;if(n!==(r43Nine(i)?5:4))q.push(`${e[0]}: أسبوع يبدأ ${r43Date(RW_START+k).toISOString().slice(0,10)} فيه ${n} أيام عمل/إجازة`);}}
-  let run=0;for(let k=0;k<extended.length;k++){if(rwTransition()&&(known?RW_START+k:k+1)<2){run=0;continue;}run=rwWork(extended[k])?run+1:0;if(!r43Nine(i)&&run===7)q.push(`${e[0]}: أكثر من ٦ أيام عمل متتالية`);if(rwNightRestViolation(extended,k))q.push(`${e[0]} يوم ${known?RW_START+k:k+1}: N ثم صباح يحتاج يومين أوف؛ يوم واحد مسموح فقط إذا كانت المناوبة التالية N`);}
+  let run=0;for(let k=0;k<extended.length;k++){if(rwTransition()&&(known?RW_START+k:k+1)<1){run=0;continue;}run=rwWork(extended[k])?run+1:0;if(!r43Nine(i)&&run===7)q.push(`${e[0]}: أكثر من ٦ أيام عمل متتالية`);if(rwNightRestViolation(extended,k))q.push(`${e[0]} يوم ${known?RW_START+k:k+1}: N ثم صباح يحتاج يومين أوف؛ يوم واحد مسموح فقط إذا كانت المناوبة التالية N`);}
   const prior=rwTransition()?null:previousEmployeeRow(i,previousMonthSnapshot());
   if(prior?.length){const edge=prior.slice(-7).concat(row.slice(0,7));for(let k=1;k<edge.length;k++)if(rwNightRestViolation(edge,k))q.push(`${e[0]}: التحول من N إلى صباح عند بداية الشهر يحتاج يومين أوف`);if(known)for(let d=RW_START;d<1;d++){const actual=prior[prior.length+d-1];if(actual&&actual!==extended[d-RW_START])q.push(`${e[0]}: بداية الأسبوع لا تطابق الشهر السابق`);}}
  });return [...new Set(q)];
@@ -3384,30 +3385,34 @@ collectIssues=()=>{
 check=()=>{const q=collectIssues();msg.textContent=q.length?'ملاحظات: '+q.slice(0,12).join(' • '):'✓ الفحص سليم: ٤ أيام أسبوعيًا، وبحد أقصى ويكندين، والتغطية والراحة.';const b=document.getElementById('fixBtn');if(b)b.style.display=q.length?'inline-block':'none';return q;};
 summary=()=>{sum.innerHTML='<tr><th>الموظف</th><th>M</th><th>N</th><th>D</th><th>أوف</th><th>إجازة</th><th>ساعات النظام الجديد</th><th>المقرر</th><th>الفرق</th><th>الويكندات</th></tr>'+E.map((e,i)=>{const b=employeeHoursBreakdown(i);return `<tr><td>${r43Escape(e[0])}</td><td>${b.m12h}</td><td>${b.n12h}</td><td>${b.day9}</td><td>${b.o}</td><td>${b.v}</td><td>${b.hours}</td><td>${b.target}</td><td>${b.diff}</td><td style="color:${rwWeekends(i)>2?'#b91c1c':'inherit'}">${rwWeekends(i)}</td></tr>`}).join('');};
 monthlyHoursTargetHtml=i=>`<div class="hoursTargetBox"><b>${r43Nine(i)?'الأحد–الخميس، ٩ ساعات = ٤٥ ساعة أسبوعيًا':'٤ أيام × ١٢ ساعة في الأسبوع؛ ٣ أوف وقد تتفرق لتدوير الويكند'}</b><span>الويكندات: ${rwWeekends(i)} / ${r43Nine(i)?0:2} • المقرر: ${r43Target(i)} ساعة • الفعلي: ${workHours(i)}</span></div>`;
-generatedScheduleTableHtml=()=>`<p class="r43Notice"><b>مسودة — ويكند واحد أو اثنان لكل موظف</b><br>${R43_LEGEND}<br>٤ أيام عمل لكل أسبوع (الأحد–السبت)، والأوفات قد تتفرق. تُجمع الليالي قدر الإمكان؛ البلوك الممتد ٦ أيام يعبر أسبوعين، وليس ٦ أيام في أسبوع واحد. الراحة: N → O → N مسموح؛ N → O → M ممنوع؛ N → O → O → M مسموح. الجمعة والسبت: ٢ صباح و٢ مساء. حد أقصى ويكندان، ويُحسب أي يوم منهما ويكندًا. <button onclick="checkScheduleAndOpen()">فحص</button><button onclick="renderStatsOnly()">الساعات والويكندات</button><br>أكتوبر ٢٠٢٦: يوم ١ مثبت من الصورة (M قديم ٧ص–٣م، E قديم ٣م–١٢ ليلًا، N قديم ١١م–٧ص)، والتطبيق من يوم ٢. ساعات النظام القديم مستبعدة، وفحص ٤ أيام/٤٨ ساعة يبدأ بأول أسبوع كامل يوم ٤. الأيام خارج الشهر استكمال تخطيطي للأسبوع؛ تُطابق بالشهر السابق المحفوظ إن وُجد، وتحتاج مراجعة عند أول تطبيق.</p>`+r43OldTable();
+generatedScheduleTableHtml=()=>`<p class="r43Notice"><b>مسودة — ويكند واحد أو اثنان لكل موظف</b><br>${R43_LEGEND}<br>٤ أيام عمل لكل أسبوع (الأحد–السبت)، والأوفات قد تتفرق. بلوك N حتى ٦ أيام متواصلة عند الحاجة، مع الحفاظ على أربع مناوبات عمل في كل أسبوع كامل. الراحة: N → O → N مسموح؛ N → O → M ممنوع؛ N → O → O → M مسموح. الجمعة والسبت: ٢ صباح و٣ مساء. حد أقصى ويكندان، ويُحسب أي يوم منهما ويكندًا. <button onclick="checkScheduleAndOpen()">فحص</button><button onclick="renderStatsOnly()">الساعات والويكندات</button><br>أكتوبر ٢٠٢٦: التطبيق من يوم ١، وجميع مناوباته قابلة لإعادة التوزيع. ساعات أكتوبر محسوبة كاملة بالنظام الجديد، وفحص ٤ أيام/٤٨ ساعة يبدأ بأول أسبوع كامل يوم ٤. سبتمبر يُستخدم للراحة فقط دون إعادة حساب ساعاته. الأيام خارج الشهر استكمال تخطيطي للأسبوع؛ تُطابق بالشهر السابق المحفوظ إن وُجد، وتحتاج مراجعة عند أول تطبيق.</p>`+r43OldTable();
 openEmployeeEditor=i=>{r43OldEmployeeEditor(i);const body=document.querySelector('.adminSubBody');if(body){const box=document.createElement('div');box.className='r43Notice';box.textContent=r43Nine(i)?'ثابت الأحد–الخميس ٧ص–٤م؛ الويكند أوف.':'تدوير تلقائي للويكند: مرة أو مرتان بالشهر. ٤ أيام عمل أسبوعيًا وأوفات قابلة للتوزيع. أعد الإنشاء بعد تعديل نوع الدوام.';body.prepend(box);}};
 const rwManual=manualCycle;
-manualCycle=(i,d)=>{if(rwTransition()&&d===0){alert('يوم ١ أكتوبر ثابت من الجدول السابق. التعديل يبدأ يوم ٢.');return;}rwManual(i,d);};
-workHours=i=>(S[i]||[]).reduce((a,x,k)=>a+(rwTransition()&&k===0?0:shiftHours(i,x)),0);
+manualCycle=(i,d)=>rwManual(i,d);
+workHours=i=>(S[i]||[]).reduce((a,x,k)=>a+shiftHours(i,x),0);
 employeeHours=workHours;finalHours=workHours;
 const rwSave=saveScheduleNow;
-saveScheduleNow=silent=>{rwSave(silent);if(RW_BASE&&RW_MONTH===rwKey())localStorage.setItem('lab-roster-weekend-plan-'+RW_MONTH,JSON.stringify({version:5,data:RW_BASE,start:RW_START,names:E.map(e=>e[0])}));};
+saveScheduleNow=silent=>{rwSave(silent);if(RW_BASE&&RW_MONTH===rwKey())localStorage.setItem('lab-roster-weekend-plan-'+RW_MONTH,JSON.stringify({version:9,data:RW_BASE,start:RW_START,names:E.map(e=>e[0])}));};
 finalSave=saveScheduleNow;
 const rwLoad=onload;
-onload=()=>{let p;try{const setting=JSON.parse(localStorage.getItem(R43_KEY)||'null');const key=setting?`${setting.y}-${setting.m}`:'2026-9';p=JSON.parse(localStorage.getItem('lab-roster-weekend-plan-'+key)||'null');if(p&&p.version===5){RW_BASE=p.data;RW_START=p.start;RW_MONTH=key;}}catch(e){}rwLoad();if(p&&p.names.join('|')!==E.map(e=>e[0]).join('|'))RW_BASE=null;check();};
+onload=()=>{let p;try{const setting=JSON.parse(localStorage.getItem(R43_KEY)||'null');const key=setting?`${setting.y}-${setting.m}`:'2026-9';p=JSON.parse(localStorage.getItem('lab-roster-weekend-plan-'+key)||'null');if(p&&p.version===9){RW_BASE=p.data;RW_START=p.start;RW_MONTH=key;}}catch(e){}rwLoad();if(p&&p.names.join('|')!==E.map(e=>e[0]).join('|'))RW_BASE=null;check();};
 
 
-employeeHoursBreakdown=i=>{const r=(S[i]||[]).slice(rwTransition()?1:0),c=x=>r.filter(z=>z===x).length;return {m12h:c('M'),n12h:c('N'),day9:c('D'),day8:0,o:c('O'),v:c('V'),hours:workHours(i),target:r43Target(i),diff:workHours(i)-r43Target(i)}};
+employeeHoursBreakdown=i=>{const r=(S[i]||[]).slice(),c=x=>r.filter(z=>z===x).length;return {m12h:c('M'),n12h:c('N'),day9:c('D'),day8:0,o:c('O'),v:c('V'),hours:workHours(i),target:r43Target(i),diff:workHours(i)-r43Target(i)}};
 const rwCoverage=r43CoverageHtml;
-r43CoverageHtml=()=>{let html=rwCoverage();if(rwTransition())html=html.replace(/<tr style="color:[^"]*"><td>[^<]* 1<\/td>[\s\S]*?<\/tr>/,'<tr><td>١ أكتوبر</td><td colspan="3">مثبت بالنظام القديم؛ التطبيق الجديد من ٢ أكتوبر</td></tr>');return html;};
+r43CoverageHtml=()=>{let html='<table class="statsTable"><tr><th>اليوم</th><th>٧ص–٤م</th><th>٤م–٧م</th><th>٧م–٧ص</th></tr>';for(let d=1;d<=days();d++){const mm=cnt(d,'M'),nn=cnt(d,'N'),dd=cnt(d,'D'),ok=(wk(d)?mm===2:mm>=4)&&nn===3;html+=`<tr style="color:${ok?'#174f30':'#b91c1c'}"><td>${d}</td><td>${mm+dd}</td><td>${mm}</td><td>${nn}</td></tr>`;}return html+'</table>';};
 const rwBoot=onload;
-onload=()=>{rwBoot();if(!RW_BASE||RW_MONTH!==rwKey()||collectIssues().length)r43Generate();};
+onload=()=>{wn.value=3;if(typeof en!=='undefined')en.value=3;rwBoot();if(!RW_BASE||RW_MONTH!==rwKey()||collectIssues().length)r43Generate();};
 
 const rwOriginalIssues=collectIssues;
-collectIssues=()=>{const q=rwOriginalIssues();if(!S.length)return q;const ids=E.map((e,i)=>i).filter(i=>!r43Nine(i)&&!E[i][1]&&!E[i][2]&&!E[i][5]),counts=ids.map(i=>(S[i]||[]).filter(x=>x==='N').length);if(counts.length&&Math.max(...counts)-Math.min(...counts)>1)q.push('توزيع N غير متساوٍ على المرنين: يجب ألا يزيد الفرق على مناوبة واحدة، مع احتساب يوم ١ أكتوبر.');for(let d=rwTransition()?2:1;d<=days();d++)if(cnt(d,'N')!==2)q.push(`يوم ${d}: توزيع N العادل يتطلب موظفين بالضبط`);return q;};
+collectIssues=()=>{const q=rwOriginalIssues();if(!S.length)return q;const ids=E.map((e,i)=>i).filter(i=>!r43Nine(i)&&!E[i][1]&&!E[i][2]&&!E[i][5]),counts=ids.map(i=>(S[i]||[]).filter(x=>x==='N').length);if(counts.length&&Math.max(...counts)-Math.min(...counts)>1)q.push('توزيع N غير متساوٍ على المرنين: يجب ألا يزيد الفرق على مناوبة واحدة، مع احتساب يوم ١ أكتوبر.');for(let d=1;d<=days();d++)if(cnt(d,'N')!==3)q.push(`يوم ${d}: المطلوب ٣ موظفين N بالضبط`);return q;};
 const rwFairSummary=summary;
 summary=()=>{rwFairSummary();sum.innerHTML=sum.innerHTML.replace('<th>N</th>','<th>N من أول الشهر</th>');const counts=E.map((e,i)=>(S[i]||[]).filter(x=>x==='N').length);let i=-1;sum.innerHTML=sum.innerHTML.replace(/<tr><td>[\s\S]*?<\/tr>/g,row=>{i++;let j=-1;return row.replace(/<td(?: [^>]*)?>[\s\S]*?<\/td>/g,cell=>{j++;return j===2?`<td>${counts[i]}</td>`:cell;});});};
 const rwFairTable=generatedScheduleTableHtml;
-generatedScheduleTableHtml=()=>'<p class="r43Notice">توزيع N على المرنين بفارق مناوبة واحدة كحد أقصى. أكتوبر: ٥ موظفين × ٨ و٣ موظفين × ٧؛ إضافة إلى N محمد العيثان المثبتة يوم ١. عدّاد N يشمل الشهر كاملًا؛ الساعات المعروضة للنظام الجديد من يوم ٢.</p>'+rwFairTable();
+generatedScheduleTableHtml=()=>'<div class="r43Notice"><b>٣ موظفين N كل ليلة — ١٢ موظفًا مرنًا</b><p>طاهر ومصطفى ومحمد العيثان وزهرة بو حسن ضمن المرنين. التطبيق من ١ أكتوبر، دون قروبات ثابتة. ٩ موظفين × ٨ N و٣ موظفين × ٧ N = ٩٣. بلوكات N مرنة بحد أقصى ٦ ليالٍ متصلة، وقد تكون أقصر لتلبية الساعات الأسبوعية والراحة.</p></div>'+rwFairTable();
+
+
+const rwBeforeFour=collectIssues;
+collectIssues=()=>{const q=rwBeforeFour();if(!S.length)return q;E.forEach((e,i)=>{if(r43Nine(i))return;const row=S[i]||[],runs=rwNightLengths(row);if(runs.some(n=>n>6))q.push(`${e[0]}: بلوك N تجاوز ٦ أيام`);if(rwTransition()&&!e[1]&&!e[2]&&!e[5]&&![7,8].includes(row.filter(x=>x==='N').length))q.push(`${e[0]}: المطلوب ٧ أو ٨ مناوبات N`);});return q;};
 </script>
 </html>
